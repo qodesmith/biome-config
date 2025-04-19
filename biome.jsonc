@@ -1,0 +1,63 @@
+{
+  // "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": false,
+    "enabled": true,
+    "expand": "auto",
+    "formatWithErrors": true,
+    // "includes": [],
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "useEditorconfig": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "assist": {},
+    "formatter": {},
+    "globals": [],
+    "jsxRuntime": "transparent",
+    "linter": {},
+    "parser": {}
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "css": {},
+
+  // Since this is a shareable config, the `extends` property should NOT be
+  // used because Biome does not support extending from a config that itself
+  // extends from other configs.
+  // "extends": [],
+
+  "graphql": {},
+  "grit": {},
+  "html": {},
+  "json": {},
+  "overrides": [],
+  "plugins": [],
+  "root": true
+}

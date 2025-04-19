@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "@qodestack/biome-config",
+      "dependencies": {
+        "@biomejs/biome": "2.0.0-beta.1",
+      },
       "devDependencies": {
         "@types/bun": "latest",
         "@types/react": "^19",
@@ -11,9 +14,6 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tailwindcss": "^4.1.4",
-      },
-      "peerDependencies": {
-        "@biomejs/biome": "2.0.0-beta.1",
       },
     },
   },
