@@ -32,7 +32,29 @@
   },
   "javascript": {
     "assist": {},
-    "formatter": {},
+    "formatter": {
+      /*
+        Properties already defined in the top-level `formatter` section:
+        - attributePosition
+        - bracketSameLine
+        - bracketSpacing
+        - expand
+        - indentStyle
+        - indentWidth
+        - lineEnding
+        - lineWidth
+      */
+
+      "enabled": true,
+      "arrowParentheses": "asNeeded",
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+
+      // TODO - avoid trailing commas in imports and function params / args.
+      "trailingCommas": "es5"
+    },
     "globals": [],
     "jsxRuntime": "transparent",
     "linter": {},
