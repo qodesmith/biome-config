@@ -2,10 +2,11 @@
   // "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
-    "enabled": false,
     "clientKind": "git",
-    "useIgnoreFile": true,
-    "defaultBranch": "main"
+    "defaultBranch": "main",
+    "enabled": false,
+    "root": ".",
+    "useIgnoreFile": true
   },
   "files": {
     "ignoreUnknown": false
@@ -25,7 +26,15 @@
     "useEditorconfig": true
   },
   "linter": {
+    "domains": {
+      /*
+        Domains are a convenient way to group rules together by technology (i.e.
+        React, Solid, etc.). Rules found in domains are NOT exclusive to domains
+        so we will address them in the `rules` section instead of here.
+      */
+    },
     "enabled": true,
+    "includes": [],
     "rules": {
       "recommended": true
     }
