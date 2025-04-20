@@ -7,12 +7,20 @@ await Bun.write('./dist/biome.json', defaultConfig)
 await Bun.write('./dist/biome-react.json', reactConfig)
 
 function createConfig({type}: {type: 'default' | 'react'}): Configuration {
+  // https://next.biomejs.dev/reference/configuration/
   return {
     $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
     assist: {},
     css: {},
     extends: [],
-    files: {},
+    files: {
+      ignoreUnknown: true,
+      includes: [
+        // Include all known files in all folders recursively.
+        '**',
+      ],
+      // maxSize: 1048576, // Default value - (1024*1024, 1MB)
+    },
     formatter: {},
     graphql: {},
     grit: {},
@@ -23,6 +31,12 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
     overrides: [],
     plugins: [],
     root: true,
-    vcs: {},
+    vcs: {
+      clientKind: 'git',
+      defaultBranch: 'main',
+      enabled: true,
+      root: '.',
+      useIgnoreFile: true,
+    },
   }
 }
