@@ -98,6 +98,9 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
          * or update individual rules as need be.
          */
         recommended: true,
+        a11y: {
+          noAutofocus: 'off',
+        },
         correctness: {
           ...(type === 'react' ? correctnessReact : {}),
           noConstantMathMinMaxClamp: 'warn',
