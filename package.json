@@ -3,11 +3,18 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./biome.jsonc"
+      "import": "./dist/biome.json"
+    },
+    "./react": {
+      "import": "./dist/biome-react.json"
     }
   },
   "scripts": {
-    "dev": "bun --hot react-app/index.tsx"
+    "dev": "bun --hot react-app/index.tsx",
+    "build": "bun run build:types && bun run build:check && bun run build:tsc && bun run build.ts",
+    "build:check": "biome check ./build.ts",
+    "build:tsc": "tsc -p tsconfig.build.json",
+    "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi"
   },
   "dependencies": {
     "@biomejs/biome": "2.0.0-beta.1"
@@ -17,6 +24,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "bun-plugin-tailwind": "^0.0.15",
+    "json-schema-to-typescript": "^15.0.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.4"

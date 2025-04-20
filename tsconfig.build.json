@@ -9,10 +9,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./react-app/*"]
-    }
+    "noEmit": true
   },
-  "include": ["react-app/*", "src/*", "build.ts"]
+  "include": ["build.ts"]
 }
