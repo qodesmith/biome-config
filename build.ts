@@ -21,7 +21,22 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
       ],
       // maxSize: 1048576, // Default value - (1024*1024, 1MB)
     },
-    formatter: {},
+    formatter: {
+      attributePosition: 'auto',
+      bracketSameLine: false,
+      bracketSpacing: false,
+      enabled: true,
+      expand: 'auto',
+      formatWithErrors: true,
+
+      // `formatter.includes` is applied AFTER `files.includes`
+      // includes: ['**'],
+      indentStyle: 'space',
+      indentWidth: 2,
+      lineEnding: 'lf',
+      lineWidth: 80,
+      useEditorconfig: true,
+    },
     graphql: {},
     grit: {},
     html: {},
