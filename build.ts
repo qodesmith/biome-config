@@ -143,7 +143,9 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
         performance: {},
 
         // Rules that detect potential security flaws.
-        security: {},
+        security: {
+          noDangerouslySetInnerHtml: 'warn',
+        },
 
         // Rules enforcing a consistent and idiomatic way of writing your code.
         style: {
