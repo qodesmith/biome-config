@@ -1,4 +1,8 @@
-import type {Configuration, SeverityOrGroupFor_Correctness} from './biomeSchema'
+import type {
+  Configuration,
+  Hook,
+  SeverityOrGroupFor_Correctness,
+} from './biomeSchema'
 
 const defaultConfig = JSON.stringify(createConfig({type: 'default'}), null, 2)
 const reactConfig = JSON.stringify(createConfig({type: 'react'}), null, 2)
@@ -7,18 +11,20 @@ await Bun.write('./dist/biome.json', defaultConfig)
 await Bun.write('./dist/biome-react.json', reactConfig)
 
 function createConfig({type}: {type: 'default' | 'react'}): Configuration {
+  // Jotai hooks - because Jotai is an amazing state library.
+  const jotaiHooks: Hook[] = [
+    {name: 'useAtom', stableResult: [1]},
+    {name: 'useSetAtom', stableResult: true},
+    {name: 'useStore', stableResult: true},
+    {name: 'useResetAtom', stableResult: true},
+  ]
+
   const correctnessReact: SeverityOrGroupFor_Correctness = {
     useExhaustiveDependencies: {
       level: 'error',
       fix: 'safe',
       options: {
-        hooks: [
-          // Jotai hooks - because Jotai is an amazing state library.
-          {name: 'useAtom', stableResult: [1]},
-          {name: 'useSetAtom', stableResult: true},
-          {name: 'useStore', stableResult: true},
-          {name: 'useResetAtom', stableResult: true},
-        ],
+        hooks: [...jotaiHooks],
         reportMissingDependenciesArray: true,
         reportUnnecessaryDependencies: true,
       },
