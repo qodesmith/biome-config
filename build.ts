@@ -101,6 +101,11 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
         a11y: {
           noAutofocus: 'off',
         },
+        complexity: {
+          noUselessStringConcat: 'error',
+          noUselessUndefinedInitialization: 'error',
+          useSimplifiedLogicExpression: 'error',
+        },
         correctness: {
           ...(type === 'react' ? correctnessReact : {}),
           noConstantMathMinMaxClamp: 'warn',
