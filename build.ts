@@ -98,14 +98,20 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
          * or update individual rules as need be.
          */
         recommended: true,
+
+        // Rules focused on preventing accessibility problems.
         a11y: {
           noAutofocus: 'off',
         },
+
+        // Rules that focus on inspecting complex code that could be simplified.
         complexity: {
           noUselessStringConcat: 'error',
           noUselessUndefinedInitialization: 'error',
           useSimplifiedLogicExpression: 'error',
         },
+
+        // Rules that detect code that is guaranteed to be incorrect or useless.
         correctness: {
           ...(type === 'react' ? correctnessReact : {}),
           noConstantMathMinMaxClamp: 'warn',
@@ -123,6 +129,23 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
           noUnusedVariables: 'error',
           useIsNan: 'error',
         },
+
+        /**
+         * New rules that are still under development. These will eventually
+         * find themselves into other groups.
+         */
+        nursery: {},
+
+        /**
+         * Rules catching ways your code could be written to run faster, or
+         * generally be more efficient.
+         */
+        performance: {},
+
+        // Rules that detect potential security flaws.
+        security: {},
+
+        // Rules enforcing a consistent and idiomatic way of writing your code.
         style: {
           noDefaultExport: 'error',
           noInferrableTypes: 'error',
@@ -162,6 +185,9 @@ function createConfig({type}: {type: 'default' | 'react'}): Configuration {
           useTemplate: 'error',
           useThrowNewError: 'error',
         },
+
+        // Rules that detect code that is likely to be incorrect or useless.
+        suspicious: {},
       },
     },
     overrides: [],
