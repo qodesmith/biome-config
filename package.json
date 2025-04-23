@@ -35,16 +35,16 @@
     "check:fix": "biome check --write ."
   },
   "dependencies": {
-    "@biomejs/biome": "2.0.0-beta.1"
+    "@biomejs/biome": "2.0.0-beta.1",
+    "gradient-string": "^3.0.0",
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "bun-plugin-tailwind": "^0.0.15",
-    "gradient-string": "^3.0.0",
     "json-schema-to-typescript": "^15.0.4",
-    "picocolors": "^1.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.4"
