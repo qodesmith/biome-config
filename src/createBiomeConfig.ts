@@ -42,14 +42,16 @@ export function createBiomeConfig({
   // https://next.biomejs.dev/reference/configuration/
   return {
     $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
-    assist: {},
-    css: {},
+    // assist: {},
+    // css: {},
     // extends: [],
     files: {
       ignoreUnknown: true,
       includes: [
-        // Include all known files in all folders recursively.
-        '**',
+        '**', // Include all known files in all folders recursively.
+        '!node_modules/**',
+        '!dist/**',
+        '!*.lock',
       ],
       // maxSize: 1048576, // Default value - (1024*1024, 1MB)
     },
@@ -69,9 +71,14 @@ export function createBiomeConfig({
       lineWidth: 80,
       useEditorconfig: true,
     },
-    graphql: {},
-    grit: {},
-    html: {},
+    // graphql: {},
+    // grit: {},
+
+    /**
+     * https://github.com/biomejs/biome/issues/4726
+     * HTML parsing and formatting not available yet.
+     */
+    // html: {},
     javascript: {
       formatter: {
         /**
@@ -95,7 +102,7 @@ export function createBiomeConfig({
         trailingCommas: 'es5',
       },
     },
-    json: {},
+    // json: {},
     linter: {
       /**
        * Domains are a convenient way to group rules together by technology
@@ -211,14 +218,13 @@ export function createBiomeConfig({
           noFocusedTests: 'warn',
           noSkippedTests: 'warn',
           noVar: 'error',
-          useAwait: 'warn',
           useErrorMessage: 'error',
           useNumberToFixedDigitsArgument: 'error',
         },
       },
     },
-    overrides: [],
-    plugins: [],
+    // overrides: [],
+    // plugins: [],
     root: true,
     vcs: {
       clientKind: 'git',
