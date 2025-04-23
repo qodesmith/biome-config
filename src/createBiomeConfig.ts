@@ -152,7 +152,10 @@ export function createBiomeConfig({
          * Rules catching ways your code could be written to run faster, or
          * generally be more efficient.
          */
-        performance: {},
+        performance: {
+          noBarrelFile: 'error',
+          noReExportAll: 'error',
+        },
 
         // Rules that detect potential security flaws.
         security: {
