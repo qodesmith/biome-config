@@ -1,25 +1,25 @@
-import React, { useRef, type FormEvent } from "react";
+import {type FormEvent, useRef} from 'react'
 
 export function APITester() {
-  const responseInputRef = useRef<HTMLTextAreaElement>(null);
+  const responseInputRef = useRef<HTMLTextAreaElement>(null)
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const form = e.currentTarget;
-      const formData = new FormData(form);
-      const endpoint = formData.get("endpoint") as string;
-      const url = new URL(endpoint, location.href);
-      const method = formData.get("method") as string;
-      const res = await fetch(url, { method });
+      const form = e.currentTarget
+      const formData = new FormData(form)
+      const endpoint = formData.get('endpoint') as string
+      const url = new URL(endpoint, location.href)
+      const method = formData.get('method') as string
+      const res = await fetch(url, {method})
 
-      const data = await res.json();
-      responseInputRef.current!.value = JSON.stringify(data, null, 2);
+      const data = await res.json()
+      responseInputRef.current!.value = JSON.stringify(data, null, 2)
     } catch (error) {
-      responseInputRef.current!.value = String(error);
+      responseInputRef.current!.value = String(error)
     }
-  };
+  }
 
   return (
     <div className="mt-8 mx-auto w-full max-w-2xl text-left flex flex-col gap-4">
@@ -59,5 +59,5 @@ export function APITester() {
         className="w-full min-h-[140px] bg-[#1a1a1a] border-2 border-[#fbf0df] rounded-xl p-3 text-[#fbf0df] font-mono resize-y focus:border-[#f3d5a3] placeholder-[#fbf0df]/40"
       />
     </div>
-  );
+  )
 }
