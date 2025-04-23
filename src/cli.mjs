@@ -73,20 +73,35 @@ const args = parseArgs({
       type: 'boolean',
       default: false,
     },
+    vscode: {
+      type: 'boolean',
+      default: true,
+    },
+    extraHooks: {
+      type: 'boolean',
+      default: true,
+    },
   },
   allowPositionals: true,
   allowNegative: true,
 })
 
 const isVanilla = args.values.vanilla
+const reactFlavor = args.values.extraHooks ? '/reactExtraHooks' : '/react'
 const biomeConfig = {
   $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
-  extends: [`@qodestack/biome-config${isVanilla ? '' : '/reactExtraHooks'}`],
+  extends: [`@qodestack/biome-config${isVanilla ? '' : reactFlavor}`],
 }
+
+// biome.json takes precedence over biome.jsonc
 const biomeConfigPath = path.resolve(process.cwd(), 'biome.json')
 
 if (fs.existsSync(biomeConfigPath)) {
-  console.log('-', color.yellow('Skipping biome.json - file already exists'))
+  console.log(
+    'A biome.json file already exists. Proceed manually or delete the file.'
+  )
+  console.log('')
+  process.exit()
 } else {
   fs.writeFileSync(biomeConfigPath, JSON.stringify(biomeConfig, null, 2))
   console.log('-', 'created', color.cyan('biome.json'))
@@ -96,52 +111,55 @@ if (fs.existsSync(biomeConfigPath)) {
 // VS CODE //
 /////////////
 
+const isVscode = args.values.vscode
 const vscodeFolderPath = path.resolve(process.cwd(), '.vscode')
 const vscodeSettingsPath = `${vscodeFolderPath}/settings.json`
 
-try {
-  fs.mkdirSync(vscodeFolderPath)
-} catch {
-  // noop
+if (isVscode) {
+  try {
+    fs.mkdirSync(vscodeFolderPath)
+  } catch {
+    // noop
+  }
+
+  let currentVscodeSettings
+
+  try {
+    currentVscodeSettings = JSON.parse(fs.readFileSync(vscodeSettingsPath))
+  } catch {
+    // noop
+  }
+
+  const vscodeSettings = {
+    ...currentVscodeSettings,
+    'prettier.enable': false,
+    'eslint.enable': false,
+
+    // https://next.biomejs.dev/linter/rules/use-import-type/#description
+    'typescript.preferences.preferTypeOnlyAutoImports': true,
+
+    'biome.enabled': true,
+
+    'editor.defaultFormatter': 'biomejs.biome',
+    'editor.formatOnSave': true,
+    'editor.codeActionsOnSave': {
+      ...currentVscodeSettings?.['editor.codeActionsOnSave'],
+      'source.fixAll.biome': 'explicit',
+      'source.organizeImports.biome': 'explicit',
+    },
+  }
+  const vscodeSettingsContents = [
+    JSON.stringify(vscodeSettings, null, 2),
+    '', // Ensure an empty line at the end of the file.
+  ].join('\n')
+
+  fs.writeFileSync(vscodeSettingsPath, vscodeSettingsContents)
+  console.log(
+    '-',
+    currentVscodeSettings ? 'updated' : 'created',
+    color.cyan('./vscode/settings.json')
+  )
 }
-
-let currentVscodeSettings
-
-try {
-  currentVscodeSettings = JSON.parse(fs.readFileSync(vscodeSettingsPath))
-} catch {
-  // noop
-}
-
-const vscodeSettings = {
-  ...currentVscodeSettings,
-  'prettier.enable': false,
-  'eslint.enable': false,
-
-  // https://next.biomejs.dev/linter/rules/use-import-type/#description
-  'typescript.preferences.preferTypeOnlyAutoImports': true,
-
-  'biome.enabled': true,
-
-  'editor.defaultFormatter': 'biomejs.biome',
-  'editor.formatOnSave': true,
-  'editor.codeActionsOnSave': {
-    ...currentVscodeSettings?.['editor.codeActionsOnSave'],
-    'source.fixAll.biome': 'explicit',
-    'source.organizeImports.biome': 'explicit',
-  },
-}
-const vscodeSettingsContents = [
-  JSON.stringify(vscodeSettings, null, 2),
-  '', // Ensure an empty line at the end of the file.
-].join('\n')
-
-fs.writeFileSync(vscodeSettingsPath, vscodeSettingsContents)
-console.log(
-  '-',
-  currentVscodeSettings ? 'updated' : 'created',
-  color.cyan('./vscode/settings.json')
-)
 
 //////////////////////
 // PKG JSON SCRIPTS //
