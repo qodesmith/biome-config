@@ -175,7 +175,7 @@ pkgJson.scripts = {
   'format:fix': 'biome format --write .',
 }
 
-fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2))
+fs.writeFileSync(pkgJsonPath, `${JSON.stringify(pkgJson, null, 2)}\n`)
 
 console.log('-', 'updated', color.cyan('package.json'), 'scripts')
 console.log('')
