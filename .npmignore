@@ -1,0 +1,9 @@
+.vscode
+react-app
+bunfig.toml
+bun.lock
+tsconfig.json
+tsconfig.build.json
+biomeSchema.d.ts
+src/*
+!src/cli.mjs

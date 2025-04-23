@@ -1,6 +1,8 @@
 {
   "name": "@qodestack/biome-config",
+  "version": "1.0.0",
   "author": "Qodesmith",
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
@@ -13,12 +15,15 @@
       "import": "./dist/biomeReactExtraHooks.json"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
-    "biomeInit": "./src/cli.mjs"
+    "biomeInit": "src/cli.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qodesmith/biome-config"
+    "url": "git+https://github.com/qodesmith/biome-config.git"
   },
   "scripts": {
     "dev": "bun --hot react-app/index.tsx",
