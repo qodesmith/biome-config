@@ -2,8 +2,8 @@
   // "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "root": true,
-  "extends": ["./dist/biome-react.json"],
+  "extends": ["./dist/biomeReactExtraHooks.json"],
   "files": {
-    "includes": ["!biomeSchema.d.ts"]
+    "includes": ["*", "!src/biomeSchema.d.ts", "!bun.lock"]
   }
 }

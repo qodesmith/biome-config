@@ -1,20 +1,31 @@
 {
   "name": "@qodestack/biome-config",
+  "author": "Qodesmith",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/biome.json"
     },
     "./react": {
-      "import": "./dist/biome-react.json"
+      "import": "./dist/biomeReact.json"
+    },
+    "./reactExtraHooks": {
+      "import": "./dist/biomeReactExtraHooks.json"
     }
+  },
+  "bin": {
+    "biomeInit": "./src/cli.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qodesmith/biome-config"
   },
   "scripts": {
     "dev": "bun --hot react-app/index.tsx",
-    "build": "bun run build:types && bun run build:check && bun run build:tsc && bun run build.ts",
-    "build:check": "biome check ./build.ts",
-    "build:tsc": "tsc -p tsconfig.build.json",
-    "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi"
+    "build": "bun run build:types && bun run build:check && bun run build:tsc && bun run ./src/createStaticBiomeConfigs.ts",
+    "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi",
+    "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
+    "build:tsc": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@biomejs/biome": "2.0.0-beta.1"
@@ -24,7 +35,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "bun-plugin-tailwind": "^0.0.15",
+    "gradient-string": "^3.0.0",
     "json-schema-to-typescript": "^15.0.4",
+    "picocolors": "^1.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.4"

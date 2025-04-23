@@ -14,5 +14,5 @@
       "@/*": ["./react-app/*"]
     }
   },
-  "include": ["react-app/*", "src/*", "build.ts"]
+  "include": ["react-app/*", "src/*"]
 }
