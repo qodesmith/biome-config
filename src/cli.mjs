@@ -6,6 +6,8 @@ import {parseArgs} from 'node:util'
 import {mind as mindGradient} from 'gradient-string'
 import color from 'picocolors'
 
+// biome-ignore-start lint/suspicious/noConsole: we need it here
+
 ////////////////////
 // PKG JSON CHECK //
 ////////////////////

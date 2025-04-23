@@ -4,6 +4,6 @@
   "root": true,
   "extends": ["./dist/biomeReactExtraHooks.json"],
   "files": {
-    "includes": ["*", "!src/biomeSchema.d.ts", "!bun.lock"]
+    "includes": ["**", "!src/biomeSchema.d.ts", "!bun.lock", "!node_modules/**"]
   }
 }
