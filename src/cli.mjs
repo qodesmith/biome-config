@@ -3,6 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import {parseArgs} from 'node:util'
+
 import {mind as mindGradient} from 'gradient-string'
 import color from 'picocolors'
 
@@ -116,10 +117,16 @@ const vscodeSettings = {
   ...currentVscodeSettings,
   'prettier.enable': false,
   'eslint.enable': false,
+
+  // https://next.biomejs.dev/linter/rules/use-import-type/#description
+  'typescript.preferences.preferTypeOnlyAutoImports': true,
+
   'biome.enabled': true,
+
   'editor.defaultFormatter': 'biomejs.biome',
   'editor.formatOnSave': true,
   'editor.codeActionsOnSave': {
+    ...currentVscodeSettings?.['editor.codeActionsOnSave'],
     'source.fixAll.biome': 'explicit',
     'source.organizeImports.biome': 'explicit',
   },
