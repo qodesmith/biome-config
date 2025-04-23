@@ -1,6 +1,7 @@
 import type {
   Configuration,
   Hook,
+  PredefinedImportGroup,
   SeverityOrGroupFor_Correctness,
 } from './biomeSchema'
 
@@ -42,7 +43,38 @@ export function createBiomeConfig({
   // https://next.biomejs.dev/reference/configuration/
   return {
     $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
-    // assist: {},
+    assist: {
+      actions: {
+        source: {
+          organizeImports: {
+            level: 'on',
+            options: {
+              // https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
+              groups: [
+                ':BUN:',
+                ':NODE:',
+                ':BLANK_LINE:',
+                //
+                ':ALIAS:',
+                ':BLANK_LINE:',
+                //
+                ':PACKAGE:',
+                ':PACKAGE_WITH_PROTOCOL:',
+                ':BLANK_LINE:',
+                //
+                ':PATH:',
+                ':BLANK_LINE:',
+                //
+                ':URL:',
+              ] as PredefinedImportGroup[],
+            },
+          },
+
+          // This affects CSS only.
+          useSortedProperties: 'on',
+        },
+      },
+    },
     // css: {},
     // extends: [],
     files: {
@@ -195,7 +227,21 @@ export function createBiomeConfig({
           useExportType: 'error',
           useForOf: 'error',
           useFragmentSyntax: 'error',
+
+          /**
+           * https://next.biomejs.dev/linter/rules/use-import-type/#description
+           * This rule should be able to take options according to the docs.
+           * I have filed an issue in the Biome repo:
+           * https://github.com/biomejs/biome/issues/5749
+           */
           useImportType: 'error',
+          // useImportType: {
+          //   level: 'error',
+          //   options: {
+          //     style: 'separatedType'
+          //   }
+          // },
+
           useNamingConvention: {
             level: 'error',
             options: {
