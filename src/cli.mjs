@@ -4,8 +4,17 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {parseArgs} from 'node:util'
 
+import {Biome, Distribution} from '@biomejs/js-api'
 import {mind as mindGradient} from 'gradient-string'
 import color from 'picocolors'
+
+const biome = await Biome.create({distribution: Distribution.NODE})
+
+function formatJson(codeString) {
+  return biome.formatContent(codeString, {
+    filePath: 'example.json',
+  }).content
+}
 
 // biome-ignore-start lint/suspicious/noConsole: we need it here
 
@@ -18,15 +27,14 @@ const pkgJson = (() => {
   try {
     return JSON.parse(fs.readFileSync(pkgJsonPath, {encoding: 'utf8'}))
   } catch {
-    // noop
+    return {}
   }
 })()
 
 try {
-  const {dependencies, devDependencies} = pkgJson ?? {}
+  const {dependencies, devDependencies} = pkgJson
 
   if (
-    pkgJson === undefined ||
     !(
       dependencies?.['@qodestack/biome-config'] ||
       devDependencies?.['@qodestack/biome-config']
@@ -103,7 +111,9 @@ if (fs.existsSync(biomeConfigPath)) {
   console.log('')
   process.exit()
 } else {
-  fs.writeFileSync(biomeConfigPath, JSON.stringify(biomeConfig, null, 2))
+  const formattedBiomeConfig = formatJson(JSON.stringify(biomeConfig, null, 2))
+
+  fs.writeFileSync(biomeConfigPath, formattedBiomeConfig)
   console.log('-', 'created', color.cyan('biome.json'))
 }
 
@@ -148,12 +158,11 @@ if (isVscode) {
       'source.organizeImports.biome': 'explicit',
     },
   }
-  const vscodeSettingsContents = [
-    JSON.stringify(vscodeSettings, null, 2),
-    '', // Ensure an empty line at the end of the file.
-  ].join('\n')
+  const formattedVscodeSettings = formatJson(
+    JSON.stringify(vscodeSettings, null, 2)
+  )
 
-  fs.writeFileSync(vscodeSettingsPath, vscodeSettingsContents)
+  fs.writeFileSync(vscodeSettingsPath, formattedVscodeSettings)
   console.log(
     '-',
     currentVscodeSettings ? 'updated' : 'created',
@@ -175,7 +184,8 @@ pkgJson.scripts = {
   'format:fix': 'biome format --write .',
 }
 
-fs.writeFileSync(pkgJsonPath, `${JSON.stringify(pkgJson, null, 2)}\n`)
+const formattedPkgJson = formatJson(JSON.stringify(pkgJson, null, 2))
+fs.writeFileSync(pkgJsonPath, formattedPkgJson)
 
 console.log('-', 'updated', color.cyan('package.json'), 'scripts')
 console.log('')
