@@ -27,7 +27,7 @@
   },
   "scripts": {
     "dev": "bun --hot react-app/index.tsx",
-    "build": "bun run build:types && bun run build:check && bun run build:tsc && bun run ./src/createStaticBiomeConfigs.ts",
+    "build": "bun run build:types && bun run ./src/createStaticBiomeConfigs.ts && bun run build:check && bun run build:tsc",
     "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi",
     "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
     "build:tsc": "tsc -p tsconfig.build.json",
