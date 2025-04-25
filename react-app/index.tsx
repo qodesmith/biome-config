@@ -1,5 +1,3 @@
-// biome-ignore-all lint/style/useNamingConvention: Bun uses all-caps convention
-
 import {serve} from 'bun'
 
 import index from './index.html'

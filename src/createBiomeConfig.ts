@@ -1,3 +1,14 @@
+/**
+ * WAITING ON:
+ *
+ * - HTML parsing & formatting not available yet
+ *   - https://github.com/biomejs/biome/issues/4726
+ * - Overriding `fix` levels isn't released yet
+ *   - https://github.com/biomejs/biome/issues/5488
+ * - `useImportType` options isn't released yet
+ *   - https://github.com/biomejs/biome/issues/5749
+ */
+
 import type {
   Configuration,
   Hook,
@@ -28,7 +39,7 @@ export function createBiomeConfig({
 
   const correctnessReact: SeverityOrGroupFor_Correctness = {
     useExhaustiveDependencies: {
-      level: 'error',
+      level: 'on',
       fix: 'safe',
       options: {
         hooks: hooks.length > 0 ? hooks : undefined,
@@ -36,8 +47,8 @@ export function createBiomeConfig({
         reportUnnecessaryDependencies: true,
       },
     },
-    useHookAtTopLevel: 'error',
-    useJsxKeyInIterable: 'error',
+    useHookAtTopLevel: 'on',
+    useJsxKeyInIterable: 'on',
   }
 
   // https://next.biomejs.dev/reference/configuration/
@@ -157,15 +168,42 @@ export function createBiomeConfig({
 
         // Rules that focus on inspecting complex code that could be simplified.
         complexity: {
-          noUselessStringConcat: 'error',
-          noUselessUndefinedInitialization: 'error',
-          useSimplifiedLogicExpression: 'error',
+          noExtraBooleanCast: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noUselessFragments: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noUselessStringConcat: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noUselessSwitchCase: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noUselessUndefinedInitialization: 'on',
+          useLiteralKeys: {
+            level: 'on',
+            fix: 'safe',
+          },
+          useSimplifiedLogicExpression: 'warn',
         },
 
         // Rules that detect code that is guaranteed to be incorrect or useless.
         correctness: {
           ...(type === 'react' ? correctnessReact : {}),
           noConstantMathMinMaxClamp: 'warn',
+          noInvalidBuiltinInstantiation: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noInvalidNewBuiltin: {
+            level: 'on',
+            fix: 'safe',
+          },
           noUndeclaredDependencies: {
             level: 'error',
             options: {
@@ -175,10 +213,22 @@ export function createBiomeConfig({
               peerDependencies: true,
             },
           },
-          noUnusedFunctionParameters: 'error',
-          noUnusedImports: 'error',
-          noUnusedVariables: 'error',
-          useIsNan: 'error',
+          noUnusedFunctionParameters: {
+            level: 'warn',
+            fix: 'safe',
+          },
+          noUnusedImports: {
+            level: 'warn',
+            fix: 'none',
+          },
+          noUnusedVariables: {
+            level: 'warn',
+            fix: 'safe',
+          },
+          useIsNan: {
+            level: 'on',
+            fix: 'safe',
+          },
         },
 
         /**
@@ -204,29 +254,48 @@ export function createBiomeConfig({
         // Rules enforcing a consistent and idiomatic way of writing your code.
         style: {
           noDefaultExport: 'error',
-          noInferrableTypes: 'error',
-          noNegationElse: 'error',
+          noInferrableTypes: 'on',
+          noNegationElse: 'warn',
           noParameterProperties: 'error',
           noShoutyConstants: 'error',
-          noUnusedTemplateLiteral: 'error',
-          noUselessElse: 'error',
+          noUnusedTemplateLiteral: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noUselessElse: {
+            level: 'warn',
+            fix: 'safe',
+          },
           noYodaExpression: 'error',
           useAsConstAssertion: 'error',
           useCollapsedElseIf: 'error',
           useConsistentArrayType: {
             level: 'error',
+            fix: 'safe',
             options: {
               syntax: 'shorthand',
             },
           },
-          useConsistentBuiltinInstantiation: 'error',
+          useConsistentBuiltinInstantiation: {
+            level: 'error',
+            fix: 'safe',
+          },
           useConst: 'error',
-          useDefaultParameterLast: 'error',
+          useDefaultParameterLast: {
+            level: 'error',
+            fix: 'safe',
+          },
           useDefaultSwitchClause: 'error',
-          useExponentiationOperator: 'error',
+          useExponentiationOperator: {
+            level: 'error',
+            fix: 'safe',
+          },
           useExportType: 'error',
           useForOf: 'error',
-          useFragmentSyntax: 'error',
+          useFragmentSyntax: {
+            level: 'error',
+            fix: 'safe',
+          },
 
           /**
            * https://next.biomejs.dev/linter/rules/use-import-type/#description
@@ -243,17 +312,48 @@ export function createBiomeConfig({
           // },
 
           useNamingConvention: {
-            level: 'error',
+            level: 'warn',
             options: {
               strictCase: false,
+              conventions: [
+                /**
+                 * Allows object methods like:
+                 * {
+                 *   GET: () => {...},
+                 *   POST: () => {...},
+                 * }
+                 */
+                {
+                  selector: {
+                    kind: 'objectLiteralMethod',
+                    scope: 'any',
+                  },
+                  formats: ['CONSTANT_CASE', 'camelCase'],
+                },
+              ],
             },
           },
-          useNodejsImportProtocol: 'error',
+          useNodejsImportProtocol: {
+            level: 'warn',
+            fix: 'safe',
+          },
           useSelfClosingElements: 'error',
-          useShorthandAssign: 'error',
-          useSingleVarDeclarator: 'error',
-          useTemplate: 'error',
-          useThrowNewError: 'error',
+          useShorthandAssign: {
+            level: 'error',
+            fix: 'safe',
+          },
+          useSingleVarDeclarator: {
+            level: 'error',
+            fix: 'safe',
+          },
+          useTemplate: {
+            level: 'error',
+            fix: 'safe',
+          },
+          useThrowNewError: {
+            level: 'error',
+            fix: 'safe',
+          },
         },
 
         // Rules that detect code that is likely to be incorrect or useless.
@@ -262,10 +362,33 @@ export function createBiomeConfig({
           noConsole: 'warn',
           noDuplicateTestHooks: 'error',
           noFocusedTests: 'warn',
+          noGlobalIsFinite: {
+            level: 'on',
+            fix: 'safe',
+          },
+          noGlobalIsNan: {
+            level: 'error',
+            fix: 'safe',
+          },
           noSkippedTests: 'warn',
+          noUnsafeNegation: {
+            level: 'on',
+            fix: 'safe',
+          },
           noVar: 'error',
           useErrorMessage: 'error',
-          useNumberToFixedDigitsArgument: 'error',
+          useIsArray: {
+            level: 'on',
+            fix: 'safe',
+          },
+          useNumberToFixedDigitsArgument: {
+            level: 'error',
+            fix: 'safe',
+          },
+          useValidTypeof: {
+            level: 'on',
+            fix: 'safe',
+          },
         },
       },
     },
