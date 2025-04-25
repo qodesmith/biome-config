@@ -235,7 +235,44 @@ export function createBiomeConfig({
          * New rules that are still under development. These will eventually
          * find themselves into other groups.
          */
-        nursery: {},
+        nursery: {
+          noBitwiseOperators: 'warn',
+          noCommonJs: 'error',
+          noConstantBinaryExpression: 'warn',
+          noDocumentCookie: 'error',
+          noDuplicateElseIf: 'on',
+          noDynamicNamespaceImportAccess: 'warn',
+          noEnum: 'error',
+          noExportedImports: 'warn',
+          noFloatingPromises: 'warn',
+          noGlobalDirnameFilename: 'error',
+          noImportCycles: 'on',
+          noIrregularWhitespace: 'error',
+          noNoninteractiveElementInteractions: 'warn',
+          noProcessGlobal: 'warn',
+          noStaticElementInteractions: 'warn',
+          noTemplateCurlyInString: 'warn',
+          noTsIgnore: 'error',
+          useAdjacentOverloadSignatures: 'warn',
+          useAriaPropsSupportedByRole: 'on',
+          useAtIndex: 'warn',
+          useCollapsedIf: 'warn',
+          useComponentExportOnlyModules: 'error',
+          useConsistentCurlyBraces: 'warn',
+          useExportsLast: 'warn',
+          useParseIntRadix: 'error',
+          useSortedClasses: {
+            level: 'info',
+            fix: 'safe',
+            options: {
+              // 'class' and 'className' are default.
+              // attributes: [],
+              functions: ['clsx'],
+            },
+          },
+          useSymbolDescription: 'on',
+          useValidAutocomplete: 'warn',
+        },
 
         /**
          * Rules catching ways your code could be written to run faster, or
