@@ -6,16 +6,19 @@ TL;DR
 bunx biomeInit
 ```
 
-By itself, this command will:
+Running the command with no arguments will:
 
 - Create a `biome.json` file for a React project.
 - Create (or update) a `.vscode/settings.json` file.
-- Add a few 3rd party hooks to a list, preventing them from being flagged as unstable values in the `useCallback` dependency array.
+- Add scripts to `package.json`.
+- Add a few 3rd party hooks to a list, marking their return values as stable and
+preventing them from having to be added to the `useCallback` dependency array.
 
 ## Options
 
-| Option          | Description                                          |
-|-----------------|------------------------------------------------------|
-| --no-vscode     | Prevent creating `.vscode/settings.json`             |
-| --vanilla       | Prevent including React settings in the Biome config |
-| --no-extraHooks | Prevent listing the 3rd party hooks                  |
+| Option            | Description                                          |
+|-------------------|------------------------------------------------------|
+| `--no-vscode`     | Prevent creating `.vscode/settings.json`             |
+| `--vanilla`       | Prevent including React settings in the Biome config |
+| `--no-extraHooks` | Prevent listing the 3rd party hooks                  |
+| `--jsonc`         | Create a `biome.jsonc` file instead of `biome.json`  |

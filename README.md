@@ -89,11 +89,17 @@ React projects:
 
 Add the following to `.vscode/settings.json`:
 
-```json
+```jsonc
 {
+  // Avoid any remnants from previously loved tools.
   "prettier.enable": false,
   "eslint.enable": false,
+
+  // import type {thing} from 'pkg' <-- Uses this
+  // import {type thing} from 'pkg'
   "typescript.preferences.preferTypeOnlyAutoImports": true,
+
+  // Biome settings.
   "biome.enabled": true,
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,

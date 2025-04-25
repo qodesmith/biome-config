@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import fs from 'node:fs'
+import fs, {existsSync} from 'node:fs'
 import path from 'node:path'
 import {parseArgs} from 'node:util'
 
@@ -77,17 +77,28 @@ console.log(titleGradient)
 const args = parseArgs({
   args: process.argv,
   options: {
+    // Default to creating React projects.
     vanilla: {
       type: 'boolean',
       default: false,
     },
+
+    // Default to using VS Code.
     vscode: {
       type: 'boolean',
       default: true,
     },
+
+    // Default to including Jotai hooks.
     extraHooks: {
       type: 'boolean',
       default: true,
+    },
+
+    // Default to using json over jsonc.
+    jsonc: {
+      type: 'boolean',
+      default: false,
     },
   },
   allowPositionals: true,
@@ -102,20 +113,51 @@ const biomeConfig = {
 }
 
 // biome.json takes precedence over biome.jsonc
-const biomeConfigPath = path.resolve(process.cwd(), 'biome.json')
+const biomeJsonPath = path.resolve(process.cwd(), 'biome.json')
+const biomeJsoncPath = path.resolve(process.cwd(), 'biome.jsonc')
+const isJsonc = args.values.jsonc
+const hasBiomeJson = fs.existsSync(biomeJsonPath)
+const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
+const formattedBiomeConfig = formatJson(JSON.stringify(biomeConfig, null, 2))
 
-if (fs.existsSync(biomeConfigPath)) {
+/*
+  - jsonc: true
+    - has jsonc - quit
+    - has json - warn & proceed
+  - jsonc: false
+    - has jsonc - warn & proceed
+    - has json - quit
+*/
+
+if (isJsonc) {
+  if (hasBiomeJsonc) {
+    console.log(
+      'A biome.jsonc file already exists. Proceed manually or delete the file.'
+    )
+    console.log('')
+    process.exit()
+  } else if (hasBiomeJson) {
+    console.warn(
+      '⚠️ A biome.json file already exists. Biome will use that instead of biome.jsonc'
+    )
+  }
+
+  fs.writeFileSync(biomeJsoncPath, formattedBiomeConfig)
+  console.log('-', 'created', color.cyan('biome.jsonc'))
+} else if (hasBiomeJson) {
   console.log(
     'A biome.json file already exists. Proceed manually or delete the file.'
   )
   console.log('')
   process.exit()
-} else {
-  const formattedBiomeConfig = formatJson(JSON.stringify(biomeConfig, null, 2))
-
-  fs.writeFileSync(biomeConfigPath, formattedBiomeConfig)
-  console.log('-', 'created', color.cyan('biome.json'))
+} else if (hasBiomeJsonc) {
+  console.warn(
+    '⚠️ A biome.jsonc file already exists. Biome will ignore that in favor of biome.json'
+  )
 }
+
+fs.writeFileSync(biomeJsonPath, formattedBiomeConfig)
+console.log('-', 'created', color.cyan('biome.json'))
 
 /////////////
 // VS CODE //
@@ -123,22 +165,21 @@ if (fs.existsSync(biomeConfigPath)) {
 
 const isVscode = args.values.vscode
 const vscodeFolderPath = path.resolve(process.cwd(), '.vscode')
+const vscodeFolderExists = existsSync(vscodeFolderPath)
 const vscodeSettingsPath = `${vscodeFolderPath}/settings.json`
 
 if (isVscode) {
-  try {
+  if (!vscodeFolderExists) {
     fs.mkdirSync(vscodeFolderPath)
-  } catch {
-    // noop
   }
 
-  let currentVscodeSettings
-
-  try {
-    currentVscodeSettings = JSON.parse(fs.readFileSync(vscodeSettingsPath))
-  } catch {
-    // noop
-  }
+  const currentVscodeSettings = (() => {
+    try {
+      return JSON.parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
+    } catch {
+      return {}
+    }
+  })()
 
   const vscodeSettings = {
     ...currentVscodeSettings,
