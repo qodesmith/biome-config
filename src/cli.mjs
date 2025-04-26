@@ -2,6 +2,7 @@
 
 import fs, {existsSync} from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import {parseArgs} from 'node:util'
 
 import {Biome, Distribution} from '@biomejs/js-api'

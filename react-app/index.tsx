@@ -1,4 +1,5 @@
 import {serve} from 'bun'
+import process from 'node:process'
 
 import index from './index.html'
 
