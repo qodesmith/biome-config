@@ -32,7 +32,8 @@
     "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
     "build:tsc": "tsc -p tsconfig.build.json",
     "check": "biome check",
-    "check:fix": "biome check --write ."
+    "check:fix": "biome check --write .",
+    "release": "release-it"
   },
   "dependencies": {
     "@biomejs/biome": "2.0.0-beta.1",
@@ -44,10 +45,12 @@
     "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "auto-changelog": "^2.5.0",
     "bun-plugin-tailwind": "^0.0.15",
     "json-schema-to-typescript": "^15.0.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "release-it": "^19.0.1",
     "tailwindcss": "^4.1.4"
   },
   "peerDependencies": {
