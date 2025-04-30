@@ -287,7 +287,14 @@ export function createBiomeConfig({
           useCollapsedIf: 'warn',
           useComponentExportOnlyModules: 'warn',
           useConsistentCurlyBraces: 'warn',
-          useNumericSeparators: 'on',
+          /**
+           * This rule currently reports errors on single-digit numbers. It will
+           * be enabled when that is fixed.
+           *
+           * Playground - https://bit.ly/3YjGbI3
+           * Issue - https://github.com/biomejs/biome/issues/5826
+           */
+          // useNumericSeparators: 'on',
           useParseIntRadix: 'warn',
           useSortedClasses: {
             level: 'info',
