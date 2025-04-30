@@ -3,10 +3,6 @@
  *
  * - HTML parsing & formatting not available yet
  *   - https://github.com/biomejs/biome/issues/4726
- * - Overriding `fix` levels isn't released yet
- *   - https://github.com/biomejs/biome/issues/5488
- * - `useImportType` options isn't released yet
- *   - https://github.com/biomejs/biome/issues/5749
  */
 
 import type {
@@ -364,20 +360,12 @@ export function createBiomeConfig({
             level: 'error',
             fix: 'safe',
           },
-
-          /**
-           * https://next.biomejs.dev/linter/rules/use-import-type/#description
-           * This rule should be able to take options according to the docs.
-           * I have filed an issue in the Biome repo:
-           * https://github.com/biomejs/biome/issues/5749
-           */
-          useImportType: 'error',
-          // useImportType: {
-          //   level: 'error',
-          //   options: {
-          //     style: 'separatedType'
-          //   }
-          // },
+          useImportType: {
+            level: 'error',
+            options: {
+              style: 'separatedType',
+            },
+          },
 
           useNamingConvention: {
             level: 'warn',
