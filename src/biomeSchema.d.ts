@@ -8,16 +8,11 @@
 export type Schema = string
 export type RuleAssistConfigurationFor_Options = RuleAssistPlainConfiguration | RuleAssistWithOptionsFor_Options
 export type RuleAssistPlainConfiguration = 'off' | 'on'
-export type ImportGroup = PredefinedImportGroup | ImportSourceGlob | ImportSourceGlob[]
-export type PredefinedImportGroup =
-  | ':BLANK_LINE:'
-  | ':ALIAS:'
-  | ':BUN:'
-  | ':NODE:'
-  | ':PACKAGE:'
-  | ':PACKAGE_WITH_PROTOCOL:'
-  | ':PATH:'
-  | ':URL:'
+export type ImportGroup = null | GroupMatcher | GroupMatcher[]
+export type GroupMatcher = ImportMatcher | SourceMatcher
+export type SourcesMatcher = SourceMatcher | SourceMatcher[]
+export type SourceMatcher = PredefinedGroupMatcher | ImportSourceGlob
+export type PredefinedGroupMatcher = string
 /**
  * Glob to match against import sources.
  */
@@ -26,6 +21,10 @@ export type Glob = string
 export type ImportGroups = ImportGroup[]
 export type RuleAssistConfigurationFor_Null = RuleAssistPlainConfiguration | RuleAssistWithOptionsFor_Null
 export type Bool = boolean
+/**
+ * Normalized Biome glob pattern that strips `./` from the pattern.
+ */
+export type NormalizedGlob = Glob
 export type IndentStyle = 'tab' | 'space'
 export type IndentWidth = number
 export type LineEnding = 'lf' | 'crlf' | 'cr'
@@ -50,6 +49,10 @@ export type Expand = 'auto' | 'always' | 'never'
  * When true, the content of `<script>` and `<style>` tags will be indented one level.
  */
 export type IndentScriptAndStyle = boolean
+/**
+ * Controls whether void-elements should be self closed
+ */
+export type SelfCloseVoidElements = 'never' | 'always'
 /**
  * Whitespace sensitivity for HTML formatting.
  *
@@ -89,7 +92,6 @@ export type RulePlainConfiguration = 'off' | 'on' | 'info' | 'warn' | 'error'
  * Used to identify the kind of code action emitted by a rule
  */
 export type FixKind = 'none' | 'safe' | 'unsafe'
-export type AllowDomainConfiguration = RulePlainConfiguration | RuleWithAllowDomainOptions
 export type NoLabelWithoutControlConfiguration = RulePlainConfiguration | RuleWithNoLabelWithoutControlOptions
 export type RuleConfiguration = RulePlainConfiguration | RuleWithNoOptions
 export type ValidAriaRoleConfiguration = RulePlainConfiguration | RuleWithValidAriaRoleOptions
@@ -109,6 +111,7 @@ export type DeprecatedHooksConfiguration = RulePlainConfiguration | RuleWithDepr
 export type UseImportExtensionsConfiguration = RulePlainConfiguration | RuleWithUseImportExtensionsOptions
 export type SeverityOrGroupFor_Nursery = GroupPlainConfiguration | Nursery
 export type NoBitwiseOperatorsConfiguration = RulePlainConfiguration | RuleWithNoBitwiseOperatorsOptions
+export type NoRestrictedElementsConfiguration = RulePlainConfiguration | RuleWithNoRestrictedElementsOptions
 export type RestrictedImportsConfiguration = RulePlainConfiguration | RuleWithRestrictedImportsOptions
 export type CustomRestrictedImport = string | CustomRestrictedImportOptions
 export type NoRestrictedTypesConfiguration = RulePlainConfiguration | RuleWithNoRestrictedTypesOptions
@@ -129,6 +132,7 @@ export type UtilityClassSortingConfiguration = RulePlainConfiguration | RuleWith
 export type UseValidAutocompleteConfiguration = RulePlainConfiguration | RuleWithUseValidAutocompleteOptions
 export type SeverityOrGroupFor_Performance = GroupPlainConfiguration | Performance
 export type SeverityOrGroupFor_Security = GroupPlainConfiguration | Security
+export type NoBlankTargetConfiguration = RulePlainConfiguration | RuleWithNoBlankTargetOptions
 export type SeverityOrGroupFor_Style = GroupPlainConfiguration | Style
 export type RestrictedGlobalsConfiguration = RulePlainConfiguration | RuleWithRestrictedGlobalsOptions
 export type ConsistentArrayTypeConfiguration = RulePlainConfiguration | RuleWithConsistentArrayTypeOptions
@@ -140,6 +144,11 @@ export type FilenamingConventionConfiguration = RulePlainConfiguration | RuleWit
 export type FilenameCase = 'camelCase' | 'export' | 'kebab-case' | 'PascalCase' | 'snake_case'
 export type FilenameCases = FilenameCase[]
 export type Regex = string
+export type ImportTypeConfiguration = RulePlainConfiguration | RuleWithImportTypeOptions
+/**
+ * Rule's options.
+ */
+export type Style2 = 'auto' | 'inlineType' | 'separatedType'
 export type NamingConventionConfiguration = RulePlainConfiguration | RuleWithNamingConventionOptions
 /**
  * Supported cases.
@@ -276,13 +285,13 @@ export interface AssistConfiguration {
    */
   actions?: Actions | null
   /**
-   * Whether Biome should enable assist via LSP.
+   * Whether Biome should enable assist via LSP and CLI.
    */
   enabled?: Bool | null
   /**
    * A list of glob patterns. Biome will include files/folders that will match these patterns.
    */
-  includes?: Glob[] | null
+  includes?: NormalizedGlob[] | null
 }
 export interface Actions {
   /**
@@ -328,6 +337,11 @@ export interface RuleAssistWithOptionsFor_Options {
 }
 export interface Options {
   groups?: ImportGroups
+}
+export interface ImportMatcher {
+  source?: SourcesMatcher | null
+  type?: boolean | null
+  [k: string]: unknown
 }
 export interface RuleAssistWithOptionsFor_Null {
   /**
@@ -435,7 +449,7 @@ export interface FilesConfiguration {
   /**
    * A list of glob patterns. Biome will handle only those files/folders that will match these patterns.
    */
-  includes?: Glob[] | null
+  includes?: NormalizedGlob[] | null
   /**
    * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
    */
@@ -469,7 +483,7 @@ export interface FormatterConfiguration {
   /**
    * A list of glob patterns. The formatter will include files/folders that will match these patterns.
    */
-  includes?: Glob[] | null
+  includes?: NormalizedGlob[] | null
   /**
    * The indent style.
    */
@@ -658,6 +672,10 @@ export interface HtmlFormatterConfiguration {
    * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
    */
   lineWidth?: LineWidth | null
+  /**
+   * Whether void elements should be self-closed. Defaults to never.
+   */
+  selfCloseVoidElements?: SelfCloseVoidElements | null
   /**
    * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
    */
@@ -896,7 +914,7 @@ export interface LinterConfiguration {
   /**
    * A list of glob patterns. The analyzer will handle only those files/folders that will match these patterns.
    */
-  includes?: Glob[] | null
+  includes?: NormalizedGlob[] | null
   /**
    * List of rules
    */
@@ -939,10 +957,6 @@ export interface A11Y {
    * Enforce that autoFocus prop is not used on elements.
    */
   noAutofocus?: RuleFixConfiguration | null
-  /**
-   * Disallow target="_blank" attribute without rel="noreferrer"
-   */
-  noBlankTarget?: AllowDomainConfiguration | null
   /**
    * Enforces that no distracting elements are used.
    */
@@ -1073,26 +1087,6 @@ export interface RuleWithFixNoOptions {
    * The severity of the emitted diagnostics by the rule
    */
   level: RulePlainConfiguration
-}
-export interface RuleWithAllowDomainOptions {
-  /**
-   * The kind of the code actions emitted by the rule
-   */
-  fix?: FixKind | null
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: AllowDomainOptions
-}
-export interface AllowDomainOptions {
-  /**
-   * List of domains to allow `target="_blank"` without `rel="noreferrer"`
-   */
-  allowDomains?: string[]
 }
 export interface RuleWithNoLabelWithoutControlOptions {
   /**
@@ -1407,7 +1401,7 @@ export interface Correctness {
    */
   noPrecisionLoss?: RuleConfiguration | null
   /**
-   * Restricts imports of private exports.
+   * Restrict imports of private exports.
    */
   noPrivateImports?: NoPrivateImportsConfiguration | null
   /**
@@ -1808,6 +1802,10 @@ export interface Nursery {
    */
   noImportCycles?: RuleConfiguration | null
   /**
+   * Disallow the use of the !important style.
+   */
+  noImportantStyles?: RuleFixConfiguration | null
+  /**
    * Disallows the use of irregular whitespace characters.
    */
   noIrregularWhitespace?: RuleConfiguration | null
@@ -1835,6 +1833,10 @@ export interface Nursery {
    * Disallow the use of process global.
    */
   noProcessGlobal?: RuleFixConfiguration | null
+  /**
+   * Disallow the use of configured elements.
+   */
+  noRestrictedElements?: NoRestrictedElementsConfiguration | null
   /**
    * Disallow specified modules when loaded by import or require.
    */
@@ -1879,6 +1881,10 @@ export interface Nursery {
    * Disallow unknown type selectors.
    */
   noUnknownTypeSelector?: RuleConfiguration | null
+  /**
+   * Warn when importing non-existing exports.
+   */
+  noUnresolvedImports?: RuleConfiguration | null
   /**
    * Prevent duplicate polyfills from Polyfill.io.
    */
@@ -1944,7 +1950,7 @@ export interface Nursery {
    */
   useDeprecatedReason?: RuleConfiguration | null
   /**
-   * Require explicit return types on functions and class methods.
+   * Enforce types in functions, methods, variables, and parameters.
    */
   useExplicitType?: RuleConfiguration | null
   /**
@@ -1968,6 +1974,10 @@ export interface Nursery {
    */
   useGuardForIn?: RuleConfiguration | null
   /**
+   * Enforce consistent return values in iterable callbacks.
+   */
+  useIterableCallbackReturn?: RuleConfiguration | null
+  /**
    * Enforce specifying the name of GraphQL operations.
    */
   useNamedOperation?: RuleFixConfiguration | null
@@ -1975,6 +1985,10 @@ export interface Nursery {
    * Validates that all enum values are capitalized.
    */
   useNamingConvention?: RuleConfiguration | null
+  /**
+   * Enforce the use of numeric separators in numeric literals.
+   */
+  useNumericSeparators?: RuleFixConfiguration | null
   /**
    * Enforce the consistent use of the radix argument when using parseInt().
    */
@@ -2018,6 +2032,25 @@ export interface NoBitwiseOperatorsOptions {
    * Allows a list of bitwise operators to be used as exceptions.
    */
   allow?: string[]
+}
+export interface RuleWithNoRestrictedElementsOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoRestrictedElementsOptions
+}
+export interface NoRestrictedElementsOptions {
+  /**
+   * Elements to restrict. Each key is the element name, and the value is the message to show when the element is used.
+   */
+  elements?: CustomRestrictedElements
+}
+export interface CustomRestrictedElements {
+  [k: string]: string
 }
 export interface RuleWithRestrictedImportsOptions {
   /**
@@ -2128,6 +2161,10 @@ export interface ConsistentMemberAccessibilityOptions {
 }
 export interface RuleWithUseConsistentObjectDefinitionOptions {
   /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
    * The severity of the emitted diagnostics by the rule
    */
   level: RulePlainConfiguration
@@ -2216,6 +2253,10 @@ export interface Performance {
  */
 export interface Security {
   /**
+   * Disallow target="_blank" attribute without rel="noopener".
+   */
+  noBlankTarget?: NoBlankTargetConfiguration | null
+  /**
    * Prevent the usage of dangerous JSX props
    */
   noDangerouslySetInnerHtml?: RuleConfiguration | null
@@ -2231,6 +2272,30 @@ export interface Security {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
+}
+export interface RuleWithNoBlankTargetOptions {
+  /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoBlankTargetOptions
+}
+export interface NoBlankTargetOptions {
+  /**
+   * List of domains where `target="_blank"` is allowed without `rel="noopener"`.
+   */
+  allowDomains?: string[]
+  /**
+   * Whether `noreferrer` is allowed in addition to `noopener`.
+   */
+  allowNoReferrer?: boolean
 }
 /**
  * A list of rules that belong to this group
@@ -2371,7 +2436,7 @@ export interface Style {
   /**
    * Promotes the use of import type for types.
    */
-  useImportType?: RuleFixConfiguration | null
+  useImportType?: ImportTypeConfiguration | null
   /**
    * Require all enum members to be literal values.
    */
@@ -2450,7 +2515,9 @@ export interface RestrictedGlobalsOptions {
   /**
    * A list of names that should trigger the rule
    */
-  deniedGlobals?: string[]
+  deniedGlobals?: {
+    [k: string]: string
+  }
 }
 export interface RuleWithConsistentArrayTypeOptions {
   /**
@@ -2499,6 +2566,26 @@ export interface FilenamingConventionOptions {
    * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
    */
   strictCase?: boolean
+}
+export interface RuleWithImportTypeOptions {
+  /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: ImportTypeOptions
+}
+/**
+ * Rule's options.
+ */
+export interface ImportTypeOptions {
+  style: Style2
 }
 export interface RuleWithNamingConventionOptions {
   /**

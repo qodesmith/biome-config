@@ -12,7 +12,6 @@
 import type {
   Configuration,
   Hook,
-  PredefinedImportGroup,
   SeverityOrGroupFor_Correctness,
 } from './biomeSchema'
 
@@ -77,7 +76,7 @@ export function createBiomeConfig({
                 ':BLANK_LINE:',
                 //
                 ':URL:',
-              ] as PredefinedImportGroup[],
+              ],
             },
           },
 
