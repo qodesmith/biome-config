@@ -120,7 +120,7 @@ export function createBiomeConfig({
       ignoreUnknown: true,
       includes: [
         '**', // Include all known files in all folders recursively.
-        '!node_modules/**',
+        '!**/node_modules/**',
         '!dist/**',
         '!*.lock',
       ],
