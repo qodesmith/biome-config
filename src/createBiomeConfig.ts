@@ -12,8 +12,23 @@
 import type {
   Configuration,
   Hook,
+  ImportMatcher,
   SeverityOrGroupFor_Correctness,
 } from './biomeSchema'
+
+/**
+ * This type is no longer included in the JSON schema. Docs for these values can
+ * be found at https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
+ */
+type PredefinedImportGroup =
+  | ':BLANK_LINE:'
+  | ':ALIAS:'
+  | ':BUN:'
+  | ':NODE:'
+  | ':PACKAGE:'
+  | ':PACKAGE_WITH_PROTOCOL:'
+  | ':PATH:'
+  | ':URL:'
 
 export function createBiomeConfig({
   type,
@@ -75,7 +90,7 @@ export function createBiomeConfig({
                     ':PACKAGE_WITH_PROTOCOL:',
                     ':PATH:',
                     ':URL:',
-                  ],
+                  ] satisfies PredefinedImportGroup[],
                 },
                 ':BLANK_LINE:',
                 //
@@ -94,7 +109,7 @@ export function createBiomeConfig({
                 ':BLANK_LINE:',
                 //
                 ':URL:',
-              ],
+              ] satisfies (PredefinedImportGroup | ImportMatcher)[],
             },
           },
 
