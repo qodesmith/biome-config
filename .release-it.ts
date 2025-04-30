@@ -4,18 +4,13 @@ import type {Config} from 'release-it'
 export default {
   git: {
     requireBranch: 'main',
-
-    // https://github.com/release-it/release-it/blob/main/docs/changelog.md#auto-changelog
-    changelog:
-      'bunx auto-changelog --stdout --commit-limit false -u --template ./src/changelog-compact.hbs',
   },
 
   // https://github.com/release-it/release-it?tab=readme-ov-file#hooks
   hooks: {
     'before:init': ['bun run build'],
-    'after:bump': ['bunx auto-changelog -p'],
+    'after:bump': ['bunx auto-changelog --commit-limit false -p'],
   },
-
   github: {
     release: true,
   },
