@@ -36,15 +36,15 @@
     "release": "release-it"
   },
   "dependencies": {
-    "@biomejs/biome": "2.0.0-beta.1",
+    "@biomejs/biome": "2.0.0-beta.2",
     "@biomejs/js-api": "^0.7.1",
     "gradient-string": "^3.0.0",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "auto-changelog": "^2.5.0",
     "bun-plugin-tailwind": "^0.0.15",
     "json-schema-to-typescript": "^15.0.4",
