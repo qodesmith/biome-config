@@ -291,7 +291,7 @@ export function createBiomeConfig({
           useCollapsedIf: 'warn',
           useComponentExportOnlyModules: 'error',
           useConsistentCurlyBraces: 'warn',
-          useParseIntRadix: 'error',
+          useNumericSeparators: 'on',
           useSortedClasses: {
             level: 'info',
             fix: 'safe',
