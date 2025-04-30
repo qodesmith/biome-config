@@ -17,7 +17,7 @@ function formatJson(codeString) {
   }).content
 }
 
-// biome-ignore-start lint/suspicious/noConsole: we need it here
+// biome-ignore-start lint/suspicious/noConsole: intentionally used
 
 ////////////////////
 // PKG JSON CHECK //
@@ -234,3 +234,5 @@ console.log('')
 console.log(color.greenBright('Biome setup complete!'))
 console.log('"Reload Window" in VS Code for Biome to take effect.')
 console.log('')
+
+// biome-ignore-end lint/suspicious/noConsole: intentionally used
