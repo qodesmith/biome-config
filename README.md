@@ -34,17 +34,6 @@ npm i -D @qodestack/biome-config
 
 You will extend from the config provided in this package.
 
-> [!NOTE]
-> The `$schema` property can be one of two values:
->
-> Local file:
->
-> `./node_modules/@biomejs/biome/configuration_schema.json`
->
-> Published file:
->
-> `https://biomejs.dev/schemas/2.0.0-beta.1/schema.json`
-
 Vanilla JS/TS projects:
 
 ```json
