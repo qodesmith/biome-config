@@ -61,6 +61,24 @@ export function createBiomeConfig({
             options: {
               // https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
               groups: [
+                {
+                  type: true,
+                  /**
+                   * Types are in a single group (no blank lines), sorted the
+                   * same as non-type imports.
+                   */
+                  source: [
+                    ':BUN:',
+                    ':NODE:',
+                    ':ALIAS:',
+                    ':PACKAGE:',
+                    ':PACKAGE_WITH_PROTOCOL:',
+                    ':PATH:',
+                    ':URL:',
+                  ],
+                },
+                ':BLANK_LINE:',
+                //
                 ':BUN:',
                 ':NODE:',
                 ':BLANK_LINE:',
