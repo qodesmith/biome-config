@@ -109,7 +109,7 @@ const args = parseArgs({
 const isVanilla = args.values.vanilla
 const reactFlavor = args.values.extraHooks ? '/reactExtraHooks' : '/react'
 const biomeConfig = {
-  $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
+  $schema: './node_modules/@biomejs/biome/configuration_schema.json',
   extends: [`@qodestack/biome-config${isVanilla ? '' : reactFlavor}`],
 }
 
