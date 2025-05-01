@@ -12,9 +12,15 @@ import type {
   SeverityOrGroupFor_Correctness,
 } from './biomeSchema'
 
+import pkgJson from '../package.json'
+
 /**
  * This type is no longer included in the JSON schema. Docs for these values can
  * be found at https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
+ *
+ * The original schema values can be found at
+ * https://next.biomejs.dev/schemas/2.0.0-beta.1/schema.json
+ * Search for `PredefinedImportGroup`
  */
 type PredefinedImportGroup =
   | ':BLANK_LINE:'
@@ -61,9 +67,11 @@ export function createBiomeConfig({
     useJsxKeyInIterable: 'on',
   }
 
+  const biomeVersion = pkgJson.dependencies['@biomejs/biome']
+
   // https://next.biomejs.dev/reference/configuration/
   return {
-    $schema: 'https://biomejs.dev/schemas/2.0.0-beta.1/schema.json',
+    $schema: `https://next.biomejs.dev/schemas/${biomeVersion}/schema.json`,
     assist: {
       actions: {
         source: {
