@@ -188,7 +188,7 @@ export function createBiomeConfig({
        * (i.e. React, Solid, etc.). Rules found in domains are NOT exclusive to
        * domains so we will address them in the `rules` section instead of here.
        */
-      domains: {},
+      // domains: {},
       enabled: true,
       rules: {
         /**
