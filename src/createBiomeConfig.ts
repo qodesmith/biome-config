@@ -260,6 +260,9 @@ export function createBiomeConfig({
           noUnusedVariables: {
             level: 'warn',
             fix: 'safe',
+            options: {
+              ignoreRestSiblings: false,
+            },
           },
           useIsNan: {
             level: 'on',
