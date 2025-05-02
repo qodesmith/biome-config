@@ -15,10 +15,13 @@ import type {
 import pkgJson from '../package.json'
 
 /**
- * This type is no longer included in the JSON schema. Docs for these values can
- * be found at https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
+ * This type is no longer included in the JSON schema for 2.0.0-beta.2:
+ * https://next.biomejs.dev/schemas/2.0.0-beta.2/schema.json
  *
- * The original schema values can be found at
+ * Docs for these values can be found at:
+ * https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
+ *
+ * The original schema values with this type can be found at:
  * https://next.biomejs.dev/schemas/2.0.0-beta.1/schema.json
  * Search for `PredefinedImportGroup`
  */
@@ -31,6 +34,7 @@ type PredefinedImportGroup =
   | ':PACKAGE_WITH_PROTOCOL:'
   | ':PATH:'
   | ':URL:'
+  | (string & {}) // Allow arbitrary strings but keep autocompletion.
 
 export function createBiomeConfig({
   type,
@@ -69,6 +73,49 @@ export function createBiomeConfig({
 
   const biomeVersion = pkgJson.dependencies['@biomejs/biome']
 
+  const organizeImportsGroups = [
+    /**
+     * GROUP 1 - runtime and protocol
+     * - 'bun' takes precedence because Bun rules
+     */
+    'bun',
+    ':BUN:',
+    ':NODE:',
+    ':PACKAGE_WITH_PROTOCOL:',
+    ':BLANK_LINE:',
+
+    /**
+     * GROUP 2 - aliased
+     * - @/aliased-pkg
+     * - #aliased-pkg
+     * - ~aliased-pkg
+     * - %aliased-pkg
+     */
+    ':ALIAS:',
+    ':BLANK_LINE:',
+
+    /**
+     * GROUP 3 - 3rd party (i.e. node_modules)
+     * - @scoped-pkg/thing
+     * - regular-pkg
+     */
+    ':PACKAGE:',
+    ':BLANK_LINE:',
+
+    /**
+     * GROUP 4 - local
+     * - ./mod1
+     * - ../../mod2
+     */
+    ':PATH:',
+    ':BLANK_LINE:',
+
+    /**
+     * GROUP 5 - everything else
+     */
+    '**',
+  ] satisfies PredefinedImportGroup[]
+
   // https://next.biomejs.dev/reference/configuration/
   return {
     $schema: `https://next.biomejs.dev/schemas/${biomeVersion}/schema.json`,
@@ -86,34 +133,17 @@ export function createBiomeConfig({
                    * Types are in a single group (no blank lines), sorted the
                    * same as non-type imports.
                    */
-                  source: [
-                    ':BUN:',
-                    ':NODE:',
-                    ':ALIAS:',
-                    ':PACKAGE:',
-                    ':PACKAGE_WITH_PROTOCOL:',
-                    ':PATH:',
-                    ':URL:',
-                  ] satisfies PredefinedImportGroup[],
+                  source: organizeImportsGroups.filter(
+                    matcher => matcher !== ':BLANK_LINE:'
+                  ),
                 },
                 ':BLANK_LINE:',
-                //
-                ':BUN:',
-                ':NODE:',
-                ':BLANK_LINE:',
-                //
-                ':ALIAS:',
-                ':BLANK_LINE:',
-                //
-                ':PACKAGE:',
-                ':PACKAGE_WITH_PROTOCOL:',
-                ':BLANK_LINE:',
-                //
-                ':PATH:',
-                ':BLANK_LINE:',
-                //
-                ':URL:',
-              ] satisfies (PredefinedImportGroup | ImportMatcher)[],
+                ...organizeImportsGroups,
+              ] satisfies (
+                | PredefinedImportGroup
+                | PredefinedImportGroup[]
+                | ImportMatcher
+              )[],
             },
           },
 
