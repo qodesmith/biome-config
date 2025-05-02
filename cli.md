@@ -20,5 +20,5 @@ preventing them from having to be added to the `useCallback` dependency array.
 |-------------------|------------------------------------------------------|
 | `--no-vscode`     | Prevent creating `.vscode/settings.json`             |
 | `--vanilla`       | Prevent including React settings in the Biome config |
-| `--no-extraHooks` | Prevent listing the 3rd party hooks                  |
+| `--no-extraHooks` | Prevent listing the 3rd party React hooks            |
 | `--jsonc`         | Create a `biome.jsonc` file instead of `biome.json`  |

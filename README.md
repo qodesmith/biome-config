@@ -30,6 +30,16 @@ bun add -d @qodestack/biome-config
 npm i -D @qodestack/biome-config
 ```
 
+### CLI Tool
+
+There is a CLI tool included in this package that automatically sets everything
+up for you. Since this config is opinionated, the CLI tool is also. For example,
+it assumes VS Code is your IDE (you can disable that with an option). See
+[cli.md](./cli.md) for details.
+
+Using the CLI is completely optional. Below details how you can manually set
+things up.
+
 ### Create a `biome.jsonc` or `biome.json` file
 
 You will extend from the config provided in this package.
@@ -98,13 +108,6 @@ Add the following to `.vscode/settings.json`:
   }
 }
 ```
-
-## CLI Tool
-
-There is a CLI tool included in this package that automatically sets everything
-up for you. Since this config is opinionated, the CLI tool is also. For example,
-it assumes VS Code is your IDE (you can disable that with an option). See
-[cli.md](./cli.md) for details.
 
 <hr />
 
