@@ -178,7 +178,7 @@ if (isVscode) {
     try {
       return JSON.parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
     } catch {
-      return {}
+      return undefined
     }
   })()
 
