@@ -9,6 +9,8 @@ import {Biome, Distribution} from '@biomejs/js-api'
 import {mind as mindGradient} from 'gradient-string'
 import color from 'picocolors'
 
+import {files} from './commonBiomeSettings.mjs'
+
 const biome = await Biome.create({distribution: Distribution.NODE})
 
 function formatJson(codeString) {
@@ -111,6 +113,14 @@ const reactFlavor = args.values.extraHooks ? '/reactExtraHooks' : '/react'
 const biomeConfig = {
   $schema: './node_modules/@biomejs/biome/configuration_schema.json',
   extends: [`@qodestack/biome-config${isVanilla ? '' : reactFlavor}`],
+
+  /**
+   * Settings likekly to be customized by the user.
+   *
+   * Exposing these as opposed to keeping them opaque in the generated biome
+   * settings files provided by this package.
+   */
+  files,
 }
 
 // biome.json takes precedence over biome.jsonc

@@ -13,6 +13,7 @@ import type {
 } from './biomeSchema'
 
 import pkgJson from '../package.json'
+import {files} from './commonBiomeSettings.mjs'
 
 /**
  * This type is no longer included in the JSON schema for 2.0.0-beta.2:
@@ -154,16 +155,7 @@ export function createBiomeConfig({
     },
     // css: {},
     // extends: [],
-    files: {
-      ignoreUnknown: true,
-      includes: [
-        '**', // Include all known files in all folders recursively.
-        '!**/node_modules/**',
-        '!dist/**',
-        '!*.lock',
-      ],
-      // maxSize: 1048576, // Default value - (1024*1024, 1MB)
-    },
+    files,
     formatter: {
       attributePosition: 'auto',
       bracketSameLine: false,
