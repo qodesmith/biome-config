@@ -4,6 +4,14 @@ import {createBiomeConfig} from './createBiomeConfig'
 
 const biome = await Biome.create({distribution: Distribution.NODE})
 
+biome.applyConfiguration({
+  formatter: {
+    indentStyle: 'space',
+    indentWidth: 2,
+    lineEnding: 'lf',
+  },
+})
+
 function formatJson(codeString: string): string {
   return biome.formatContent(codeString, {
     filePath: 'example.json',
