@@ -173,10 +173,10 @@ if (isJsonc) {
   console.warn(
     '⚠️ A biome.jsonc file already exists. Biome will ignore that in favor of biome.json'
   )
+} else {
+  fs.writeFileSync(biomeJsonPath, formattedBiomeConfig)
+  console.log('-', 'created', color.cyan('biome.json'))
 }
-
-fs.writeFileSync(biomeJsonPath, formattedBiomeConfig)
-console.log('-', 'created', color.cyan('biome.json'))
 
 /////////////
 // VS CODE //
