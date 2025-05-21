@@ -15,7 +15,9 @@
       "import": "./dist/biomeReactExtraHooks.json"
     },
     "./biomeSchema": {
-      "types": "./dist/biomeSchema.d.ts"
+      "import": {
+        "types": "./dist/biomeSchema.ts"
+      }
     }
   },
   "publishConfig": {
