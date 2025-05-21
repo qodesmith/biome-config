@@ -1,3 +1,5 @@
+import path from 'node:path'
+
 import {Biome, Distribution} from '@biomejs/js-api'
 
 import {createBiomeConfig} from './createBiomeConfig'
@@ -38,3 +40,9 @@ const reactExtraHooksConfigStr = formatJson(
 await Bun.write('./dist/biome.json', defaultConfigStr)
 await Bun.write('./dist/biomeReact.json', reactConfigStr)
 await Bun.write('./dist/biomeReactExtraHooks.json', reactExtraHooksConfigStr)
+
+// Copy the schema to the dist folder to finish out what's exported.
+const schemafile = Bun.file(
+  path.resolve(import.meta.dirname, './biomeSchema.d.ts')
+)
+await Bun.write('./dist/biomeSchema.d.ts', schemafile)
