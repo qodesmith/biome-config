@@ -7,3 +7,4 @@ tsconfig.build.json
 biomeSchema.d.ts
 src/*
 !src/*.mjs
+!src/biomeSchema.d.ts

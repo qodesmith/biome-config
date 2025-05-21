@@ -16,7 +16,7 @@
     },
     "./biomeSchema": {
       "import": {
-        "types": "./dist/biomeSchema.ts"
+        "types": "./src/biomeSchema.d.ts"
       }
     }
   },
