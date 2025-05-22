@@ -209,7 +209,9 @@ if (isVscode) {
     'typescript.preferences.preferTypeOnlyAutoImports': true,
 
     'biome.enabled': true,
-
+    '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]': {
+      'editor.defaultFormatter': 'biomejs.biome',
+    },
     'editor.defaultFormatter': 'biomejs.biome',
     'editor.formatOnSave': true,
     'editor.codeActionsOnSave': {
