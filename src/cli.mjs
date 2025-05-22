@@ -151,13 +151,13 @@ const formattedBiomeConfig = formatJson(JSON.stringify(biomeConfig, null, 2))
 if (isJsonc) {
   if (hasBiomeJsonc) {
     console.log(
-      'A biome.jsonc file already exists. Proceed manually or delete the file.'
+      `A ${color.bold('biome.jsonc')} file already exists. Delete this file first or proceed with a manual setup.`
     )
     console.log('')
     process.exit()
   } else if (hasBiomeJson) {
     console.warn(
-      '⚠️ A biome.json file already exists. Biome will use that instead of biome.jsonc'
+      `⚠️ A ${color.bold('biome.json')} file already exists. ${color.bold('biome.jsonc')} will be created but Biome will default to reading ${color.bold('biome.json')}.`
     )
   }
 
@@ -165,13 +165,13 @@ if (isJsonc) {
   console.log('-', 'created', color.cyan('biome.jsonc'))
 } else if (hasBiomeJson) {
   console.log(
-    'A biome.json file already exists. Proceed manually or delete the file.'
+    `A ${color.bold('biome.json')} file already exists. Delete this file first or proceed with a manual setup.`
   )
   console.log('')
   process.exit()
 } else if (hasBiomeJsonc) {
   console.warn(
-    '⚠️ A biome.jsonc file already exists. Biome will ignore that in favor of biome.json'
+    `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
   )
 } else {
   fs.writeFileSync(biomeJsonPath, formattedBiomeConfig)
