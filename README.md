@@ -23,22 +23,24 @@ formatting in one!
 ### Installation via your package manager
 
 ```
-bun add -d @qodestack/biome-config
+bun add -D @qodestack/biome-config
 ```
 
 ```
 npm i -D @qodestack/biome-config
 ```
 
-### CLI Tool
+### CLI Tool ✨
 
 There is a CLI tool included in this package that automatically sets everything
-up for you. Since this config is opinionated, the CLI tool is also. For example,
-it assumes VS Code is your IDE (you can disable that with an option). See
+up for you. You can run it by typing `bunx biomeInit`. This will start a guided
+process. Since this config is opinionated, the CLI tool is also. For example,
+it assumes VS Code is your IDE (you can disable that with an option). If you
+want more control over what the CLI tool outputs, use the optional flags. See
 [cli.md](./cli.md) for details.
 
 Using the CLI is completely optional. Below details how you can manually set
-things up.
+things up yourself.
 
 ### Create a `biome.jsonc` or `biome.json` file
 
@@ -100,6 +102,9 @@ Add the following to `.vscode/settings.json`:
 
   // Biome settings.
   "biome.enabled": true,
+  "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome",
+  },
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
