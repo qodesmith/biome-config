@@ -11,8 +11,22 @@ export type RuleAssistPlainConfiguration = 'off' | 'on'
 export type ImportGroup = null | GroupMatcher | GroupMatcher[]
 export type GroupMatcher = ImportMatcher | SourceMatcher
 export type SourcesMatcher = SourceMatcher | SourceMatcher[]
-export type SourceMatcher = PredefinedGroupMatcher | ImportSourceGlob
-export type PredefinedGroupMatcher = string
+export type SourceMatcher = NegatablePredefinedSourceMatcher | ImportSourceGlob
+export type NegatablePredefinedSourceMatcher =
+  | ':ALIAS:'
+  | ':BUN:'
+  | ':NODE:'
+  | ':PACKAGE:'
+  | ':PACKAGE_WITH_PROTOCOL:'
+  | ':PATH:'
+  | ':URL:'
+  | '!:ALIAS:'
+  | '!:BUN:'
+  | '!:NODE:'
+  | '!:PACKAGE:'
+  | '!:PACKAGE_WITH_PROTOCOL:'
+  | '!:PATH:'
+  | '!:URL:'
 /**
  * Glob to match against import sources.
  */
@@ -95,6 +109,7 @@ export type FixKind = 'none' | 'safe' | 'unsafe'
 export type NoLabelWithoutControlConfiguration = RulePlainConfiguration | RuleWithNoLabelWithoutControlOptions
 export type RuleConfiguration = RulePlainConfiguration | RuleWithNoOptions
 export type ValidAriaRoleConfiguration = RulePlainConfiguration | RuleWithValidAriaRoleOptions
+export type UseValidAutocompleteConfiguration = RulePlainConfiguration | RuleWithUseValidAutocompleteOptions
 export type SeverityOrGroupFor_Complexity = GroupPlainConfiguration | Complexity
 export type ComplexityConfiguration = RulePlainConfiguration | RuleWithComplexityOptions
 export type NoForEachConfiguration = RulePlainConfiguration | RuleWithNoForEachOptions
@@ -109,34 +124,34 @@ export type UseExhaustiveDependenciesConfiguration = RulePlainConfiguration | Ru
 export type StableHookResult = boolean | number[]
 export type DeprecatedHooksConfiguration = RulePlainConfiguration | RuleWithDeprecatedHooksOptions
 export type UseImportExtensionsConfiguration = RulePlainConfiguration | RuleWithUseImportExtensionsOptions
+export type UseJsxKeyInIterableConfiguration = RulePlainConfiguration | RuleWithUseJsxKeyInIterableOptions
 export type SeverityOrGroupFor_Nursery = GroupPlainConfiguration | Nursery
 export type NoBitwiseOperatorsConfiguration = RulePlainConfiguration | RuleWithNoBitwiseOperatorsOptions
 export type NoRestrictedElementsConfiguration = RulePlainConfiguration | RuleWithNoRestrictedElementsOptions
-export type RestrictedImportsConfiguration = RulePlainConfiguration | RuleWithRestrictedImportsOptions
-export type CustomRestrictedImport = string | CustomRestrictedImportOptions
-export type NoRestrictedTypesConfiguration = RulePlainConfiguration | RuleWithNoRestrictedTypesOptions
-export type CustomRestrictedType = string | CustomRestrictedTypeOptions
 export type NoSecretsConfiguration = RulePlainConfiguration | RuleWithNoSecretsOptions
-export type UseComponentExportOnlyModulesConfiguration =
-  | RulePlainConfiguration
-  | RuleWithUseComponentExportOnlyModulesOptions
-export type ConsistentMemberAccessibilityConfiguration =
-  | RulePlainConfiguration
-  | RuleWithConsistentMemberAccessibilityOptions
-export type Accessibility = 'noPublic' | 'explicit' | 'none'
 export type UseConsistentObjectDefinitionConfiguration =
   | RulePlainConfiguration
   | RuleWithUseConsistentObjectDefinitionOptions
 export type ObjectPropertySyntax = 'explicit' | 'shorthand'
 export type UtilityClassSortingConfiguration = RulePlainConfiguration | RuleWithUtilityClassSortingOptions
-export type UseValidAutocompleteConfiguration = RulePlainConfiguration | RuleWithUseValidAutocompleteOptions
 export type SeverityOrGroupFor_Performance = GroupPlainConfiguration | Performance
 export type SeverityOrGroupFor_Security = GroupPlainConfiguration | Security
 export type NoBlankTargetConfiguration = RulePlainConfiguration | RuleWithNoBlankTargetOptions
 export type SeverityOrGroupFor_Style = GroupPlainConfiguration | Style
 export type RestrictedGlobalsConfiguration = RulePlainConfiguration | RuleWithRestrictedGlobalsOptions
+export type RestrictedImportsConfiguration = RulePlainConfiguration | RuleWithRestrictedImportsOptions
+export type CustomRestrictedImport = string | CustomRestrictedImportOptions
+export type NoRestrictedTypesConfiguration = RulePlainConfiguration | RuleWithNoRestrictedTypesOptions
+export type CustomRestrictedType = string | CustomRestrictedTypeOptions
+export type UseComponentExportOnlyModulesConfiguration =
+  | RulePlainConfiguration
+  | RuleWithUseComponentExportOnlyModulesOptions
 export type ConsistentArrayTypeConfiguration = RulePlainConfiguration | RuleWithConsistentArrayTypeOptions
 export type ConsistentArrayType = 'shorthand' | 'generic'
+export type ConsistentMemberAccessibilityConfiguration =
+  | RulePlainConfiguration
+  | RuleWithConsistentMemberAccessibilityOptions
+export type Accessibility = 'noPublic' | 'explicit' | 'none'
 export type FilenamingConventionConfiguration = RulePlainConfiguration | RuleWithFilenamingConventionOptions
 /**
  * Supported cases for file names.
@@ -994,6 +1009,10 @@ export interface A11Y {
    */
   noRedundantRoles?: RuleFixConfiguration | null
   /**
+   * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
+   */
+  noStaticElementInteractions?: RuleConfiguration | null
+  /**
    * Enforces the usage of the title element for the svg element.
    */
   noSvgWithoutTitle?: RuleConfiguration | null
@@ -1017,6 +1036,10 @@ export interface A11Y {
    * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
    */
   useAriaPropsForRole?: RuleConfiguration | null
+  /**
+   * Enforce that ARIA properties are valid for the roles that are supported by the element.
+   */
+  useAriaPropsSupportedByRole?: RuleConfiguration | null
   /**
    * Enforces the usage of the attribute type for the element button
    */
@@ -1073,6 +1096,10 @@ export interface A11Y {
    * Enforce that ARIA state and property values are valid.
    */
   useValidAriaValues?: RuleConfiguration | null
+  /**
+   * Use valid values for the autocomplete attribute on input elements.
+   */
+  useValidAutocomplete?: UseValidAutocompleteConfiguration | null
   /**
    * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
    */
@@ -1136,6 +1163,22 @@ export interface ValidAriaRoleOptions {
   allowInvalidRoles?: string[]
   ignoreNonDom?: boolean
 }
+export interface RuleWithUseValidAutocompleteOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: UseValidAutocompleteOptions
+}
+export interface UseValidAutocompleteOptions {
+  /**
+   * `input` like custom components that should be checked.
+   */
+  inputComponents?: string[]
+}
 /**
  * A list of rules that belong to this group
  */
@@ -1165,6 +1208,10 @@ export interface Complexity {
    */
   noExtraBooleanCast?: RuleFixConfiguration | null
   /**
+   * Disallow to use unnecessary callback on flatMap.
+   */
+  noFlatMapIdentity?: RuleFixConfiguration | null
+  /**
    * Prefer for...of statement instead of Array.forEach.
    */
   noForEach?: NoForEachConfiguration | null
@@ -1185,9 +1232,17 @@ export interface Complexity {
    */
   noUselessConstructor?: RuleFixConfiguration | null
   /**
+   * Avoid using unnecessary continue.
+   */
+  noUselessContinue?: RuleFixConfiguration | null
+  /**
    * Disallow empty exports that don't change anything in a module file.
    */
   noUselessEmptyExport?: RuleFixConfiguration | null
+  /**
+   * Disallow unnecessary escape sequence in regular expression literals.
+   */
+  noUselessEscapeInRegex?: RuleFixConfiguration | null
   /**
    * Disallow unnecessary fragments
    */
@@ -1208,6 +1263,10 @@ export interface Complexity {
    * Disallow unnecessary concatenation of string or template literals.
    */
   noUselessStringConcat?: RuleFixConfiguration | null
+  /**
+   * Disallow unnecessary String.raw function in template string literals without any escape sequence.
+   */
+  noUselessStringRaw?: RuleConfiguration | null
   /**
    * Disallow useless case in switch statements.
    */
@@ -1233,10 +1292,6 @@ export interface Complexity {
    */
   noVoid?: RuleConfiguration | null
   /**
-   * Disallow with statements in non-strict contexts.
-   */
-  noWith?: RuleConfiguration | null
-  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
@@ -1257,6 +1312,10 @@ export interface Complexity {
    */
   useLiteralKeys?: RuleFixConfiguration | null
   /**
+   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+   */
+  useNumericLiterals?: RuleFixConfiguration | null
+  /**
    * Enforce using concise optional chain instead of chained logical expressions.
    */
   useOptionalChain?: RuleFixConfiguration | null
@@ -1265,7 +1324,7 @@ export interface Complexity {
    */
   useRegexLiterals?: RuleFixConfiguration | null
   /**
-   * Disallow number literal object member names which are not base10 or uses underscore as separator
+   * Disallow number literal object member names which are not base 10 or use underscore as separator.
    */
   useSimpleNumberKeys?: RuleFixConfiguration | null
   /**
@@ -1345,10 +1404,6 @@ export interface Correctness {
    */
   noEmptyPattern?: RuleConfiguration | null
   /**
-   * Disallow to use unnecessary callback on flatMap.
-   */
-  noFlatMapIdentity?: RuleFixConfiguration | null
-  /**
    * Disallow calling global object properties as functions
    */
   noGlobalObjectCalls?: RuleConfiguration | null
@@ -1373,10 +1428,6 @@ export interface Correctness {
    */
   noInvalidGridAreas?: RuleConfiguration | null
   /**
-   * Disallow new operators with global non-constructor functions.
-   */
-  noInvalidNewBuiltin?: RuleFixConfiguration | null
-  /**
    * Disallow the use of @import at-rules in invalid positions.
    */
   noInvalidPositionAtImportRule?: RuleConfiguration | null
@@ -1385,9 +1436,9 @@ export interface Correctness {
    */
   noInvalidUseBeforeDeclaration?: RuleConfiguration | null
   /**
-   * Disallow new operators with the Symbol object.
+   * Disallow missing var function for css variables.
    */
-  noNewSymbol?: RuleFixConfiguration | null
+  noMissingVarFunction?: RuleConfiguration | null
   /**
    * Forbid the use of Node.js builtin modules.
    */
@@ -1445,6 +1496,18 @@ export interface Correctness {
    */
   noUnknownProperty?: RuleConfiguration | null
   /**
+   * Disallow unknown pseudo-class selectors.
+   */
+  noUnknownPseudoClass?: RuleConfiguration | null
+  /**
+   * Disallow unknown pseudo-element selectors.
+   */
+  noUnknownPseudoElement?: RuleConfiguration | null
+  /**
+   * Disallow unknown type selectors.
+   */
+  noUnknownTypeSelector?: RuleConfiguration | null
+  /**
    * Disallow unknown CSS units.
    */
   noUnknownUnit?: RuleConfiguration | null
@@ -1489,10 +1552,6 @@ export interface Correctness {
    */
   noUnusedVariables?: NoUnusedVariablesConfiguration | null
   /**
-   * Avoid using unnecessary continue.
-   */
-  noUselessContinue?: RuleFixConfiguration | null
-  /**
    * This rules prevents void elements (AKA self-closing elements) from having children.
    */
   noVoidElementsWithChildren?: RuleFixConfiguration | null
@@ -1504,10 +1563,6 @@ export interface Correctness {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
-  /**
-   * Disallow Array constructors.
-   */
-  useArrayLiterals?: RuleFixConfiguration | null
   /**
    * Enforce all dependencies are correctly specified in a React hook.
    */
@@ -1527,11 +1582,15 @@ export interface Correctness {
   /**
    * Disallow missing key props in iterators/collection literals.
    */
-  useJsxKeyInIterable?: RuleConfiguration | null
+  useJsxKeyInIterable?: UseJsxKeyInIterableConfiguration | null
   /**
    * Enforce "for" loop update clause moving the counter in the right direction.
    */
   useValidForDirection?: RuleConfiguration | null
+  /**
+   * This rule checks that the result of a typeof expression is compared to a valid value.
+   */
+  useValidTypeof?: RuleFixConfiguration | null
   /**
    * Require generator functions to contain yield.
    */
@@ -1713,6 +1772,22 @@ export interface UseImportExtensionsOptions {
    */
   forceJsExtensions?: boolean
 }
+export interface RuleWithUseJsxKeyInIterableOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: UseJsxKeyInIterableOptions
+}
+export interface UseJsxKeyInIterableOptions {
+  /**
+   * Set to `true` to check shorthand fragments (`<></>`)
+   */
+  checkShorthandFragments?: boolean
+}
 /**
  * A list of rules that belong to this group
  */
@@ -1726,57 +1801,13 @@ export interface Nursery {
    */
   noBitwiseOperators?: NoBitwiseOperatorsConfiguration | null
   /**
-   * Disallow use of CommonJs module system in favor of ESM style imports.
-   */
-  noCommonJs?: RuleConfiguration | null
-  /**
    * Disallow expressions where the operation doesn't affect the value
    */
   noConstantBinaryExpression?: RuleConfiguration | null
   /**
-   * Disallow a lower specificity selector from coming after a higher specificity selector.
-   */
-  noDescendingSpecificity?: RuleConfiguration | null
-  /**
    * Disallow destructuring props inside JSX components in Solid projects.
    */
   noDestructuredProps?: RuleConfiguration | null
-  /**
-   * Disallow direct assignments to document.cookie.
-   */
-  noDocumentCookie?: RuleConfiguration | null
-  /**
-   * Prevents importing next/document outside of pages/_document.jsx in Next.js projects.
-   */
-  noDocumentImportInPage?: RuleConfiguration | null
-  /**
-   * Disallow duplicate custom properties within declaration blocks.
-   */
-  noDuplicateCustomProperties?: RuleConfiguration | null
-  /**
-   * Disallow duplicate conditions in if-else-if chains
-   */
-  noDuplicateElseIf?: RuleConfiguration | null
-  /**
-   * No duplicated fields in GraphQL operations.
-   */
-  noDuplicateFields?: RuleConfiguration | null
-  /**
-   * Disallow duplicate properties within declaration blocks.
-   */
-  noDuplicateProperties?: RuleConfiguration | null
-  /**
-   * Disallow accessing namespace imports dynamically.
-   */
-  noDynamicNamespaceImportAccess?: RuleConfiguration | null
-  /**
-   * Disallow TypeScript enum.
-   */
-  noEnum?: RuleConfiguration | null
-  /**
-   * Disallow exporting an imported variable.
-   */
-  noExportedImports?: RuleConfiguration | null
   /**
    * Require Promise-like statements to be handled appropriately.
    */
@@ -1786,18 +1817,6 @@ export interface Nursery {
    */
   noGlobalDirnameFilename?: RuleFixConfiguration | null
   /**
-   * Prevent usage of \<head> element in a Next.js project.
-   */
-  noHeadElement?: RuleConfiguration | null
-  /**
-   * Prevent using the next/head module in pages/_document.js on Next.js projects.
-   */
-  noHeadImportInDocument?: RuleConfiguration | null
-  /**
-   * Prevent usage of \<img> element in a Next.js project.
-   */
-  noImgElement?: RuleConfiguration | null
-  /**
    * Prevent import cycles.
    */
   noImportCycles?: RuleConfiguration | null
@@ -1806,29 +1825,13 @@ export interface Nursery {
    */
   noImportantStyles?: RuleFixConfiguration | null
   /**
-   * Disallows the use of irregular whitespace characters.
+   * Disallows defining React components inside other components.
    */
-  noIrregularWhitespace?: RuleConfiguration | null
-  /**
-   * Disallow missing var function for css variables.
-   */
-  noMissingVarFunction?: RuleConfiguration | null
-  /**
-   * Disallow nested ternary expressions.
-   */
-  noNestedTernary?: RuleConfiguration | null
+  noNestedComponentDefinitions?: RuleConfiguration | null
   /**
    * Disallow use event handlers on non-interactive elements.
    */
   noNoninteractiveElementInteractions?: RuleConfiguration | null
-  /**
-   * Disallow octal escape sequences in string literals
-   */
-  noOctalEscape?: RuleFixConfiguration | null
-  /**
-   * Disallow the use of process.env.
-   */
-  noProcessEnv?: RuleConfiguration | null
   /**
    * Disallow the use of process global.
    */
@@ -1838,29 +1841,13 @@ export interface Nursery {
    */
   noRestrictedElements?: NoRestrictedElementsConfiguration | null
   /**
-   * Disallow specified modules when loaded by import or require.
-   */
-  noRestrictedImports?: RestrictedImportsConfiguration | null
-  /**
-   * Disallow user defined types.
-   */
-  noRestrictedTypes?: NoRestrictedTypesConfiguration | null
-  /**
    * Disallow usage of sensitive data such as API keys and tokens.
    */
   noSecrets?: NoSecretsConfiguration | null
   /**
-   * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
+   * Disallow variable declarations from shadowing variables declared in the outer scope.
    */
-  noStaticElementInteractions?: RuleConfiguration | null
-  /**
-   * Enforce the use of String.slice() over String.substr() and String.substring().
-   */
-  noSubstr?: RuleFixConfiguration | null
-  /**
-   * Disallow template literal placeholder syntax in regular strings.
-   */
-  noTemplateCurlyInString?: RuleConfiguration | null
+  noShadow?: RuleConfiguration | null
   /**
    * Prevents the use of the TypeScript directive @ts-ignore.
    */
@@ -1870,18 +1857,6 @@ export interface Nursery {
    */
   noUnknownAtRule?: RuleConfiguration | null
   /**
-   * Disallow unknown pseudo-class selectors.
-   */
-  noUnknownPseudoClass?: RuleConfiguration | null
-  /**
-   * Disallow unknown pseudo-element selectors.
-   */
-  noUnknownPseudoElement?: RuleConfiguration | null
-  /**
-   * Disallow unknown type selectors.
-   */
-  noUnknownTypeSelector?: RuleConfiguration | null
-  /**
    * Warn when importing non-existing exports.
    */
   noUnresolvedImports?: RuleConfiguration | null
@@ -1890,65 +1865,33 @@ export interface Nursery {
    */
   noUnwantedPolyfillio?: RuleConfiguration | null
   /**
-   * Disallow unnecessary escape sequence in regular expression literals.
+   * Disallow useless backreferences in regular expression literals that always match an empty string.
    */
-  noUselessEscapeInRegex?: RuleFixConfiguration | null
+  noUselessBackrefInRegex?: RuleConfiguration | null
   /**
    * Disallow unnecessary escapes in string literals.
    */
   noUselessEscapeInString?: RuleFixConfiguration | null
   /**
-   * Disallow unnecessary String.raw function in template string literals without any escape sequence.
-   */
-  noUselessStringRaw?: RuleConfiguration | null
-  /**
    * Disallow the use of useless undefined.
    */
   noUselessUndefined?: RuleFixConfiguration | null
-  /**
-   * Disallow use of @value rule in css modules.
-   */
-  noValueAtRule?: RuleConfiguration | null
   /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
   /**
-   * Disallow the use of overload signatures that are not next to each other.
+   * Enforce that getters and setters for the same property are adjacent in class and object definitions.
    */
-  useAdjacentOverloadSignatures?: RuleConfiguration | null
-  /**
-   * Enforce that ARIA properties are valid for the roles that are supported by the element.
-   */
-  useAriaPropsSupportedByRole?: RuleConfiguration | null
-  /**
-   * Use at() instead of integer index access.
-   */
-  useAtIndex?: RuleFixConfiguration | null
-  /**
-   * Enforce using single if instead of nested if clauses.
-   */
-  useCollapsedIf?: RuleFixConfiguration | null
-  /**
-   * Enforce declaring components only within modules that export React Components exclusively.
-   */
-  useComponentExportOnlyModules?: UseComponentExportOnlyModulesConfiguration | null
-  /**
-   * This rule enforces consistent use of curly braces inside JSX attributes and JSX children.
-   */
-  useConsistentCurlyBraces?: RuleFixConfiguration | null
-  /**
-   * Require consistent accessibility modifiers on class properties and methods.
-   */
-  useConsistentMemberAccessibility?: ConsistentMemberAccessibilityConfiguration | null
+  useAdjacentGetterSetter?: RuleConfiguration | null
   /**
    * Require the consistent declaration of object literals. Defaults to explicit definitions.
    */
   useConsistentObjectDefinition?: UseConsistentObjectDefinitionConfiguration | null
   /**
-   * Require specifying the reason argument when using @deprecated directive
+   * Require switch-case statements to be exhaustive.
    */
-  useDeprecatedReason?: RuleConfiguration | null
+  useExhaustiveSwitchCases?: RuleFixConfiguration | null
   /**
    * Enforce types in functions, methods, variables, and parameters.
    */
@@ -1962,17 +1905,9 @@ export interface Nursery {
    */
   useForComponent?: RuleConfiguration | null
   /**
-   * Enforces the use of a recommended display strategy with Google Fonts.
-   */
-  useGoogleFontDisplay?: RuleConfiguration | null
-  /**
    * Ensure the preconnect attribute is used when using Google Fonts.
    */
   useGoogleFontPreconnect?: RuleFixConfiguration | null
-  /**
-   * Require for-in loops to include an if statement.
-   */
-  useGuardForIn?: RuleConfiguration | null
   /**
    * Enforce consistent return values in iterable callbacks.
    */
@@ -1994,25 +1929,17 @@ export interface Nursery {
    */
   useParseIntRadix?: RuleFixConfiguration | null
   /**
+   * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
+   */
+  useSingleJsDocAsterisk?: RuleFixConfiguration | null
+  /**
    * Enforce the sorting of CSS utility classes.
    */
   useSortedClasses?: UtilityClassSortingConfiguration | null
   /**
-   * Enforce the use of the directive "use strict" in script files.
-   */
-  useStrictMode?: RuleFixConfiguration | null
-  /**
    * Require a description parameter for the Symbol().
    */
   useSymbolDescription?: RuleConfiguration | null
-  /**
-   * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
-   */
-  useTrimStartEnd?: RuleFixConfiguration | null
-  /**
-   * Use valid values for the autocomplete attribute on input elements.
-   */
-  useValidAutocomplete?: UseValidAutocompleteConfiguration | null
 }
 export interface RuleWithNoBitwiseOperatorsOptions {
   /**
@@ -2052,64 +1979,6 @@ export interface NoRestrictedElementsOptions {
 export interface CustomRestrictedElements {
   [k: string]: string
 }
-export interface RuleWithRestrictedImportsOptions {
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: RestrictedImportsOptions
-}
-/**
- * Options for the rule `noRestrictedImports`.
- */
-export interface RestrictedImportsOptions {
-  /**
-   * A list of import paths that should trigger the rule.
-   */
-  paths?: {
-    [k: string]: CustomRestrictedImport
-  }
-}
-export interface CustomRestrictedImportOptions {
-  /**
-   * Names of the exported members that allowed to be not be used.
-   */
-  allowImportNames?: string[]
-  /**
-   * Names of the exported members that should not be used.
-   */
-  importNames?: string[]
-  /**
-   * The message to display when this module is imported.
-   */
-  message?: string
-}
-export interface RuleWithNoRestrictedTypesOptions {
-  /**
-   * The kind of the code actions emitted by the rule
-   */
-  fix?: FixKind | null
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: NoRestrictedTypesOptions
-}
-export interface NoRestrictedTypesOptions {
-  types?: {
-    [k: string]: CustomRestrictedType
-  }
-}
-export interface CustomRestrictedTypeOptions {
-  message?: string
-  use?: string | null
-}
 export interface RuleWithNoSecretsOptions {
   /**
    * The severity of the emitted diagnostics by the rule
@@ -2125,39 +1994,6 @@ export interface NoSecretsOptions {
    * Set entropy threshold (default is 41).
    */
   entropyThreshold?: number | null
-}
-export interface RuleWithUseComponentExportOnlyModulesOptions {
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: UseComponentExportOnlyModulesOptions
-}
-export interface UseComponentExportOnlyModulesOptions {
-  /**
-   * Allows the export of constants. This option is for environments that support it, such as [Vite](https://vitejs.dev/)
-   */
-  allowConstantExport?: boolean
-  /**
-   * A list of names that can be additionally exported from the module This option is for exports that do not hinder [React Fast Refresh](https://github.com/facebook/react/tree/main/packages/react-refresh), such as [`meta` in Remix](https://remix.run/docs/en/main/route/meta)
-   */
-  allowExportNames?: string[]
-}
-export interface RuleWithConsistentMemberAccessibilityOptions {
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: ConsistentMemberAccessibilityOptions
-}
-export interface ConsistentMemberAccessibilityOptions {
-  accessibility?: Accessibility & string
 }
 export interface RuleWithUseConsistentObjectDefinitionOptions {
   /**
@@ -2203,22 +2039,6 @@ export interface UtilityClassSortingOptions {
    */
   functions?: string[] | null
 }
-export interface RuleWithUseValidAutocompleteOptions {
-  /**
-   * The severity of the emitted diagnostics by the rule
-   */
-  level: RulePlainConfiguration
-  /**
-   * Rule's options
-   */
-  options?: UseValidAutocompleteOptions
-}
-export interface UseValidAutocompleteOptions {
-  /**
-   * `input` like custom components that should be checked.
-   */
-  inputComponents?: string[]
-}
 /**
  * A list of rules that belong to this group
  */
@@ -2235,6 +2055,18 @@ export interface Performance {
    * Disallow the use of the delete operator.
    */
   noDelete?: RuleFixConfiguration | null
+  /**
+   * Disallow accessing namespace imports dynamically.
+   */
+  noDynamicNamespaceImportAccess?: RuleConfiguration | null
+  /**
+   * Prevent usage of \<img> element in a Next.js project.
+   */
+  noImgElement?: RuleConfiguration | null
+  /**
+   * Disallow the use of namespace imports.
+   */
+  noNamespaceImport?: RuleConfiguration | null
   /**
    * Avoid re-export all.
    */
@@ -2310,13 +2142,33 @@ export interface Style {
    */
   noCommaOperator?: RuleConfiguration | null
   /**
+   * Disallow use of CommonJs module system in favor of ESM style imports.
+   */
+  noCommonJs?: RuleConfiguration | null
+  /**
    * Disallow default exports.
    */
   noDefaultExport?: RuleConfiguration | null
   /**
+   * Disallow a lower specificity selector from coming after a higher specificity selector.
+   */
+  noDescendingSpecificity?: RuleConfiguration | null
+  /**
    * Disallow using a callback in asynchronous tests and hooks.
    */
   noDoneCallback?: RuleConfiguration | null
+  /**
+   * Disallow TypeScript enum.
+   */
+  noEnum?: RuleConfiguration | null
+  /**
+   * Disallow exporting an imported variable.
+   */
+  noExportedImports?: RuleConfiguration | null
+  /**
+   * Prevent usage of \<head> element in a Next.js project.
+   */
+  noHeadElement?: RuleConfiguration | null
   /**
    * Disallow implicit true values on JSX boolean attributes
    */
@@ -2330,13 +2182,13 @@ export interface Style {
    */
   noNamespace?: RuleConfiguration | null
   /**
-   * Disallow the use of namespace imports.
-   */
-  noNamespaceImport?: RuleConfiguration | null
-  /**
    * Disallow negation in the condition of an if statement if it has an else clause.
    */
   noNegationElse?: RuleFixConfiguration | null
+  /**
+   * Disallow nested ternary expressions.
+   */
+  noNestedTernary?: RuleConfiguration | null
   /**
    * Disallow non-null assertions using the ! postfix operator.
    */
@@ -2350,13 +2202,29 @@ export interface Style {
    */
   noParameterProperties?: RuleConfiguration | null
   /**
+   * Disallow the use of process.env.
+   */
+  noProcessEnv?: RuleConfiguration | null
+  /**
    * This rule allows you to specify global variable names that you don’t want to use in your application.
    */
   noRestrictedGlobals?: RestrictedGlobalsConfiguration | null
   /**
+   * Disallow specified modules when loaded by import or require.
+   */
+  noRestrictedImports?: RestrictedImportsConfiguration | null
+  /**
+   * Disallow user defined types.
+   */
+  noRestrictedTypes?: NoRestrictedTypesConfiguration | null
+  /**
    * Disallow the use of constants which its value is the upper-case version of its name.
    */
   noShoutyConstants?: RuleFixConfiguration | null
+  /**
+   * Enforce the use of String.slice() over String.substr() and String.substring().
+   */
+  noSubstr?: RuleFixConfiguration | null
   /**
    * Disallow template literals if interpolation and special-character handling are not needed
    */
@@ -2366,6 +2234,10 @@ export interface Style {
    */
   noUselessElse?: RuleFixConfiguration | null
   /**
+   * Disallow use of @value rule in css modules.
+   */
+  noValueAtRule?: RuleConfiguration | null
+  /**
    * Disallow the use of yoda expressions.
    */
   noYodaExpression?: RuleFixConfiguration | null
@@ -2374,9 +2246,17 @@ export interface Style {
    */
   recommended?: boolean | null
   /**
+   * Disallow Array constructors.
+   */
+  useArrayLiterals?: RuleFixConfiguration | null
+  /**
    * Enforce the use of as const over literal type and type annotation.
    */
   useAsConstAssertion?: RuleFixConfiguration | null
+  /**
+   * Use at() instead of integer index access.
+   */
+  useAtIndex?: RuleFixConfiguration | null
   /**
    * Requires following curly brace conventions.
    */
@@ -2386,6 +2266,14 @@ export interface Style {
    */
   useCollapsedElseIf?: RuleFixConfiguration | null
   /**
+   * Enforce using single if instead of nested if clauses.
+   */
+  useCollapsedIf?: RuleFixConfiguration | null
+  /**
+   * Enforce declaring components only within modules that export React Components exclusively.
+   */
+  useComponentExportOnlyModules?: UseComponentExportOnlyModulesConfiguration | null
+  /**
    * Require consistently using either T\[] or Array\<T>
    */
   useConsistentArrayType?: ConsistentArrayTypeConfiguration | null
@@ -2393,6 +2281,14 @@ export interface Style {
    * Enforce the use of new for all builtins, except String, Number and Boolean.
    */
   useConsistentBuiltinInstantiation?: RuleFixConfiguration | null
+  /**
+   * This rule enforces consistent use of curly braces inside JSX attributes and JSX children.
+   */
+  useConsistentCurlyBraces?: RuleFixConfiguration | null
+  /**
+   * Require consistent accessibility modifiers on class properties and methods.
+   */
+  useConsistentMemberAccessibility?: ConsistentMemberAccessibilityConfiguration | null
   /**
    * Require const declarations for variables that are only assigned once.
    */
@@ -2405,6 +2301,10 @@ export interface Style {
    * Require the default clause in switch statements.
    */
   useDefaultSwitchClause?: RuleConfiguration | null
+  /**
+   * Require specifying the reason argument when using @deprecated directive
+   */
+  useDeprecatedReason?: RuleConfiguration | null
   /**
    * Require that each enum member value be explicitly initialized.
    */
@@ -2458,17 +2358,9 @@ export interface Style {
    */
   useNumberNamespace?: RuleFixConfiguration | null
   /**
-   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
-   */
-  useNumericLiterals?: RuleFixConfiguration | null
-  /**
-   * Prevent extra closing tags for components without children
+   * Prevent extra closing tags for components without children.
    */
   useSelfClosingElements?: UseSelfClosingElementsConfiguration | null
-  /**
-   * When expressing array types, this rule promotes the usage of T\[] shorthand instead of Array\<T>.
-   */
-  useShorthandArrayType?: RuleFixConfiguration | null
   /**
    * Require assignment operator shorthand where possible.
    */
@@ -2477,10 +2369,6 @@ export interface Style {
    * Enforce using function types instead of object type with call signatures.
    */
   useShorthandFunctionType?: RuleFixConfiguration | null
-  /**
-   * Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block.
-   */
-  useSingleCaseStatement?: RuleFixConfiguration | null
   /**
    * Disallow multiple variable declarations in the same variable statement
    */
@@ -2497,6 +2385,10 @@ export interface Style {
    * Disallow throwing non-Error values.
    */
   useThrowOnlyError?: RuleConfiguration | null
+  /**
+   * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
+   */
+  useTrimStartEnd?: RuleFixConfiguration | null
 }
 export interface RuleWithRestrictedGlobalsOptions {
   /**
@@ -2519,6 +2411,84 @@ export interface RestrictedGlobalsOptions {
     [k: string]: string
   }
 }
+export interface RuleWithRestrictedImportsOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: RestrictedImportsOptions
+}
+/**
+ * Options for the rule `noRestrictedImports`.
+ */
+export interface RestrictedImportsOptions {
+  /**
+   * A list of import paths that should trigger the rule.
+   */
+  paths?: {
+    [k: string]: CustomRestrictedImport
+  }
+}
+export interface CustomRestrictedImportOptions {
+  /**
+   * Names of the exported members that allowed to be not be used.
+   */
+  allowImportNames?: string[]
+  /**
+   * Names of the exported members that should not be used.
+   */
+  importNames?: string[]
+  /**
+   * The message to display when this module is imported.
+   */
+  message?: string
+}
+export interface RuleWithNoRestrictedTypesOptions {
+  /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoRestrictedTypesOptions
+}
+export interface NoRestrictedTypesOptions {
+  types?: {
+    [k: string]: CustomRestrictedType
+  }
+}
+export interface CustomRestrictedTypeOptions {
+  message?: string
+  use?: string | null
+}
+export interface RuleWithUseComponentExportOnlyModulesOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: UseComponentExportOnlyModulesOptions
+}
+export interface UseComponentExportOnlyModulesOptions {
+  /**
+   * Allows the export of constants. This option is for environments that support it, such as [Vite](https://vitejs.dev/)
+   */
+  allowConstantExport?: boolean
+  /**
+   * A list of names that can be additionally exported from the module This option is for exports that do not hinder [React Fast Refresh](https://github.com/facebook/react/tree/main/packages/react-refresh), such as [`meta` in Remix](https://remix.run/docs/en/main/route/meta)
+   */
+  allowExportNames?: string[]
+}
 export interface RuleWithConsistentArrayTypeOptions {
   /**
    * The kind of the code actions emitted by the rule
@@ -2535,6 +2505,19 @@ export interface RuleWithConsistentArrayTypeOptions {
 }
 export interface ConsistentArrayTypeOptions {
   syntax?: ConsistentArrayType & string
+}
+export interface RuleWithConsistentMemberAccessibilityOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: ConsistentMemberAccessibilityOptions
+}
+export interface ConsistentMemberAccessibilityOptions {
+  accessibility?: Accessibility & string
 }
 export interface RuleWithFilenamingConventionOptions {
   /**
@@ -2727,6 +2710,14 @@ export interface Suspicious {
    */
   noDebugger?: RuleFixConfiguration | null
   /**
+   * Disallow direct assignments to document.cookie.
+   */
+  noDocumentCookie?: RuleConfiguration | null
+  /**
+   * Prevents importing next/document outside of pages/_document.jsx in Next.js projects.
+   */
+  noDocumentImportInPage?: RuleConfiguration | null
+  /**
    * Require the use of === and !==.
    */
   noDoubleEquals?: NoDoubleEqualsConfiguration | null
@@ -2743,6 +2734,18 @@ export interface Suspicious {
    */
   noDuplicateClassMembers?: RuleConfiguration | null
   /**
+   * Disallow duplicate custom properties within declaration blocks.
+   */
+  noDuplicateCustomProperties?: RuleConfiguration | null
+  /**
+   * Disallow duplicate conditions in if-else-if chains
+   */
+  noDuplicateElseIf?: RuleConfiguration | null
+  /**
+   * No duplicated fields in GraphQL operations.
+   */
+  noDuplicateFields?: RuleConfiguration | null
+  /**
    * Disallow duplicate names within font families.
    */
   noDuplicateFontNames?: RuleConfiguration | null
@@ -2758,6 +2761,10 @@ export interface Suspicious {
    * Disallow duplicate function parameter name.
    */
   noDuplicateParameters?: RuleConfiguration | null
+  /**
+   * Disallow duplicate properties within declaration blocks.
+   */
+  noDuplicateProperties?: RuleConfiguration | null
   /**
    * Disallow duplicate selectors within keyframe blocks.
    */
@@ -2819,6 +2826,10 @@ export interface Suspicious {
    */
   noGlobalIsNan?: RuleFixConfiguration | null
   /**
+   * Prevent using the next/head module in pages/_document.js on Next.js projects.
+   */
+  noHeadImportInDocument?: RuleConfiguration | null
+  /**
    * Disallow use of implicit any type on variable declarations.
    */
   noImplicitAnyLet?: RuleConfiguration | null
@@ -2830,6 +2841,10 @@ export interface Suspicious {
    * Disallow invalid !important within keyframe declarations
    */
   noImportantInKeyframe?: RuleConfiguration | null
+  /**
+   * Disallows the use of irregular whitespace characters.
+   */
+  noIrregularWhitespace?: RuleConfiguration | null
   /**
    * Disallow labels that share a name with a variable
    */
@@ -2850,6 +2865,10 @@ export interface Suspicious {
    * Disallow shorthand assign when variable appears on both sides.
    */
   noMisrefactoredShorthandAssign?: RuleFixConfiguration | null
+  /**
+   * Disallow octal escape sequences in string literals
+   */
+  noOctalEscape?: RuleFixConfiguration | null
   /**
    * Disallow direct use of Object.prototype builtins.
    */
@@ -2891,6 +2910,10 @@ export interface Suspicious {
    */
   noSuspiciousSemicolonInJsx?: RuleConfiguration | null
   /**
+   * Disallow template literal placeholder syntax in regular strings.
+   */
+  noTemplateCurlyInString?: RuleConfiguration | null
+  /**
    * Disallow then property.
    */
   noThenProperty?: RuleConfiguration | null
@@ -2907,9 +2930,17 @@ export interface Suspicious {
    */
   noVar?: RuleFixConfiguration | null
   /**
+   * Disallow with statements in non-strict contexts.
+   */
+  noWith?: RuleConfiguration | null
+  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
+  /**
+   * Disallow the use of overload signatures that are not next to each other.
+   */
+  useAdjacentOverloadSignatures?: RuleConfiguration | null
   /**
    * Ensure async functions utilize await.
    */
@@ -2927,6 +2958,14 @@ export interface Suspicious {
    */
   useGetterReturn?: RuleConfiguration | null
   /**
+   * Enforces the use of a recommended display strategy with Google Fonts.
+   */
+  useGoogleFontDisplay?: RuleConfiguration | null
+  /**
+   * Require for-in loops to include an if statement.
+   */
+  useGuardForIn?: RuleConfiguration | null
+  /**
    * Use Array.isArray() instead of instanceof Array.
    */
   useIsArray?: RuleFixConfiguration | null
@@ -2939,9 +2978,9 @@ export interface Suspicious {
    */
   useNumberToFixedDigitsArgument?: RuleFixConfiguration | null
   /**
-   * This rule checks that the result of a typeof expression is compared to a valid value.
+   * Enforce the use of the directive "use strict" in script files.
    */
-  useValidTypeof?: RuleFixConfiguration | null
+  useStrictMode?: RuleFixConfiguration | null
 }
 export interface RuleWithNoConfusingLabelsOptions {
   /**
@@ -3017,6 +3056,10 @@ export interface OverridePattern {
    */
   css?: CssConfiguration | null
   /**
+   * Specific configuration for the filesystem
+   */
+  files?: OverrideFilesConfiguration | null
+  /**
    * Specific configuration for the Json language
    */
   formatter?: OverrideFormatterConfiguration | null
@@ -3058,6 +3101,12 @@ export interface OverrideAssistConfiguration {
    * if `false`, it disables the feature and the assist won't be executed. `true` by default
    */
   enabled?: Bool | null
+}
+export interface OverrideFilesConfiguration {
+  /**
+   * File size limit in bytes
+   */
+  maxSize?: MaxSize | null
 }
 export interface OverrideFormatterConfiguration {
   /**

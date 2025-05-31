@@ -9,33 +9,15 @@ import type {
   Configuration,
   Hook,
   ImportMatcher,
+  NegatablePredefinedSourceMatcher,
   SeverityOrGroupFor_Correctness,
 } from './biomeSchema'
 
 import pkgJson from '../package.json'
 import {files} from './commonBiomeSettings.mjs'
 
-/**
- * This type is no longer included in the JSON schema for 2.0.0-beta.2:
- * https://next.biomejs.dev/schemas/2.0.0-beta.2/schema.json
- *
- * Docs for these values can be found at:
- * https://next.biomejs.dev/assist/actions/organize-imports/#import-and-export-groups
- *
- * The original schema values with this type can be found at:
- * https://next.biomejs.dev/schemas/2.0.0-beta.1/schema.json
- * Search for `PredefinedImportGroup`
- */
-type PredefinedImportGroup =
-  | ':BLANK_LINE:'
-  | ':ALIAS:'
-  | ':BUN:'
-  | ':NODE:'
-  | ':PACKAGE:'
-  | ':PACKAGE_WITH_PROTOCOL:'
-  | ':PATH:'
-  | ':URL:'
-  | (string & {}) // Allow arbitrary strings but keep autocompletion.
+// Allow arbitrary strings but keep autocompletion.
+type PredefinedImportGroup = NegatablePredefinedSourceMatcher | (string & {})
 
 export function createBiomeConfig({
   type,
@@ -222,6 +204,9 @@ export function createBiomeConfig({
         // Rules focused on preventing accessibility problems.
         a11y: {
           noAutofocus: 'off',
+          noStaticElementInteractions: 'warn',
+          useAriaPropsSupportedByRole: 'on',
+          useValidAutocomplete: 'warn',
         },
 
         // Rules that focus on inspecting complex code that could be simplified.
@@ -258,10 +243,6 @@ export function createBiomeConfig({
             level: 'on',
             fix: 'safe',
           },
-          noInvalidNewBuiltin: {
-            level: 'on',
-            fix: 'safe',
-          },
           noUndeclaredDependencies: {
             level: 'error',
             options: {
@@ -290,6 +271,10 @@ export function createBiomeConfig({
             level: 'on',
             fix: 'safe',
           },
+          useValidTypeof: {
+            level: 'on',
+            fix: 'safe',
+          },
         },
 
         /**
@@ -298,37 +283,16 @@ export function createBiomeConfig({
          */
         nursery: {
           noBitwiseOperators: 'warn',
-          noCommonJs: 'error',
           noConstantBinaryExpression: 'warn',
-          noDocumentCookie: 'warn',
-          noDuplicateElseIf: 'on',
-          noDynamicNamespaceImportAccess: 'warn',
-          noEnum: 'error',
-          noExportedImports: 'warn',
           noFloatingPromises: 'warn',
           noGlobalDirnameFilename: 'error',
           noImportCycles: 'on',
-          noIrregularWhitespace: 'error',
           noNoninteractiveElementInteractions: 'warn',
           noProcessGlobal: 'warn',
-          noStaticElementInteractions: 'warn',
-          noTemplateCurlyInString: 'warn',
           noTsIgnore: 'on',
-          useAdjacentOverloadSignatures: 'warn',
-          useAriaPropsSupportedByRole: 'on',
-          useAtIndex: 'warn',
-          useCollapsedIf: 'warn',
-          useComponentExportOnlyModules: 'warn',
-          useConsistentCurlyBraces: 'warn',
-          /**
-           * This rule currently reports errors on single-digit numbers. It will
-           * be enabled when that is fixed.
-           *
-           * Playground - https://bit.ly/3YjGbI3
-           * Issue - https://github.com/biomejs/biome/issues/5826
-           */
-          // useNumericSeparators: 'on',
+          useExhaustiveSwitchCases: 'warn',
           useParseIntRadix: 'warn',
+          useNumericSeparators: 'on',
           useSortedClasses: {
             level: 'info',
             fix: 'safe',
@@ -339,7 +303,6 @@ export function createBiomeConfig({
             },
           },
           useSymbolDescription: 'on',
-          useValidAutocomplete: 'warn',
         },
 
         /**
@@ -348,6 +311,7 @@ export function createBiomeConfig({
          */
         performance: {
           noBarrelFile: 'error',
+          noDynamicNamespaceImportAccess: 'on',
           noReExportAll: 'error',
         },
 
@@ -358,7 +322,10 @@ export function createBiomeConfig({
 
         // Rules enforcing a consistent and idiomatic way of writing your code.
         style: {
+          noCommonJs: 'error',
           noDefaultExport: 'warn',
+          noEnum: 'error',
+          noExportedImports: 'warn',
           noInferrableTypes: 'on',
           noNegationElse: 'warn',
           noParameterProperties: 'error',
@@ -373,7 +340,9 @@ export function createBiomeConfig({
           },
           noYodaExpression: 'warn',
           useAsConstAssertion: 'warn',
+          useAtIndex: 'warn',
           useCollapsedElseIf: 'warn',
+          useComponentExportOnlyModules: 'on',
           useConsistentArrayType: {
             level: 'warn',
             fix: 'safe',
@@ -385,6 +354,8 @@ export function createBiomeConfig({
             level: 'warn',
             fix: 'safe',
           },
+          useCollapsedIf: 'warn',
+          useConsistentCurlyBraces: 'warn',
           useConst: 'warn',
           useDefaultParameterLast: {
             level: 'warn',
@@ -457,6 +428,8 @@ export function createBiomeConfig({
         suspicious: {
           noArrayIndexKey: 'warn',
           noConsole: 'warn',
+          noDocumentCookie: 'on',
+          noDuplicateElseIf: 'on',
           noDuplicateTestHooks: 'error',
           noFocusedTests: 'warn',
           noGlobalIsFinite: {
@@ -467,12 +440,15 @@ export function createBiomeConfig({
             level: 'on',
             fix: 'safe',
           },
+          noIrregularWhitespace: 'error',
+          noTemplateCurlyInString: 'on',
           noSkippedTests: 'warn',
           noUnsafeNegation: {
             level: 'on',
             fix: 'safe',
           },
           noVar: 'on',
+          useAdjacentOverloadSignatures: 'on',
           useErrorMessage: 'warn',
           useIsArray: {
             level: 'on',
@@ -480,10 +456,6 @@ export function createBiomeConfig({
           },
           useNumberToFixedDigitsArgument: {
             level: 'warn',
-            fix: 'safe',
-          },
-          useValidTypeof: {
-            level: 'on',
             fix: 'safe',
           },
         },
