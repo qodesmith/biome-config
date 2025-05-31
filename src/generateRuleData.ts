@@ -1,9 +1,23 @@
+/**
+ * NOTE:
+ * Run this file AFTER upgrading the Biome version.
+ */
+
 import type {FixKind, RulePlainConfiguration, Rules} from './biomeSchema'
 
 import {$} from 'bun'
 import path from 'node:path'
 
 import configurationSchema from '@biomejs/biome/configuration_schema.json'
+
+function camelCaseToHyphens(str: string): string {
+  return str
+    .split('')
+    .map(char => {
+      return char === char.toUpperCase() ? `-${char.toLowerCase()}` : char
+    })
+    .join('')
+}
 
 ///////////////////////////////////////////////////////
 // Step 1: Aggregate data on all rules               //
@@ -21,6 +35,7 @@ type RuleInfo = {
   fix: FixKind
   severity: Omit<RulePlainConfiguration, 'off' | 'on'>
   description: string
+  url: string
 }
 type RuleData = Partial<Record<RuleGroup, RuleInfo[]>>
 
@@ -35,6 +50,7 @@ const ruleGroupDefinitionNames = Object.keys(
   })
   .sort() as RuleGroup[]
 const ruleData: RuleData = {}
+const ruleBaseUrl = 'https://next.biomejs.dev/linter/rules'
 
 for (const ruleGroupName of ruleGroupDefinitionNames) {
   const capitalizedRuleGroupName =
@@ -51,6 +67,7 @@ for (const ruleGroupName of ruleGroupDefinitionNames) {
     const ruleProperties =
       ruleGroup.properties[ruleName as keyof typeof ruleGroup.properties]
     const description = ruleProperties.description
+    const url = `${ruleBaseUrl}/${camelCaseToHyphens(ruleName)}/`
 
     // Skip group properties that aren't an actual rule.
     if ('type' in ruleProperties) {
@@ -86,7 +103,14 @@ for (const ruleGroupName of ruleGroupDefinitionNames) {
           }
         })()
 
-        rules.push({name: ruleName, recommended, fix, severity, description})
+        rules.push({
+          name: ruleName,
+          recommended,
+          fix,
+          severity,
+          description,
+          url,
+        })
       })
       .catch(error => {
         // biome-ignore lint/suspicious/noConsole: it's ok here
@@ -109,11 +133,66 @@ for (const arr of Object.values(ruleData)) {
   })
 }
 
-//////////////////////////////////////
-// Step 2: Write the data to a file //
-//////////////////////////////////////
+/////////////////////////////////////////////
+// Step 2: Determine new and removed rules //
+/////////////////////////////////////////////
+
+const ruleDataOnDisk = (await Bun.file(
+  path.resolve(import.meta.dirname, './ruleData.json')
+)
+  .json()
+
+  // In case the file doesn't exist on disk (1st time running this script).
+  .catch(() => ({}))) as RuleData
+const isFirstRun = Object.keys(ruleDataOnDisk).length === 0
+
+const rulesOnDisk = new Set(
+  isFirstRun
+    ? []
+    : Object.values(ruleDataOnDisk).reduce((acc, groupRules) => {
+        groupRules.forEach(rule => acc.push(rule.name))
+        return acc
+      }, [] as string[])
+)
+
+const currentRules = new Set(
+  isFirstRun
+    ? []
+    : Object.values(ruleData).reduce((acc, groupRules) => {
+        groupRules.forEach(rule => acc.push(rule.name))
+        return acc
+      }, [] as string[])
+)
+
+type RuleChange = {name: string; url: string}
+
+const newRules: RuleChange[] = []
+currentRules.forEach(name => {
+  if (!rulesOnDisk.has(name)) {
+    newRules.push({name, url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`})
+  }
+})
+
+const deletedRules: RuleChange[] = []
+rulesOnDisk.forEach(name => {
+  if (!currentRules.has(name)) {
+    deletedRules.push({
+      name,
+      url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`,
+    })
+  }
+})
+
+/////////////////////////////////////
+// Step 3: Write the data to files //
+/////////////////////////////////////
 
 await Bun.write(
   path.resolve(import.meta.dirname, './ruleData.json'),
   `${JSON.stringify(ruleData, null, 2)}\n`
+)
+
+await Bun.write(
+  path.resolve(import.meta.dirname, './ruleChanges.json'),
+  `${JSON.stringify({newRules, deletedRules}, null, 2)}\n`
 )
