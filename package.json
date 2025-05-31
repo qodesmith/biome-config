@@ -43,7 +43,7 @@
     "release": "bun run build && release-it"
   },
   "dependencies": {
-    "@biomejs/biome": "2.0.0-beta.2",
+    "@biomejs/biome": "2.0.0-beta.5",
     "@biomejs/js-api": "^0.7.1",
     "gradient-string": "^3.0.0",
     "picocolors": "^1.1.1"
