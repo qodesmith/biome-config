@@ -5,19 +5,11 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/biome.json"
-    },
-    "./react": {
-      "import": "./dist/biomeReact.json"
-    },
-    "./reactExtraHooks": {
-      "import": "./dist/biomeReactExtraHooks.json"
-    },
+    ".": "./dist/biome.json",
+    "./react": "./dist/biomeReact.json",
+    "./reactExtraHooks": "./dist/biomeReactExtraHooks.json",
     "./biomeSchema": {
-      "import": {
-        "types": "./src/biomeSchema.d.ts"
-      }
+      "types": "./src/biomeSchema.d.ts"
     }
   },
   "publishConfig": {
