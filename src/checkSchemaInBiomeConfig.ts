@@ -11,6 +11,8 @@ const hasCorrectVersion = biomeConfigStr.includes(expectedSchemaVersion)
 
 if (!hasCorrectVersion) {
   // biome-ignore lint/suspicious/noConsole: it's ok here
-  console.error('Update the schema version in biome.jsonc')
+  console.error(
+    `Update the schema version in biome.jsonc to ${expectedSchemaVersion}`
+  )
   process.exit(1)
 }

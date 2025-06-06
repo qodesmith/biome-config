@@ -1208,10 +1208,6 @@ export interface Complexity {
    */
   noExtraBooleanCast?: RuleFixConfiguration | null
   /**
-   * Disallow to use unnecessary callback on flatMap.
-   */
-  noFlatMapIdentity?: RuleFixConfiguration | null
-  /**
    * Prefer for...of statement instead of Array.forEach.
    */
   noForEach?: NoForEachConfiguration | null
@@ -1231,10 +1227,6 @@ export interface Complexity {
    * Disallow unnecessary constructors.
    */
   noUselessConstructor?: RuleFixConfiguration | null
-  /**
-   * Avoid using unnecessary continue.
-   */
-  noUselessContinue?: RuleFixConfiguration | null
   /**
    * Disallow empty exports that don't change anything in a module file.
    */
@@ -1292,6 +1284,10 @@ export interface Complexity {
    */
   noVoid?: RuleConfiguration | null
   /**
+   * Disallow with statements in non-strict contexts.
+   */
+  noWith?: RuleConfiguration | null
+  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
@@ -1311,10 +1307,6 @@ export interface Complexity {
    * Enforce the usage of a literal access to properties over computed property access.
    */
   useLiteralKeys?: RuleFixConfiguration | null
-  /**
-   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
-   */
-  useNumericLiterals?: RuleFixConfiguration | null
   /**
    * Enforce using concise optional chain instead of chained logical expressions.
    */
@@ -1403,6 +1395,10 @@ export interface Correctness {
    * Disallows empty destructuring patterns.
    */
   noEmptyPattern?: RuleConfiguration | null
+  /**
+   * Disallow to use unnecessary callback on flatMap.
+   */
+  noFlatMapIdentity?: RuleFixConfiguration | null
   /**
    * Disallow calling global object properties as functions
    */
@@ -1552,6 +1548,10 @@ export interface Correctness {
    */
   noUnusedVariables?: NoUnusedVariablesConfiguration | null
   /**
+   * Avoid using unnecessary continue.
+   */
+  noUselessContinue?: RuleFixConfiguration | null
+  /**
    * This rules prevents void elements (AKA self-closing elements) from having children.
    */
   noVoidElementsWithChildren?: RuleFixConfiguration | null
@@ -1563,6 +1563,10 @@ export interface Correctness {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
+  /**
+   * Disallow Array constructors.
+   */
+  useArrayLiterals?: RuleFixConfiguration | null
   /**
    * Enforce all dependencies are correctly specified in a React hook.
    */
@@ -1587,10 +1591,6 @@ export interface Correctness {
    * Enforce "for" loop update clause moving the counter in the right direction.
    */
   useValidForDirection?: RuleConfiguration | null
-  /**
-   * This rule checks that the result of a typeof expression is compared to a valid value.
-   */
-  useValidTypeof?: RuleFixConfiguration | null
   /**
    * Require generator functions to contain yield.
    */
@@ -1825,10 +1825,6 @@ export interface Nursery {
    */
   noImportantStyles?: RuleFixConfiguration | null
   /**
-   * Disallows defining React components inside other components.
-   */
-  noNestedComponentDefinitions?: RuleConfiguration | null
-  /**
    * Disallow use event handlers on non-interactive elements.
    */
   noNoninteractiveElementInteractions?: RuleConfiguration | null
@@ -1880,10 +1876,6 @@ export interface Nursery {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
-  /**
-   * Enforce that getters and setters for the same property are adjacent in class and object definitions.
-   */
-  useAdjacentGetterSetter?: RuleConfiguration | null
   /**
    * Require the consistent declaration of object literals. Defaults to explicit definitions.
    */
@@ -2064,10 +2056,6 @@ export interface Performance {
    */
   noImgElement?: RuleConfiguration | null
   /**
-   * Disallow the use of namespace imports.
-   */
-  noNamespaceImport?: RuleConfiguration | null
-  /**
    * Avoid re-export all.
    */
   noReExportAll?: RuleConfiguration | null
@@ -2182,6 +2170,10 @@ export interface Style {
    */
   noNamespace?: RuleConfiguration | null
   /**
+   * Disallow the use of namespace imports.
+   */
+  noNamespaceImport?: RuleConfiguration | null
+  /**
    * Disallow negation in the condition of an if statement if it has an else clause.
    */
   noNegationElse?: RuleFixConfiguration | null
@@ -2245,10 +2237,6 @@ export interface Style {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
-  /**
-   * Disallow Array constructors.
-   */
-  useArrayLiterals?: RuleFixConfiguration | null
   /**
    * Enforce the use of as const over literal type and type annotation.
    */
@@ -2357,6 +2345,10 @@ export interface Style {
    * Use the Number properties instead of global ones.
    */
   useNumberNamespace?: RuleFixConfiguration | null
+  /**
+   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+   */
+  useNumericLiterals?: RuleFixConfiguration | null
   /**
    * Prevent extra closing tags for components without children.
    */
@@ -2930,10 +2922,6 @@ export interface Suspicious {
    */
   noVar?: RuleFixConfiguration | null
   /**
-   * Disallow with statements in non-strict contexts.
-   */
-  noWith?: RuleConfiguration | null
-  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
@@ -2981,6 +2969,10 @@ export interface Suspicious {
    * Enforce the use of the directive "use strict" in script files.
    */
   useStrictMode?: RuleFixConfiguration | null
+  /**
+   * This rule checks that the result of a typeof expression is compared to a valid value.
+   */
+  useValidTypeof?: RuleFixConfiguration | null
 }
 export interface RuleWithNoConfusingLabelsOptions {
   /**
@@ -3056,10 +3048,6 @@ export interface OverridePattern {
    */
   css?: CssConfiguration | null
   /**
-   * Specific configuration for the filesystem
-   */
-  files?: OverrideFilesConfiguration | null
-  /**
    * Specific configuration for the Json language
    */
   formatter?: OverrideFormatterConfiguration | null
@@ -3101,12 +3089,6 @@ export interface OverrideAssistConfiguration {
    * if `false`, it disables the feature and the assist won't be executed. `true` by default
    */
   enabled?: Bool | null
-}
-export interface OverrideFilesConfiguration {
-  /**
-   * File size limit in bytes
-   */
-  maxSize?: MaxSize | null
 }
 export interface OverrideFormatterConfiguration {
   /**

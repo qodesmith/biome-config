@@ -333,18 +333,10 @@
     {
       "name": "noExtraBooleanCast",
       "recommended": true,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Disallow unnecessary boolean casts",
       "url": "https://next.biomejs.dev/linter/rules/no-extra-boolean-cast/"
-    },
-    {
-      "name": "noFlatMapIdentity",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Disallow to use unnecessary callback on flatMap.",
-      "url": "https://next.biomejs.dev/linter/rules/no-flat-map-identity/"
     },
     {
       "name": "noForEach",
@@ -365,7 +357,7 @@
     {
       "name": "noThisInStatic",
       "recommended": true,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "warn",
       "description": "Disallow this and super in static contexts.",
       "url": "https://next.biomejs.dev/linter/rules/no-this-in-static/"
@@ -385,14 +377,6 @@
       "severity": "info",
       "description": "Disallow unnecessary constructors.",
       "url": "https://next.biomejs.dev/linter/rules/no-useless-constructor/"
-    },
-    {
-      "name": "noUselessContinue",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Avoid using unnecessary continue.",
-      "url": "https://next.biomejs.dev/linter/rules/no-useless-continue/"
     },
     {
       "name": "noUselessEmptyExport",
@@ -445,7 +429,7 @@
     {
       "name": "noUselessStringConcat",
       "recommended": false,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Disallow unnecessary concatenation of string or template literals.",
       "url": "https://next.biomejs.dev/linter/rules/no-useless-string-concat/"
@@ -507,6 +491,14 @@
       "url": "https://next.biomejs.dev/linter/rules/no-void/"
     },
     {
+      "name": "noWith",
+      "recommended": true,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow with statements in non-strict contexts.",
+      "url": "https://next.biomejs.dev/linter/rules/no-with/"
+    },
+    {
       "name": "useArrowFunction",
       "recommended": true,
       "fix": "safe",
@@ -539,14 +531,6 @@
       "url": "https://next.biomejs.dev/linter/rules/use-literal-keys/"
     },
     {
-      "name": "useNumericLiterals",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "warn",
-      "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
-      "url": "https://next.biomejs.dev/linter/rules/use-numeric-literals/"
-    },
-    {
       "name": "useOptionalChain",
       "recommended": true,
       "fix": "unsafe",
@@ -573,7 +557,7 @@
     {
       "name": "useSimplifiedLogicExpression",
       "recommended": false,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Discard redundant terms from logical expressions.",
       "url": "https://next.biomejs.dev/linter/rules/use-simplified-logic-expression/"
@@ -643,6 +627,14 @@
       "severity": "error",
       "description": "Disallows empty destructuring patterns.",
       "url": "https://next.biomejs.dev/linter/rules/no-empty-pattern/"
+    },
+    {
+      "name": "noFlatMapIdentity",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow to use unnecessary callback on flatMap.",
+      "url": "https://next.biomejs.dev/linter/rules/no-flat-map-identity/"
     },
     {
       "name": "noGlobalObjectCalls",
@@ -727,7 +719,7 @@
     {
       "name": "noNonoctalDecimalEscape",
       "recommended": true,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "error",
       "description": "Disallow \\8 and \\9 escape sequences in string literals.",
       "url": "https://next.biomejs.dev/linter/rules/no-nonoctal-decimal-escape/"
@@ -783,7 +775,7 @@
     {
       "name": "noSwitchDeclarations",
       "recommended": true,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "error",
       "description": "Disallow lexical declarations in switch clauses.",
       "url": "https://next.biomejs.dev/linter/rules/no-switch-declarations/"
@@ -941,6 +933,14 @@
       "url": "https://next.biomejs.dev/linter/rules/no-unused-variables/"
     },
     {
+      "name": "noUselessContinue",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "error",
+      "description": "Avoid using unnecessary continue.",
+      "url": "https://next.biomejs.dev/linter/rules/no-useless-continue/"
+    },
+    {
       "name": "noVoidElementsWithChildren",
       "recommended": true,
       "fix": "unsafe",
@@ -955,6 +955,14 @@
       "severity": "error",
       "description": "Disallow returning a value from a function with the return type 'void'",
       "url": "https://next.biomejs.dev/linter/rules/no-void-type-return/"
+    },
+    {
+      "name": "useArrayLiterals",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow Array constructors.",
+      "url": "https://next.biomejs.dev/linter/rules/use-array-literals/"
     },
     {
       "name": "useExhaustiveDependencies",
@@ -1003,14 +1011,6 @@
       "severity": "error",
       "description": "Enforce \"for\" loop update clause moving the counter in the right direction.",
       "url": "https://next.biomejs.dev/linter/rules/use-valid-for-direction/"
-    },
-    {
-      "name": "useValidTypeof",
-      "recommended": true,
-      "fix": "unsafe",
-      "severity": "error",
-      "description": "This rule checks that the result of a typeof expression is compared to a valid value.",
-      "url": "https://next.biomejs.dev/linter/rules/use-valid-typeof/"
     },
     {
       "name": "useYield",
@@ -1085,14 +1085,6 @@
       "severity": "warn",
       "description": "Disallow the use of the !important style.",
       "url": "https://next.biomejs.dev/linter/rules/no-important-styles/"
-    },
-    {
-      "name": "noNestedComponentDefinitions",
-      "recommended": false,
-      "fix": "none",
-      "severity": "error",
-      "description": "Disallows defining React components inside other components.",
-      "url": "https://next.biomejs.dev/linter/rules/no-nested-component-definitions/"
     },
     {
       "name": "noNoninteractiveElementInteractions",
@@ -1189,14 +1181,6 @@
       "severity": "info",
       "description": "Disallow the use of useless undefined.",
       "url": "https://next.biomejs.dev/linter/rules/no-useless-undefined/"
-    },
-    {
-      "name": "useAdjacentGetterSetter",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Enforce that getters and setters for the same property are adjacent in class and object definitions.",
-      "url": "https://next.biomejs.dev/linter/rules/use-adjacent-getter-setter/"
     },
     {
       "name": "useConsistentObjectDefinition",
@@ -1353,14 +1337,6 @@
       "url": "https://next.biomejs.dev/linter/rules/no-img-element/"
     },
     {
-      "name": "noNamespaceImport",
-      "recommended": false,
-      "fix": "none",
-      "severity": "warn",
-      "description": "Disallow the use of namespace imports.",
-      "url": "https://next.biomejs.dev/linter/rules/no-namespace-import/"
-    },
-    {
       "name": "noReExportAll",
       "recommended": false,
       "fix": "none",
@@ -1509,6 +1485,14 @@
       "url": "https://next.biomejs.dev/linter/rules/no-namespace/"
     },
     {
+      "name": "noNamespaceImport",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow the use of namespace imports.",
+      "url": "https://next.biomejs.dev/linter/rules/no-namespace-import/"
+    },
+    {
       "name": "noNegationElse",
       "recommended": false,
       "fix": "safe",
@@ -1599,7 +1583,7 @@
     {
       "name": "noUnusedTemplateLiteral",
       "recommended": false,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "warn",
       "description": "Disallow template literals if interpolation and special-character handling are not needed",
       "url": "https://next.biomejs.dev/linter/rules/no-unused-template-literal/"
@@ -1607,7 +1591,7 @@
     {
       "name": "noUselessElse",
       "recommended": false,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Disallow else block when the if block breaks early.",
       "url": "https://next.biomejs.dev/linter/rules/no-useless-else/"
@@ -1627,14 +1611,6 @@
       "severity": "info",
       "description": "Disallow the use of yoda expressions.",
       "url": "https://next.biomejs.dev/linter/rules/no-yoda-expression/"
-    },
-    {
-      "name": "useArrayLiterals",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Disallow Array constructors.",
-      "url": "https://next.biomejs.dev/linter/rules/use-array-literals/"
     },
     {
       "name": "useAsConstAssertion",
@@ -1718,7 +1694,7 @@
     },
     {
       "name": "useConst",
-      "recommended": true,
+      "recommended": false,
       "fix": "safe",
       "severity": "warn",
       "description": "Require const declarations for variables that are only assigned once.",
@@ -1767,7 +1743,7 @@
     {
       "name": "useExponentiationOperator",
       "recommended": true,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Disallow the use of Math.pow in favor of the ** operator.",
       "url": "https://next.biomejs.dev/linter/rules/use-exponentiation-operator/"
@@ -1851,6 +1827,14 @@
       "severity": "info",
       "description": "Use the Number properties instead of global ones.",
       "url": "https://next.biomejs.dev/linter/rules/use-number-namespace/"
+    },
+    {
+      "name": "useNumericLiterals",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "warn",
+      "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
+      "url": "https://next.biomejs.dev/linter/rules/use-numeric-literals/"
     },
     {
       "name": "useSelfClosingElements",
@@ -2471,14 +2455,6 @@
       "url": "https://next.biomejs.dev/linter/rules/no-var/"
     },
     {
-      "name": "noWith",
-      "recommended": true,
-      "fix": "none",
-      "severity": "error",
-      "description": "Disallow with statements in non-strict contexts.",
-      "url": "https://next.biomejs.dev/linter/rules/no-with/"
-    },
-    {
       "name": "useAdjacentOverloadSignatures",
       "recommended": true,
       "fix": "none",
@@ -2553,7 +2529,7 @@
     {
       "name": "useNumberToFixedDigitsArgument",
       "recommended": false,
-      "fix": "safe",
+      "fix": "unsafe",
       "severity": "warn",
       "description": "Enforce using the digits argument with Number#toFixed().",
       "url": "https://next.biomejs.dev/linter/rules/use-number-to-fixed-digits-argument/"
@@ -2565,6 +2541,14 @@
       "severity": "warn",
       "description": "Enforce the use of the directive \"use strict\" in script files.",
       "url": "https://next.biomejs.dev/linter/rules/use-strict-mode/"
+    },
+    {
+      "name": "useValidTypeof",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "error",
+      "description": "This rule checks that the result of a typeof expression is compared to a valid value.",
+      "url": "https://next.biomejs.dev/linter/rules/use-valid-typeof/"
     }
   ]
 }

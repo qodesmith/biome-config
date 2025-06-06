@@ -271,10 +271,12 @@ export function createBiomeConfig({
             level: 'on',
             fix: 'safe',
           },
-          useValidTypeof: {
-            level: 'on',
-            fix: 'safe',
-          },
+
+          // Not available in 2.0.0-beta.4
+          // useValidTypeof: {
+          //   level: 'on',
+          //   fix: 'safe',
+          // },
         },
 
         /**
