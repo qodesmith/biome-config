@@ -19,17 +19,10 @@ function formatJson(codeString: string): string {
 }
 
 const defaultConfig = createBiomeConfig({type: 'default'})
-const reactConfig = createBiomeConfig({type: 'react', includeJotaiHooks: false})
-const reactExtraHooksConfig = createBiomeConfig({
-  type: 'react',
-  includeJotaiHooks: true,
-})
+const reactConfig = createBiomeConfig({type: 'react'})
 
 const defaultConfigStr = formatJson(JSON.stringify(defaultConfig, null, 2))
 const reactConfigStr = formatJson(JSON.stringify(reactConfig, null, 2))
-const reactExtraHooksConfigStr = formatJson(
-  JSON.stringify(reactExtraHooksConfig, null, 2)
-)
 
 /**
  * These are the static JSON files shipped with this package. They are ready to
@@ -37,4 +30,3 @@ const reactExtraHooksConfigStr = formatJson(
  */
 await Bun.write('./dist/biome.json', defaultConfigStr)
 await Bun.write('./dist/biomeReact.json', reactConfigStr)
-await Bun.write('./dist/biomeReactExtraHooks.json', reactExtraHooksConfigStr)

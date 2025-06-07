@@ -7,7 +7,6 @@
 
 import type {
   Configuration,
-  Hook,
   ImportMatcher,
   NegatablePredefinedSourceMatcher,
   SeverityOrGroupFor_Correctness,
@@ -21,31 +20,14 @@ type PredefinedImportGroup = NegatablePredefinedSourceMatcher | (string & {})
 
 export function createBiomeConfig({
   type,
-  includeJotaiHooks,
 }: {
   type: 'default' | 'react'
-  includeJotaiHooks?: boolean
 }): Configuration {
-  // Jotai hooks - because Jotai is an amazing state library.
-  const jotaiHooks: Hook[] = [
-    {name: 'useAtom', stableResult: [1]},
-    {name: 'useSetAtom', stableResult: true},
-    {name: 'useStore', stableResult: true},
-    {name: 'useResetAtom', stableResult: true},
-  ]
-
-  const hooks: Hook[] = []
-
-  if (type === 'react' && includeJotaiHooks) {
-    hooks.push(...jotaiHooks)
-  }
-
   const correctnessReact: SeverityOrGroupFor_Correctness = {
     useExhaustiveDependencies: {
       level: 'on',
       fix: 'safe',
       options: {
-        hooks: hooks.length > 0 ? hooks : undefined,
         reportMissingDependenciesArray: true,
         reportUnnecessaryDependencies: true,
       },

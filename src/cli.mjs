@@ -100,12 +100,6 @@ const args = parseArgs({
       default: true,
     },
 
-    // Default to including Jotai hooks.
-    extraHooks: {
-      type: 'boolean',
-      default: true,
-    },
-
     // Default to using json over jsonc.
     jsonc: {
       type: 'boolean',
@@ -117,10 +111,9 @@ const args = parseArgs({
 })
 
 const isVanilla = args.values.vanilla
-const reactFlavor = args.values.extraHooks ? '/reactExtraHooks' : '/react'
 const biomeConfig = {
   $schema: './node_modules/@biomejs/biome/configuration_schema.json',
-  extends: [`@qodestack/biome-config${isVanilla ? '' : reactFlavor}`],
+  extends: [`@qodestack/biome-config${isVanilla ? '' : '/react'}`],
 
   /**
    * Settings likekly to be customized by the user.

@@ -7,7 +7,6 @@
   "exports": {
     ".": "./dist/biome.json",
     "./react": "./dist/biomeReact.json",
-    "./reactExtraHooks": "./dist/biomeReactExtraHooks.json",
     "./biomeSchema": {
       "types": "./src/biomeSchema.d.ts"
     }
