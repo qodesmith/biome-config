@@ -1,3 +1,5 @@
+import {$} from 'bun'
+
 import {Biome, Distribution} from '@biomejs/js-api'
 
 import {createBiomeConfig} from './createBiomeConfig'
@@ -23,6 +25,8 @@ const reactConfig = createBiomeConfig({type: 'react'})
 
 const defaultConfigStr = formatJson(JSON.stringify(defaultConfig, null, 2))
 const reactConfigStr = formatJson(JSON.stringify(reactConfig, null, 2))
+
+await $`rm -rf ./dist`.quiet().nothrow()
 
 /**
  * These are the static JSON files shipped with this package. They are ready to
