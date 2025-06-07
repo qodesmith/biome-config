@@ -37,12 +37,13 @@
     "@biomejs/biome": "2.0.0-beta.4",
     "@biomejs/js-api": "^0.7.1",
     "gradient-string": "^3.0.0",
+    "jsonc-parser": "^3.3.1",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.5",
+    "@types/react-dom": "^19.1.6",
     "auto-changelog": "^2.5.0",
     "bun-plugin-tailwind": "^0.0.15",
     "json-schema-to-typescript": "^15.0.4",

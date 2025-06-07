@@ -7,6 +7,7 @@ import {parseArgs} from 'node:util'
 
 import {Biome, Distribution} from '@biomejs/js-api'
 import {mind as mindGradient} from 'gradient-string'
+import {parse} from 'jsonc-parser'
 import color from 'picocolors'
 
 import {files} from './commonBiomeSettings.mjs'
@@ -187,7 +188,7 @@ if (isVscode) {
 
   const currentVscodeSettings = (() => {
     try {
-      return JSON.parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
+      return parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
     } catch {
       return undefined
     }
