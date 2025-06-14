@@ -244,7 +244,7 @@ export function createBiomeConfig({
           },
           noUnusedVariables: {
             level: 'warn',
-            fix: 'safe',
+            fix: 'none',
             options: {
               ignoreRestSiblings: false,
             },
