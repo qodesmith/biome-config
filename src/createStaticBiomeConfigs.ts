@@ -35,5 +35,5 @@ await $`rm -rf ./dist`.quiet().nothrow()
  * These are the static JSON files shipped with this package. They are ready to
  * be extended by the user.
  */
-await Bun.write('./dist/biome.json', defaultConfigStr)
-await Bun.write('./dist/biomeReact.json', reactConfigStr)
+await Bun.write('./dist/biomeConfig.json', defaultConfigStr)
+await Bun.write('./dist/biomeConfigReact.json', reactConfigStr)

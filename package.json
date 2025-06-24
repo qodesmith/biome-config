@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": "./dist/biome.json",
-    "./react": "./dist/biomeReact.json",
+    ".": "./dist/biomeConfig.json",
+    "./react": "./dist/biomeConfigReact.json",
     "./biomeSchema": {
       "types": "./src/biomeSchema.d.ts"
     }
