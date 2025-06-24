@@ -46,11 +46,13 @@ const ruleGroupDefinitionNames = Object.keys(
   .filter(property => {
     const obj =
       configurationSchema.definitions.Rules.properties[property as keyof Rules]
+
+    // Ensure the object is a rule-group definition.
     return !('type' in obj)
   })
   .sort() as RuleGroup[]
 const ruleData: RuleData = {}
-const ruleBaseUrl = 'https://next.biomejs.dev/linter/rules'
+const ruleBaseUrl = 'https://biomejs.dev/linter/rules'
 
 for (const ruleGroupName of ruleGroupDefinitionNames) {
   const capitalizedRuleGroupName =
@@ -137,6 +139,17 @@ for (const arr of Object.values(ruleData)) {
 // Step 2: Determine new and removed rules //
 /////////////////////////////////////////////
 
+const ruleToGroup = Object.entries(ruleData).reduce<Record<string, RuleGroup>>(
+  (acc, [groupName, rules]) => {
+    rules.forEach(rule => {
+      acc[rule.name] = groupName as RuleGroup
+    })
+
+    return acc
+  },
+  {}
+)
+
 const ruleDataOnDisk = (await Bun.file(
   path.resolve(import.meta.dirname, './ruleData.json')
 )
@@ -164,16 +177,20 @@ const currentRules = new Set(
       }, [] as string[])
 )
 
-type RuleChange = {name: string; url: string}
+type RuleChange = {name: string; url: string; group: RuleGroup}
 
 const newRules: RuleChange[] = []
 currentRules.forEach(name => {
   if (!rulesOnDisk.has(name)) {
-    newRules.push({name, url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`})
+    newRules.push({
+      name,
+      url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`,
+      group: ruleToGroup[name],
+    })
   }
 })
 
-const deletedRules: RuleChange[] = []
+const deletedRules: Omit<RuleChange, 'group'>[] = []
 rulesOnDisk.forEach(name => {
   if (!currentRules.has(name)) {
     deletedRules.push({
