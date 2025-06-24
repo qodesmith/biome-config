@@ -36,7 +36,7 @@ export function createBiomeConfig({
     useJsxKeyInIterable: 'on',
   }
 
-  const biomeVersion = pkgJson.dependencies['@biomejs/biome']
+  const biomeVersion = pkgJson.dependencies['@biomejs/biome'].replace('^', '')
 
   const organizeImportsGroups = [
     /**
@@ -83,7 +83,7 @@ export function createBiomeConfig({
 
   // https://next.biomejs.dev/reference/configuration/
   return {
-    $schema: `https://next.biomejs.dev/schemas/${biomeVersion}/schema.json`,
+    $schema: `https://biomejs.dev/schemas/${biomeVersion}/schema.json`,
     assist: {
       actions: {
         source: {
@@ -233,10 +233,6 @@ export function createBiomeConfig({
               optionalDependencies: true,
               peerDependencies: true,
             },
-          },
-          noUnusedFunctionParameters: {
-            level: 'warn',
-            fix: 'safe',
           },
           noUnusedImports: {
             level: 'warn',
