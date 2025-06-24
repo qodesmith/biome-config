@@ -7,7 +7,9 @@ const expectedSchemaVersion = pkgJson.dependencies['@biomejs/biome']
 const biomeConfigStr = await Bun.file(
   path.resolve(import.meta.dirname, '../biome.jsonc')
 ).text()
-const hasCorrectVersion = biomeConfigStr.includes(expectedSchemaVersion)
+const hasCorrectVersion = biomeConfigStr.includes(
+  expectedSchemaVersion.replace('^', '')
+)
 
 if (!hasCorrectVersion) {
   // biome-ignore lint/suspicious/noConsole: it's ok here
