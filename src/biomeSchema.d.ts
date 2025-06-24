@@ -49,6 +49,7 @@ export type LineEnding = 'lf' | 'crlf' | 'cr'
  */
 export type LineWidth = number
 export type QuoteStyle = 'double' | 'single'
+export type Extends = string[] | string
 export type MaxSize = number
 export type AttributePosition = 'auto' | 'multiline'
 /**
@@ -133,11 +134,17 @@ export type UseConsistentObjectDefinitionConfiguration =
   | RulePlainConfiguration
   | RuleWithUseConsistentObjectDefinitionOptions
 export type ObjectPropertySyntax = 'explicit' | 'shorthand'
+export type ReadonlyClassPropertiesConfiguration = RulePlainConfiguration | RuleWithReadonlyClassPropertiesOptions
 export type UtilityClassSortingConfiguration = RulePlainConfiguration | RuleWithUtilityClassSortingOptions
 export type SeverityOrGroupFor_Performance = GroupPlainConfiguration | Performance
 export type SeverityOrGroupFor_Security = GroupPlainConfiguration | Security
 export type NoBlankTargetConfiguration = RulePlainConfiguration | RuleWithNoBlankTargetOptions
 export type SeverityOrGroupFor_Style = GroupPlainConfiguration | Style
+export type NoParameterAssignConfiguration = RulePlainConfiguration | RuleWithNoParameterAssignOptions
+/**
+ * Specifies whether property assignments on function parameters are allowed or denied.
+ */
+export type PropertyAssignmentMode = 'allow' | 'deny'
 export type RestrictedGlobalsConfiguration = RulePlainConfiguration | RuleWithRestrictedGlobalsOptions
 export type RestrictedImportsConfiguration = RulePlainConfiguration | RuleWithRestrictedImportsOptions
 export type CustomRestrictedImport = string | CustomRestrictedImportOptions
@@ -220,9 +227,9 @@ export type NoConfusingLabelsConfiguration = RulePlainConfiguration | RuleWithNo
 export type NoConsoleConfiguration = RulePlainConfiguration | RuleWithNoConsoleOptions
 export type NoDoubleEqualsConfiguration = RulePlainConfiguration | RuleWithNoDoubleEqualsOptions
 export type OverrideGlobs = Glob[]
-export type Overrides = OverridePattern[]
 export type PluginConfiguration = string
 export type Plugins = PluginConfiguration[]
+export type Overrides = OverridePattern[]
 export type VcsClientKind = 'git'
 
 /**
@@ -244,7 +251,7 @@ export interface Configuration {
   /**
    * A list of paths to other JSON files, used to extends the current configuration.
    */
-  extends?: string[] | null
+  extends?: Extends | null
   /**
    * The configuration of the filesystem
    */
@@ -457,6 +464,26 @@ export interface CssParserConfiguration {
  * The configuration of the filesystem
  */
 export interface FilesConfiguration {
+  /**
+   * Set of file and folder names that should be unconditionally ignored by Biome's scanner.
+   *
+   * Biome maintains an internal list of default ignore entries, which is based on user feedback and which may change in any release. This setting allows overriding this internal list completely.
+   *
+   * This is considered an advanced feature that users _should_ not need to tweak themselves, but they can as a last resort. This setting can only be configured in root configurations, and is ignored in nested configs.
+   *
+   * Entries must be file or folder *names*. Specific paths and globs are not supported.
+   *
+   * Examples where this may be useful:
+   *
+   * ```jsonc { "files": { "experimentalScannerIgnores": [ // You almost certainly don't want to scan your `.git` // folder, which is why it's already ignored by default: ".git",
+   *
+   * // But the scanner does scan `node_modules` by default. If // you *really* don't want this, you can ignore it like // this: "node_modules",
+   *
+   * // But it's probably better to ignore a specific dependency. // For instance, one that happens to be particularly slow to // scan: "RedisCommander.d.ts", ], } } ```
+   *
+   * Please be aware that rules relying on the module graph or type inference information may be negatively affected if dependencies of your project aren't (fully) scanned.
+   */
+  experimentalScannerIgnores?: string[] | null
   /**
    * Tells Biome to not emit diagnostics when handling files that doesn't know
    */
@@ -1188,9 +1215,17 @@ export interface Complexity {
    */
   noAdjacentSpacesInRegex?: RuleFixConfiguration | null
   /**
+   * Disallow the use of arguments.
+   */
+  noArguments?: RuleConfiguration | null
+  /**
    * Disallow primitive type aliases and misleading types.
    */
   noBannedTypes?: RuleFixConfiguration | null
+  /**
+   * Disallow comma operator.
+   */
+  noCommaOperator?: RuleConfiguration | null
   /**
    * Disallow empty type parameters in type aliases and interfaces.
    */
@@ -1207,6 +1242,10 @@ export interface Complexity {
    * Disallow unnecessary boolean casts
    */
   noExtraBooleanCast?: RuleFixConfiguration | null
+  /**
+   * Disallow to use unnecessary callback on flatMap.
+   */
+  noFlatMapIdentity?: RuleFixConfiguration | null
   /**
    * Prefer for...of statement instead of Array.forEach.
    */
@@ -1227,6 +1266,10 @@ export interface Complexity {
    * Disallow unnecessary constructors.
    */
   noUselessConstructor?: RuleFixConfiguration | null
+  /**
+   * Avoid using unnecessary continue.
+   */
+  noUselessContinue?: RuleFixConfiguration | null
   /**
    * Disallow empty exports that don't change anything in a module file.
    */
@@ -1284,10 +1327,6 @@ export interface Complexity {
    */
   noVoid?: RuleConfiguration | null
   /**
-   * Disallow with statements in non-strict contexts.
-   */
-  noWith?: RuleConfiguration | null
-  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
@@ -1307,6 +1346,10 @@ export interface Complexity {
    * Enforce the usage of a literal access to properties over computed property access.
    */
   useLiteralKeys?: RuleFixConfiguration | null
+  /**
+   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+   */
+  useNumericLiterals?: RuleFixConfiguration | null
   /**
    * Enforce using concise optional chain instead of chained logical expressions.
    */
@@ -1395,10 +1438,6 @@ export interface Correctness {
    * Disallows empty destructuring patterns.
    */
   noEmptyPattern?: RuleConfiguration | null
-  /**
-   * Disallow to use unnecessary callback on flatMap.
-   */
-  noFlatMapIdentity?: RuleFixConfiguration | null
   /**
    * Disallow calling global object properties as functions
    */
@@ -1548,10 +1587,6 @@ export interface Correctness {
    */
   noUnusedVariables?: NoUnusedVariablesConfiguration | null
   /**
-   * Avoid using unnecessary continue.
-   */
-  noUselessContinue?: RuleFixConfiguration | null
-  /**
    * This rules prevents void elements (AKA self-closing elements) from having children.
    */
   noVoidElementsWithChildren?: RuleFixConfiguration | null
@@ -1563,10 +1598,6 @@ export interface Correctness {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
-  /**
-   * Disallow Array constructors.
-   */
-  useArrayLiterals?: RuleFixConfiguration | null
   /**
    * Enforce all dependencies are correctly specified in a React hook.
    */
@@ -1591,6 +1622,10 @@ export interface Correctness {
    * Enforce "for" loop update clause moving the counter in the right direction.
    */
   useValidForDirection?: RuleConfiguration | null
+  /**
+   * This rule checks that the result of a typeof expression is compared to a valid value.
+   */
+  useValidTypeof?: RuleFixConfiguration | null
   /**
    * Require generator functions to contain yield.
    */
@@ -1677,7 +1712,7 @@ export interface RuleWithNoUnusedVariablesOptions {
 }
 export interface NoUnusedVariablesOptions {
   /**
-   * Whether to ignore unused variables from an object destructuring with a spread (i.e.: whether `a` and `b` in `const { a, b, ...rest } = obj` should be ignored by this rule).
+   * Whether to ignore unused variables from an object destructuring with a spread.
    */
   ignoreRestSiblings?: boolean
 }
@@ -1825,6 +1860,10 @@ export interface Nursery {
    */
   noImportantStyles?: RuleFixConfiguration | null
   /**
+   * Disallows defining React components inside other components.
+   */
+  noNestedComponentDefinitions?: RuleConfiguration | null
+  /**
    * Disallow use event handlers on non-interactive elements.
    */
   noNoninteractiveElementInteractions?: RuleConfiguration | null
@@ -1832,6 +1871,10 @@ export interface Nursery {
    * Disallow the use of process global.
    */
   noProcessGlobal?: RuleFixConfiguration | null
+  /**
+   * Disallow assigning to React component props.
+   */
+  noReactPropAssign?: RuleConfiguration | null
   /**
    * Disallow the use of configured elements.
    */
@@ -1877,9 +1920,17 @@ export interface Nursery {
    */
   recommended?: boolean | null
   /**
+   * Enforce that getters and setters for the same property are adjacent in class and object definitions.
+   */
+  useAdjacentGetterSetter?: RuleConfiguration | null
+  /**
    * Require the consistent declaration of object literals. Defaults to explicit definitions.
    */
   useConsistentObjectDefinition?: UseConsistentObjectDefinitionConfiguration | null
+  /**
+   * Use static Response methods instead of new Response() constructor when possible.
+   */
+  useConsistentResponse?: RuleFixConfiguration | null
   /**
    * Require switch-case statements to be exhaustive.
    */
@@ -1901,9 +1952,17 @@ export interface Nursery {
    */
   useGoogleFontPreconnect?: RuleFixConfiguration | null
   /**
+   * Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.
+   */
+  useIndexOf?: RuleFixConfiguration | null
+  /**
    * Enforce consistent return values in iterable callbacks.
    */
   useIterableCallbackReturn?: RuleConfiguration | null
+  /**
+   * Enforces the use of with { type: "json" } for JSON module imports.
+   */
+  useJsonImportAttribute?: RuleFixConfiguration | null
   /**
    * Enforce specifying the name of GraphQL operations.
    */
@@ -1917,9 +1976,17 @@ export interface Nursery {
    */
   useNumericSeparators?: RuleFixConfiguration | null
   /**
+   * Prefer object spread over Object.assign() when constructing new objects.
+   */
+  useObjectSpread?: RuleFixConfiguration | null
+  /**
    * Enforce the consistent use of the radix argument when using parseInt().
    */
   useParseIntRadix?: RuleFixConfiguration | null
+  /**
+   * Enforce marking members as readonly if they are never modified outside the constructor.
+   */
+  useReadonlyClassProperties?: ReadonlyClassPropertiesConfiguration | null
   /**
    * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
    */
@@ -1932,6 +1999,10 @@ export interface Nursery {
    * Require a description parameter for the Symbol().
    */
   useSymbolDescription?: RuleConfiguration | null
+  /**
+   * Prevent the usage of static string literal id attribute on elements.
+   */
+  useUniqueElementIds?: RuleConfiguration | null
 }
 export interface RuleWithNoBitwiseOperatorsOptions {
   /**
@@ -2007,6 +2078,29 @@ export interface UseConsistentObjectDefinitionOptions {
    */
   syntax?: ObjectPropertySyntax & string
 }
+export interface RuleWithReadonlyClassPropertiesOptions {
+  /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: ReadonlyClassPropertiesOptions
+}
+/**
+ * Rule's options
+ */
+export interface ReadonlyClassPropertiesOptions {
+  /**
+   * When `true`, the keywords `public`, `protected`, and `private` are analyzed by the rule.
+   */
+  checkAllProperties?: boolean
+}
 export interface RuleWithUtilityClassSortingOptions {
   /**
    * The kind of the code actions emitted by the rule
@@ -2055,6 +2149,10 @@ export interface Performance {
    * Prevent usage of \<img> element in a Next.js project.
    */
   noImgElement?: RuleConfiguration | null
+  /**
+   * Disallow the use of namespace imports.
+   */
+  noNamespaceImport?: RuleConfiguration | null
   /**
    * Avoid re-export all.
    */
@@ -2122,14 +2220,6 @@ export interface NoBlankTargetOptions {
  */
 export interface Style {
   /**
-   * Disallow the use of arguments.
-   */
-  noArguments?: RuleConfiguration | null
-  /**
-   * Disallow comma operator.
-   */
-  noCommaOperator?: RuleConfiguration | null
-  /**
    * Disallow use of CommonJs module system in favor of ESM style imports.
    */
   noCommonJs?: RuleConfiguration | null
@@ -2170,10 +2260,6 @@ export interface Style {
    */
   noNamespace?: RuleConfiguration | null
   /**
-   * Disallow the use of namespace imports.
-   */
-  noNamespaceImport?: RuleConfiguration | null
-  /**
    * Disallow negation in the condition of an if statement if it has an else clause.
    */
   noNegationElse?: RuleFixConfiguration | null
@@ -2188,7 +2274,7 @@ export interface Style {
   /**
    * Disallow reassigning function parameters.
    */
-  noParameterAssign?: RuleConfiguration | null
+  noParameterAssign?: NoParameterAssignConfiguration | null
   /**
    * Disallow the use of parameter properties in class constructors.
    */
@@ -2237,6 +2323,10 @@ export interface Style {
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
+  /**
+   * Disallow Array constructors.
+   */
+  useArrayLiterals?: RuleFixConfiguration | null
   /**
    * Enforce the use of as const over literal type and type annotation.
    */
@@ -2346,10 +2436,6 @@ export interface Style {
    */
   useNumberNamespace?: RuleFixConfiguration | null
   /**
-   * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
-   */
-  useNumericLiterals?: RuleFixConfiguration | null
-  /**
    * Prevent extra closing tags for components without children.
    */
   useSelfClosingElements?: UseSelfClosingElementsConfiguration | null
@@ -2381,6 +2467,25 @@ export interface Style {
    * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
    */
   useTrimStartEnd?: RuleFixConfiguration | null
+}
+export interface RuleWithNoParameterAssignOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoParameterAssignOptions
+}
+/**
+ * Options for the rule `NoParameterAssign`
+ */
+export interface NoParameterAssignOptions {
+  /**
+   * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to `allow`.
+   */
+  propertyAssignment?: PropertyAssignmentMode & string
 }
 export interface RuleWithRestrictedGlobalsOptions {
   /**
@@ -2922,6 +3027,10 @@ export interface Suspicious {
    */
   noVar?: RuleFixConfiguration | null
   /**
+   * Disallow with statements in non-strict contexts.
+   */
+  noWith?: RuleConfiguration | null
+  /**
    * It enables the recommended rules for this group
    */
   recommended?: boolean | null
@@ -2969,10 +3078,6 @@ export interface Suspicious {
    * Enforce the use of the directive "use strict" in script files.
    */
   useStrictMode?: RuleFixConfiguration | null
-  /**
-   * This rule checks that the result of a typeof expression is compared to a valid value.
-   */
-  useValidTypeof?: RuleFixConfiguration | null
 }
 export interface RuleWithNoConfusingLabelsOptions {
   /**
@@ -3048,6 +3153,10 @@ export interface OverridePattern {
    */
   css?: CssConfiguration | null
   /**
+   * Specific configuration for the filesystem
+   */
+  files?: OverrideFilesConfiguration | null
+  /**
    * Specific configuration for the Json language
    */
   formatter?: OverrideFormatterConfiguration | null
@@ -3079,6 +3188,10 @@ export interface OverridePattern {
    * Specific configuration for the Json language
    */
   linter?: OverrideLinterConfiguration | null
+  /**
+   * Specific configuration for additional plugins
+   */
+  plugins?: Plugins | null
 }
 export interface OverrideAssistConfiguration {
   /**
@@ -3089,6 +3202,12 @@ export interface OverrideAssistConfiguration {
    * if `false`, it disables the feature and the assist won't be executed. `true` by default
    */
   enabled?: Bool | null
+}
+export interface OverrideFilesConfiguration {
+  /**
+   * File size limit in bytes
+   */
+  maxSize?: MaxSize | null
 }
 export interface OverrideFormatterConfiguration {
   /**
