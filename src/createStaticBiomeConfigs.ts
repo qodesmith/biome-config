@@ -1,12 +1,15 @@
 import {$} from 'bun'
+import path from 'node:path'
 
 import {Biome, Distribution} from '@biomejs/js-api'
 
 import {createBiomeConfig} from './createBiomeConfig'
 
+const projectPath = path.resolve(import.meta.dirname, '..')
 const biome = await Biome.create({distribution: Distribution.NODE})
+const {projectKey} = biome.openProject(projectPath)
 
-biome.applyConfiguration({
+biome.applyConfiguration(projectKey, {
   formatter: {
     indentStyle: 'space',
     indentWidth: 2,
@@ -15,7 +18,7 @@ biome.applyConfiguration({
 })
 
 function formatJson(codeString: string): string {
-  return biome.formatContent(codeString, {
+  return biome.formatContent(projectKey, codeString, {
     filePath: 'example.json',
   }).content
 }
