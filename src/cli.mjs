@@ -1,32 +1,16 @@
 #!/usr/bin/env node
 
+import {execSync} from 'node:child_process'
 import fs, {existsSync} from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import {parseArgs} from 'node:util'
 
-import {Biome, Distribution} from '@biomejs/js-api'
 import {mind as mindGradient} from 'gradient-string'
 import {parse} from 'jsonc-parser'
 import color from 'picocolors'
 
 import {files} from './commonBiomeSettings.mjs'
-
-const biome = await Biome.create({distribution: Distribution.NODE})
-
-biome.applyConfiguration({
-  formatter: {
-    indentStyle: 'space',
-    indentWidth: 2,
-    lineEnding: 'lf',
-  },
-})
-
-function formatJson(codeString) {
-  return biome.formatContent(codeString, {
-    filePath: 'example.json',
-  }).content
-}
 
 // biome-ignore-start lint/suspicious/noConsole: intentionally used
 
@@ -131,7 +115,7 @@ const biomeJsoncPath = path.resolve(process.cwd(), 'biome.jsonc')
 const isJsonc = args.values.jsonc
 const hasBiomeJson = fs.existsSync(biomeJsonPath)
 const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
-const formattedBiomeConfig = formatJson(JSON.stringify(biomeConfig, null, 2))
+const biomeConfigStr = JSON.stringify(biomeConfig)
 
 /*
   - jsonc: true
@@ -155,7 +139,7 @@ if (isJsonc) {
     )
   }
 
-  fs.writeFileSync(biomeJsoncPath, formattedBiomeConfig)
+  fs.writeFileSync(biomeJsoncPath, biomeConfigStr)
   console.log('-', 'created', color.cyan('biome.jsonc'))
 } else if (hasBiomeJson) {
   console.log(
@@ -168,7 +152,7 @@ if (isJsonc) {
     `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
   )
 } else {
-  fs.writeFileSync(biomeJsonPath, formattedBiomeConfig)
+  fs.writeFileSync(biomeJsonPath, biomeConfigStr)
   console.log('-', 'created', color.cyan('biome.json'))
 }
 
@@ -214,11 +198,9 @@ if (isVscode) {
       'source.organizeImports.biome': 'explicit',
     },
   }
-  const formattedVscodeSettings = formatJson(
-    JSON.stringify(vscodeSettings, null, 2)
-  )
+  const vscodeSettingsStr = JSON.stringify(vscodeSettings)
 
-  fs.writeFileSync(vscodeSettingsPath, formattedVscodeSettings)
+  fs.writeFileSync(vscodeSettingsPath, vscodeSettingsStr)
   console.log(
     '-',
     currentVscodeSettings ? 'updated' : 'created',
@@ -240,8 +222,24 @@ pkgJson.scripts = {
   'format:fix': 'biome format --write .',
 }
 
-const formattedPkgJson = formatJson(JSON.stringify(pkgJson, null, 2))
-fs.writeFileSync(pkgJsonPath, formattedPkgJson)
+const pkgJsonStr = JSON.stringify(pkgJson)
+fs.writeFileSync(pkgJsonPath, pkgJsonStr)
+
+//////////////////
+// FORMAT FILES //
+//////////////////
+
+const biomeExecPath = path.resolve(process.cwd(), 'biome')
+const filesToFormat = [
+  biomeJsoncPath,
+  biomeJsonPath,
+  vscodeSettingsPath,
+  pkgJsonPath,
+]
+  .filter(filePath => existsSync(filePath))
+  .join(' ')
+
+execSync(`${biomeExecPath} format --write ${filesToFormat}`)
 
 console.log('-', 'updated', color.cyan('package.json'), 'scripts')
 console.log('')

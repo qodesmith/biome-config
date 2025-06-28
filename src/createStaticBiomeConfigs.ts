@@ -1,33 +1,13 @@
 import {$} from 'bun'
 import path from 'node:path'
 
-import {Biome, Distribution} from '@biomejs/js-api'
-
 import {createBiomeConfig} from './createBiomeConfig'
-
-const projectPath = path.resolve(import.meta.dirname, '..')
-const biome = await Biome.create({distribution: Distribution.NODE})
-const {projectKey} = biome.openProject(projectPath)
-
-biome.applyConfiguration(projectKey, {
-  formatter: {
-    indentStyle: 'space',
-    indentWidth: 2,
-    lineEnding: 'lf',
-  },
-})
-
-function formatJson(codeString: string): string {
-  return biome.formatContent(projectKey, codeString, {
-    filePath: 'example.json',
-  }).content
-}
 
 const defaultConfig = createBiomeConfig({type: 'default'})
 const reactConfig = createBiomeConfig({type: 'react'})
 
-const defaultConfigStr = formatJson(JSON.stringify(defaultConfig, null, 2))
-const reactConfigStr = formatJson(JSON.stringify(reactConfig, null, 2))
+const defaultConfigStr = JSON.stringify(defaultConfig)
+const reactConfigStr = JSON.stringify(reactConfig)
 
 await $`rm -rf ./dist`.quiet().nothrow()
 
@@ -37,3 +17,11 @@ await $`rm -rf ./dist`.quiet().nothrow()
  */
 await Bun.write('./dist/biomeConfig.json', defaultConfigStr)
 await Bun.write('./dist/biomeConfigReact.json', reactConfigStr)
+
+// Now that configs have been written to disk, use them to format themselves.
+const projectPath = path.resolve(import.meta.dirname, '..')
+const configPaths = ['./dist/biomeConfig.json', './dist/biomeConfigReact.json']
+  .map(filePath => path.resolve(projectPath, filePath))
+  .join(' ')
+
+await $`biome format --write ${{raw: configPaths}}`
