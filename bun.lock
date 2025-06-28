@@ -5,7 +5,6 @@
       "name": "@qodestack/biome-config",
       "dependencies": {
         "@biomejs/biome": "^2.0.5",
-        "@biomejs/js-api": "^1.0.0",
         "gradient-string": "^3.0.0",
         "jsonc-parser": "^3.3.1",
         "picocolors": "^1.1.1",
@@ -21,9 +20,6 @@
         "react-dom": "^19.1.0",
         "release-it": "^19.0.3",
         "tailwindcss": "^4.1.10",
-      },
-      "peerDependencies": {
-        "@biomejs/wasm-nodejs": "^2.0.5",
       },
     },
   },
@@ -47,10 +43,6 @@
     "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@2.0.5", "", { "os": "win32", "cpu": "arm64" }, "sha512-CP2wKQB+gh8HdJTFKYRFETqReAjxlcN9AlYDEoye8v2eQp+L9v+PUeDql/wsbaUhSsLR0sjj3PtbBtt+02AN3A=="],
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.0.5", "", { "os": "win32", "cpu": "x64" }, "sha512-Sw3rz2m6bBADeQpr3+MD7Ch4E1l15DTt/+dfqKnwkm3cn4BrYwnArmvKeZdVsFRDjMyjlKIP88bw1r7o+9aqzw=="],
-
-    "@biomejs/js-api": ["@biomejs/js-api@1.0.0", "", { "peerDependencies": { "@biomejs/wasm-bundler": "^2.0.0", "@biomejs/wasm-nodejs": "^2.0.0", "@biomejs/wasm-web": "^2.0.0" }, "optionalPeers": ["@biomejs/wasm-bundler", "@biomejs/wasm-nodejs", "@biomejs/wasm-web"] }, "sha512-69OfQ7+09AtiCIg+k+aU3rEsGit5o/SJWCS3BeBH/2nJYdJGi0cIx+ybka8i1EK69aNcZxYO1y1iAAEmYMq1HA=="],
-
-    "@biomejs/wasm-nodejs": ["@biomejs/wasm-nodejs@2.0.5", "", {}, "sha512-pihpBMylewgDdGFZHRkgmc3OajuGIJPXhvfYuKCNK/CWyJMrYEFmPKs8Iq1kY0sYMmGlTbD4K2udV03KYa+r0Q=="],
 
     "@inquirer/checkbox": ["@inquirer/checkbox@4.1.8", "", { "dependencies": { "@inquirer/core": "^10.1.13", "@inquirer/figures": "^1.0.12", "@inquirer/type": "^3.0.7", "ansi-escapes": "^4.3.2", "yoctocolors-cjs": "^2.1.2" }, "peerDependencies": { "@types/node": ">=18" }, "optionalPeers": ["@types/node"] }, "sha512-d/QAsnwuHX2OPolxvYcgSj7A9DO9H6gVOy2DvBTx+P2LH2iRTo/RSGV3iwCzW024nP9hw98KIuDmdyhZQj1UQg=="],
 
