@@ -229,7 +229,7 @@ fs.writeFileSync(pkgJsonPath, pkgJsonStr)
 // FORMAT FILES //
 //////////////////
 
-const biomeExecPath = path.resolve(process.cwd(), 'biome')
+const biomeExecPath = path.resolve(process.cwd(), './node_modules/.bin/biome')
 const filesToFormat = [
   biomeJsoncPath,
   biomeJsonPath,
