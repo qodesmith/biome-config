@@ -1071,6 +1071,14 @@
       "url": "https://biomejs.dev/linter/rules/no-destructured-props/"
     },
     {
+      "name": "noExcessiveLinesPerFunction",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Restrict the number of lines of code in a function.",
+      "url": "https://biomejs.dev/linter/rules/no-excessive-lines-per-function/"
+    },
+    {
       "name": "noFloatingPromises",
       "recommended": false,
       "fix": "unsafe",
@@ -1087,6 +1095,14 @@
       "url": "https://biomejs.dev/linter/rules/no-global-dirname-filename/"
     },
     {
+      "name": "noImplicitCoercion",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow shorthand type conversions.",
+      "url": "https://biomejs.dev/linter/rules/no-implicit-coercion/"
+    },
+    {
       "name": "noImportCycles",
       "recommended": false,
       "fix": "none",
@@ -1101,6 +1117,22 @@
       "severity": "warn",
       "description": "Disallow the use of the !important style.",
       "url": "https://biomejs.dev/linter/rules/no-important-styles/"
+    },
+    {
+      "name": "noMagicNumbers",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Reports usage of \"magic numbers\" — numbers used directly instead of being assigned to named constants.",
+      "url": "https://biomejs.dev/linter/rules/no-magic-numbers/"
+    },
+    {
+      "name": "noMisusedPromises",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow Promises to be used in places where they are almost certainly a mistake.",
+      "url": "https://biomejs.dev/linter/rules/no-misused-promises/"
     },
     {
       "name": "noNestedComponentDefinitions",
@@ -1165,6 +1197,14 @@
       "severity": "warn",
       "description": "Prevents the use of the TypeScript directive @ts-ignore.",
       "url": "https://biomejs.dev/linter/rules/no-ts-ignore/"
+    },
+    {
+      "name": "noUnassignedVariables",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow let or var variables that are read but never assigned.",
+      "url": "https://biomejs.dev/linter/rules/no-unassigned-variables/"
     },
     {
       "name": "noUnknownAtRule",
@@ -1373,6 +1413,14 @@
       "severity": "info",
       "description": "Require a description parameter for the Symbol().",
       "url": "https://biomejs.dev/linter/rules/use-symbol-description/"
+    },
+    {
+      "name": "useUnifiedTypeSignature",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow overload signatures that can be unified into a single signature.",
+      "url": "https://biomejs.dev/linter/rules/use-unified-type-signature/"
     },
     {
       "name": "useUniqueElementIds",
@@ -1974,6 +2022,14 @@
     }
   ],
   "suspicious": [
+    {
+      "name": "noAlert",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow the use of alert, confirm, and prompt.",
+      "url": "https://biomejs.dev/linter/rules/no-alert/"
+    },
     {
       "name": "noApproximativeNumericConstant",
       "recommended": true,
