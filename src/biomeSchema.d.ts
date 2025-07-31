@@ -304,6 +304,7 @@ export type NoNoninteractiveElementInteractionsConfiguration =
   | RulePlainConfiguration
   | RuleWithNoNoninteractiveElementInteractionsOptions
 export type NoProcessGlobalConfiguration = RulePlainConfiguration | RuleWithNoProcessGlobalOptions
+export type NoQuickfixBiomeConfiguration = RulePlainConfiguration | RuleWithNoQuickfixBiomeOptions
 export type NoReactPropAssignConfiguration = RulePlainConfiguration | RuleWithNoReactPropAssignOptions
 export type NoRestrictedElementsConfiguration = RulePlainConfiguration | RuleWithNoRestrictedElementsOptions
 export type NoSecretsConfiguration = RulePlainConfiguration | RuleWithNoSecretsOptions
@@ -316,6 +317,8 @@ export type NoUnwantedPolyfillioConfiguration = RulePlainConfiguration | RuleWit
 export type NoUselessBackrefInRegexConfiguration = RulePlainConfiguration | RuleWithNoUselessBackrefInRegexOptions
 export type NoUselessEscapeInStringConfiguration = RulePlainConfiguration | RuleWithNoUselessEscapeInStringOptions
 export type NoUselessUndefinedConfiguration = RulePlainConfiguration | RuleWithNoUselessUndefinedOptions
+export type NoVueReservedKeysConfiguration = RulePlainConfiguration | RuleWithNoVueReservedKeysOptions
+export type NoVueReservedPropsConfiguration = RulePlainConfiguration | RuleWithNoVueReservedPropsOptions
 export type UseAdjacentGetterSetterConfiguration = RulePlainConfiguration | RuleWithUseAdjacentGetterSetterOptions
 export type UseConsistentObjectDefinitionConfiguration =
   | RulePlainConfiguration
@@ -385,6 +388,7 @@ export type Scope = 'any' | 'global'
 export type UseNumericSeparatorsConfiguration = RulePlainConfiguration | RuleWithUseNumericSeparatorsOptions
 export type UseObjectSpreadConfiguration = RulePlainConfiguration | RuleWithUseObjectSpreadOptions
 export type UseParseIntRadixConfiguration = RulePlainConfiguration | RuleWithUseParseIntRadixOptions
+export type UseReactFunctionComponentsConfiguration = RulePlainConfiguration | RuleWithUseReactFunctionComponentsOptions
 export type UseReadonlyClassPropertiesConfiguration = RulePlainConfiguration | RuleWithUseReadonlyClassPropertiesOptions
 export type UseSingleJsDocAsteriskConfiguration = RulePlainConfiguration | RuleWithUseSingleJsDocAsteriskOptions
 export type UseSortedClassesConfiguration = RulePlainConfiguration | RuleWithUseSortedClassesOptions
@@ -3758,6 +3762,10 @@ export interface Nursery {
    */
   noProcessGlobal?: NoProcessGlobalConfiguration | null
   /**
+   * Disallow the use if quickfix.biome inside editor settings file.
+   */
+  noQuickfixBiome?: NoQuickfixBiomeConfiguration | null
+  /**
    * Disallow assigning to React component props.
    */
   noReactPropAssign?: NoReactPropAssignConfiguration | null
@@ -3805,6 +3813,14 @@ export interface Nursery {
    * Disallow the use of useless undefined.
    */
   noUselessUndefined?: NoUselessUndefinedConfiguration | null
+  /**
+   * Disallow reserved keys in Vue component data and computed properties.
+   */
+  noVueReservedKeys?: NoVueReservedKeysConfiguration | null
+  /**
+   * Disallow reserved names to be used as props.
+   */
+  noVueReservedProps?: NoVueReservedPropsConfiguration | null
   /**
    * It enables the recommended rules for this group
    */
@@ -3873,6 +3889,10 @@ export interface Nursery {
    * Enforce the consistent use of the radix argument when using parseInt().
    */
   useParseIntRadix?: UseParseIntRadixConfiguration | null
+  /**
+   * Enforce that components are defined as functions and never as classes.
+   */
+  useReactFunctionComponents?: UseReactFunctionComponentsConfiguration | null
   /**
    * Enforce marking members as readonly if they are never modified outside the constructor.
    */
@@ -4105,6 +4125,26 @@ export interface RuleWithNoProcessGlobalOptions {
   options?: NoProcessGlobalOptions
 }
 export interface NoProcessGlobalOptions {}
+export interface RuleWithNoQuickfixBiomeOptions {
+  /**
+   * The kind of the code actions emitted by the rule
+   */
+  fix?: FixKind | null
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoQuickfixBiomeOptions
+}
+export interface NoQuickfixBiomeOptions {
+  /**
+   * A list of additional JSON files that should be checked.
+   */
+  additionalPaths?: string[]
+}
 export interface RuleWithNoReactPropAssignOptions {
   /**
    * The severity of the emitted diagnostics by the rule
@@ -4262,6 +4302,28 @@ export interface RuleWithNoUselessUndefinedOptions {
   options?: NoUselessUndefinedOptions
 }
 export interface NoUselessUndefinedOptions {}
+export interface RuleWithNoVueReservedKeysOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoVueReservedKeysOptions
+}
+export interface NoVueReservedKeysOptions {}
+export interface RuleWithNoVueReservedPropsOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: NoVueReservedPropsOptions
+}
+export interface NoVueReservedPropsOptions {}
 export interface RuleWithUseAdjacentGetterSetterOptions {
   /**
    * The severity of the emitted diagnostics by the rule
@@ -4527,6 +4589,17 @@ export interface RuleWithUseParseIntRadixOptions {
   options?: UseParseIntRadixOptions
 }
 export interface UseParseIntRadixOptions {}
+export interface RuleWithUseReactFunctionComponentsOptions {
+  /**
+   * The severity of the emitted diagnostics by the rule
+   */
+  level: RulePlainConfiguration
+  /**
+   * Rule's options
+   */
+  options?: UseReactFunctionComponentsOptions
+}
+export interface UseReactFunctionComponentsOptions {}
 export interface RuleWithUseReadonlyClassPropertiesOptions {
   /**
    * The kind of the code actions emitted by the rule
@@ -4622,7 +4695,12 @@ export interface RuleWithUseUniqueElementIdsOptions {
    */
   options?: UseUniqueElementIdsOptions
 }
-export interface UseUniqueElementIdsOptions {}
+export interface UseUniqueElementIdsOptions {
+  /**
+   * Component names that accept an `id` prop that does not translate to a DOM element id.
+   */
+  excludedComponents?: string[]
+}
 /**
  * A list of rules that belong to this group
  */

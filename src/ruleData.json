@@ -1159,6 +1159,14 @@
       "url": "https://biomejs.dev/linter/rules/no-process-global/"
     },
     {
+      "name": "noQuickfixBiome",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow the use if quickfix.biome inside editor settings file.",
+      "url": "https://biomejs.dev/linter/rules/no-quickfix-biome/"
+    },
+    {
       "name": "noReactPropAssign",
       "recommended": false,
       "fix": "none",
@@ -1253,6 +1261,22 @@
       "severity": "info",
       "description": "Disallow the use of useless undefined.",
       "url": "https://biomejs.dev/linter/rules/no-useless-undefined/"
+    },
+    {
+      "name": "noVueReservedKeys",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow reserved keys in Vue component data and computed properties.",
+      "url": "https://biomejs.dev/linter/rules/no-vue-reserved-keys/"
+    },
+    {
+      "name": "noVueReservedProps",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow reserved names to be used as props.",
+      "url": "https://biomejs.dev/linter/rules/no-vue-reserved-props/"
     },
     {
       "name": "useAdjacentGetterSetter",
@@ -1381,6 +1405,14 @@
       "severity": "info",
       "description": "Enforce the consistent use of the radix argument when using parseInt().",
       "url": "https://biomejs.dev/linter/rules/use-parse-int-radix/"
+    },
+    {
+      "name": "useReactFunctionComponents",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforce that components are defined as functions and never as classes.",
+      "url": "https://biomejs.dev/linter/rules/use-react-function-components/"
     },
     {
       "name": "useReadonlyClassProperties",

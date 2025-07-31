@@ -10,6 +10,7 @@ import type {
   ImportMatcher,
   NegatablePredefinedSourceMatcher,
   SeverityOrGroupFor_Correctness,
+  SeverityOrGroupFor_Nursery,
 } from './biomeSchema'
 
 import pkgJson from '../package.json'
@@ -34,6 +35,10 @@ export function createBiomeConfig({
     },
     useHookAtTopLevel: 'on',
     useJsxKeyInIterable: 'on',
+  }
+
+  const nurseryReact: SeverityOrGroupFor_Nursery = {
+    useReactFunctionComponents: 'error',
   }
 
   const biomeVersion = pkgJson.dependencies['@biomejs/biome'].replace('^', '')
@@ -262,6 +267,7 @@ export function createBiomeConfig({
          * find themselves into other groups.
          */
         nursery: {
+          ...(type === 'react' ? nurseryReact : {}),
           noBitwiseOperators: 'warn',
           noConstantBinaryExpression: 'warn',
           noFloatingPromises: 'warn',
