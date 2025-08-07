@@ -143,12 +143,11 @@ export function createBiomeConfig({
     },
     // graphql: {},
     // grit: {},
-
-    /**
-     * https://github.com/biomejs/biome/issues/4726
-     * HTML parsing and formatting not available yet.
-     */
-    // html: {},
+    html: {
+      formatter: {
+        enabled: true,
+      },
+    },
     javascript: {
       formatter: {
         /**
@@ -201,23 +200,28 @@ export function createBiomeConfig({
           noExtraBooleanCast: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUselessFragments: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUselessStringConcat: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUselessSwitchCase: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUselessUndefinedInitialization: 'on',
           useLiteralKeys: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           useSimplifiedLogicExpression: 'warn',
         },
@@ -229,6 +233,7 @@ export function createBiomeConfig({
           noInvalidBuiltinInstantiation: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUndeclaredDependencies: {
             level: 'error',
@@ -242,6 +247,7 @@ export function createBiomeConfig({
           noUnusedImports: {
             level: 'warn',
             fix: 'none',
+            options: {},
           },
           noUnusedVariables: {
             level: 'warn',
@@ -253,13 +259,13 @@ export function createBiomeConfig({
           useIsNan: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
-
-          // Not available in 2.0.0-beta.4
-          // useValidTypeof: {
-          //   level: 'on',
-          //   fix: 'safe',
-          // },
+          useValidTypeof: {
+            level: 'on',
+            fix: 'safe',
+            options: {},
+          },
         },
 
         /**
@@ -319,10 +325,12 @@ export function createBiomeConfig({
           noUnusedTemplateLiteral: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noUselessElse: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           noYodaExpression: 'warn',
           useAsConstAssertion: 'warn',
@@ -339,6 +347,7 @@ export function createBiomeConfig({
           useConsistentBuiltinInstantiation: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useCollapsedIf: 'warn',
           useConsistentCurlyBraces: 'warn',
@@ -346,17 +355,20 @@ export function createBiomeConfig({
           useDefaultParameterLast: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useDefaultSwitchClause: 'warn',
           useExponentiationOperator: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           useExportType: 'error',
           useForOf: 'warn',
           useFragmentSyntax: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useImportType: {
             level: 'error',
@@ -390,23 +402,28 @@ export function createBiomeConfig({
           useNodejsImportProtocol: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useSelfClosingElements: 'warn',
           useShorthandAssign: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useSingleVarDeclarator: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useTemplate: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
           useThrowNewError: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
         },
 
@@ -421,10 +438,12 @@ export function createBiomeConfig({
           noGlobalIsFinite: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noGlobalIsNan: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noIrregularWhitespace: 'error',
           noTemplateCurlyInString: 'on',
@@ -432,6 +451,7 @@ export function createBiomeConfig({
           noUnsafeNegation: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           noVar: 'on',
           useAdjacentOverloadSignatures: 'on',
@@ -439,10 +459,12 @@ export function createBiomeConfig({
           useIsArray: {
             level: 'on',
             fix: 'safe',
+            options: {},
           },
           useNumberToFixedDigitsArgument: {
             level: 'warn',
             fix: 'safe',
+            options: {},
           },
         },
       },
