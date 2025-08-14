@@ -19,4 +19,5 @@ if (!hasCorrectVersion) {
   process.exit(1)
 }
 
+// biome-ignore lint/suspicious/noConsole: it's ok
 console.log('biome.jsonc has the correct schema version')

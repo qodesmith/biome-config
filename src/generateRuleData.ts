@@ -164,21 +164,23 @@ const ruleDataOnDisk = (await Bun.file(
   // In case the file doesn't exist on disk (1st time running this script).
   .catch(() => ({}))) as RuleData
 const isFirstRun = Object.keys(ruleDataOnDisk).length === 0
-const ruleToGroupOnDisk = Object.entries(ruleDataOnDisk).reduce<Record<string, RuleGroup>>(
-  (acc, [groupName, rules]) => {
-    rules.forEach(rule => {
-      acc[rule.name] = groupName as RuleGroup
-    })
+const ruleToGroupOnDisk = Object.entries(ruleDataOnDisk).reduce<
+  Record<string, RuleGroup>
+>((acc, [groupName, rules]) => {
+  rules.forEach(rule => {
+    acc[rule.name] = groupName as RuleGroup
+  })
 
-    return acc
-  }, {}
-)
+  return acc
+}, {})
 
 const rulesOnDisk = new Set(
   isFirstRun
     ? []
     : Object.values(ruleDataOnDisk).reduce((acc, groupRules) => {
-        groupRules.forEach(rule => acc.push(rule.name))
+        groupRules.forEach(rule => {
+          acc.push(rule.name)
+        })
         return acc
       }, [] as string[])
 )
@@ -187,13 +189,20 @@ const currentRules = new Set(
   isFirstRun
     ? []
     : Object.values(ruleData).reduce((acc, groupRules) => {
-        groupRules.forEach(rule => acc.push(rule.name))
+        groupRules.forEach(rule => {
+          acc.push(rule.name)
+        })
         return acc
       }, [] as string[])
 )
 
 type RuleChange = {name: string; url: string; group: RuleGroup}
-type PromotedRule = {name: string; url: string; oldGroup: RuleGroup; newGroup: RuleGroup}
+type PromotedRule = {
+  name: string
+  url: string
+  oldGroup: RuleGroup
+  newGroup: RuleGroup
+}
 
 const newRules: RuleChange[] = []
 currentRules.forEach(name => {
@@ -228,7 +237,7 @@ rulesOnDisk.forEach(name => {
       name,
       url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`,
       oldGroup: groupOnDisk,
-      newGroup: currentGroup
+      newGroup: currentGroup,
     })
   }
 })
@@ -247,4 +256,5 @@ await Bun.write(
   `${JSON.stringify({newRules, deletedRules, promotedRules}, null, 2)}\n`
 )
 
+// biome-ignore lint/suspicious/noConsole: it's ok
 console.log('Rule generation complete!')
