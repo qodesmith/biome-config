@@ -158,6 +158,15 @@ const ruleDataOnDisk = (await Bun.file(
   // In case the file doesn't exist on disk (1st time running this script).
   .catch(() => ({}))) as RuleData
 const isFirstRun = Object.keys(ruleDataOnDisk).length === 0
+const ruleToGroupOnDisk = Object.entries(ruleDataOnDisk).reduce<Record<string, RuleGroup>>(
+  (acc, [groupName, rules]) => {
+    rules.forEach(rule => {
+      acc[rule.name] = groupName as RuleGroup
+    })
+
+    return acc
+  }, {}
+)
 
 const rulesOnDisk = new Set(
   isFirstRun
@@ -190,12 +199,13 @@ currentRules.forEach(name => {
   }
 })
 
-const deletedRules: Omit<RuleChange, 'group'>[] = []
+const deletedRules: RuleChange[] = []
 rulesOnDisk.forEach(name => {
   if (!currentRules.has(name)) {
     deletedRules.push({
       name,
       url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`,
+      group: ruleToGroupOnDisk[name],
     })
   }
 })
