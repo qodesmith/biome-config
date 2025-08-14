@@ -25,6 +25,7 @@ export function createBiomeConfig({
   type: 'default' | 'react'
 }): Configuration {
   const correctnessReact: SeverityOrGroupFor_Correctness = {
+    noReactPropAssignments: 'error',
     useExhaustiveDependencies: {
       level: 'on',
       fix: 'safe',
@@ -190,6 +191,7 @@ export function createBiomeConfig({
         // Rules focused on preventing accessibility problems.
         a11y: {
           noAutofocus: 'off',
+          noNoninteractiveElementInteractions: 'warn',
           noStaticElementInteractions: 'warn',
           useAriaPropsSupportedByRole: 'on',
           useValidAutocomplete: 'warn',
@@ -230,11 +232,13 @@ export function createBiomeConfig({
         correctness: {
           ...(type === 'react' ? correctnessReact : {}),
           noConstantMathMinMaxClamp: 'warn',
+          noGlobalDirnameFilename: 'error',
           noInvalidBuiltinInstantiation: {
             level: 'on',
             fix: 'safe',
             options: {},
           },
+          noProcessGlobal: 'warn',
           noUndeclaredDependencies: {
             level: 'error',
             options: {
@@ -261,6 +265,7 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          useParseIntRadix: 'warn',
           useValidTypeof: {
             level: 'on',
             fix: 'safe',
@@ -274,17 +279,9 @@ export function createBiomeConfig({
          */
         nursery: {
           ...(type === 'react' ? nurseryReact : {}),
-          noBitwiseOperators: 'warn',
-          noConstantBinaryExpression: 'warn',
           noFloatingPromises: 'warn',
-          noGlobalDirnameFilename: 'error',
           noImportCycles: 'on',
-          noNoninteractiveElementInteractions: 'warn',
-          noProcessGlobal: 'warn',
-          noTsIgnore: 'on',
           useExhaustiveSwitchCases: 'warn',
-          useParseIntRadix: 'warn',
-          useNumericSeparators: 'on',
           useSortedClasses: {
             level: 'info',
             fix: 'safe',
@@ -294,7 +291,6 @@ export function createBiomeConfig({
               functions: ['clsx'],
             },
           },
-          useSymbolDescription: 'on',
         },
 
         /**
@@ -351,6 +347,12 @@ export function createBiomeConfig({
           },
           useCollapsedIf: 'warn',
           useConsistentCurlyBraces: 'warn',
+          useConsistentObjectDefinitions: {
+            level: 'info',
+            options: {
+              syntax: 'shorthand',
+            },
+          },
           useConst: 'warn',
           useDefaultParameterLast: {
             level: 'warn',
@@ -370,6 +372,7 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          useGroupedAccessorPairs: 'on',
           useImportType: {
             level: 'error',
             options: {
@@ -404,6 +407,7 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          useNumericSeparators: 'on',
           useSelfClosingElements: 'warn',
           useShorthandAssign: {
             level: 'warn',
@@ -415,6 +419,7 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          useSymbolDescription: 'on',
           useTemplate: {
             level: 'warn',
             fix: 'safe',
@@ -430,7 +435,9 @@ export function createBiomeConfig({
         // Rules that detect code that is likely to be incorrect or useless.
         suspicious: {
           noArrayIndexKey: 'warn',
+          noBitwiseOperators: 'warn',
           noConsole: 'warn',
+          noConstantBinaryExpressions: 'warn',
           noDocumentCookie: 'on',
           noDuplicateElseIf: 'on',
           noDuplicateTestHooks: 'error',
@@ -462,6 +469,11 @@ export function createBiomeConfig({
             options: {},
           },
           useNumberToFixedDigitsArgument: {
+            level: 'warn',
+            fix: 'safe',
+            options: {},
+          },
+          useStaticResponseMethods: {
             level: 'warn',
             fix: 'safe',
             options: {},

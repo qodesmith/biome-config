@@ -4,7 +4,7 @@
   "root": true,
   "extends": ["./dist/biomeConfigReact.json"],
   "files": {
-    "includes": ["**", "!src/biomeSchema.d.ts", "!bun.lock", "!node_modules/**"]
+    "includes": ["**", "!src/biomeSchema.d.ts", "!bun.lock", "!node_modules"]
   },
   "vcs": {
     "enabled": false
