@@ -18,3 +18,5 @@ if (!hasCorrectVersion) {
   )
   process.exit(1)
 }
+
+console.log('biome.jsonc has the correct schema version')

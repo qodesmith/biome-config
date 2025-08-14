@@ -246,3 +246,5 @@ await Bun.write(
   path.resolve(import.meta.dirname, './ruleChanges.json'),
   `${JSON.stringify({newRules, deletedRules, promotedRules}, null, 2)}\n`
 )
+
+console.log('Rule generation complete!')

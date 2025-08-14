@@ -24,11 +24,11 @@
   "scripts": {
     "dev": "bun --hot react-app/index.tsx",
     "build": "bun run build:schema-check && bun run build:types && bun run build:rules && bun run ./src/createStaticBiomeConfigs.ts && bun run build:check && bun run build:tsc",
-    "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi",
+    "build:schema-check": "bun run ./src/checkSchemaInBiomeConfig.ts",
+    "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi && echo \"Biome types build complete!\"",
+    "build:rules": "bun run ./src/generateRuleData.ts",
     "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
     "build:tsc": "tsc -p tsconfig.build.json",
-    "build:rules": "bun run ./src/generateRuleData.ts",
-    "build:schema-check": "bun run ./src/checkSchemaInBiomeConfig.ts",
     "check": "biome check",
     "check:fix": "biome check --write .",
     "release": "bun run build && release-it"
