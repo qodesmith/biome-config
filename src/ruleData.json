@@ -65,6 +65,14 @@
       "url": "https://biomejs.dev/linter/rules/no-label-without-control/"
     },
     {
+      "name": "noNoninteractiveElementInteractions",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow use event handlers on non-interactive elements.",
+      "url": "https://biomejs.dev/linter/rules/no-noninteractive-element-interactions/"
+    },
+    {
       "name": "noNoninteractiveElementToInteractiveRole",
       "recommended": true,
       "fix": "unsafe",
@@ -339,6 +347,14 @@
       "url": "https://biomejs.dev/linter/rules/no-excessive-cognitive-complexity/"
     },
     {
+      "name": "noExcessiveLinesPerFunction",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Restrict the number of lines of code in a function.",
+      "url": "https://biomejs.dev/linter/rules/no-excessive-lines-per-function/"
+    },
+    {
       "name": "noExcessiveNestedTestSuites",
       "recommended": false,
       "fix": "none",
@@ -369,6 +385,22 @@
       "severity": "warn",
       "description": "Prefer for...of statement instead of Array.forEach.",
       "url": "https://biomejs.dev/linter/rules/no-for-each/"
+    },
+    {
+      "name": "noImplicitCoercions",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow shorthand type conversions.",
+      "url": "https://biomejs.dev/linter/rules/no-implicit-coercions/"
+    },
+    {
+      "name": "noImportantStyles",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "warn",
+      "description": "Disallow the use of the !important style.",
+      "url": "https://biomejs.dev/linter/rules/no-important-styles/"
     },
     {
       "name": "noStaticOnlyClass",
@@ -547,6 +579,14 @@
       "url": "https://biomejs.dev/linter/rules/use-flat-map/"
     },
     {
+      "name": "useIndexOf",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.",
+      "url": "https://biomejs.dev/linter/rules/use-index-of/"
+    },
+    {
       "name": "useLiteralKeys",
       "recommended": true,
       "fix": "unsafe",
@@ -661,6 +701,14 @@
       "url": "https://biomejs.dev/linter/rules/no-empty-pattern/"
     },
     {
+      "name": "noGlobalDirnameFilename",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow the use of __dirname and __filename in the global scope.",
+      "url": "https://biomejs.dev/linter/rules/no-global-dirname-filename/"
+    },
+    {
       "name": "noGlobalObjectCalls",
       "recommended": true,
       "fix": "none",
@@ -733,6 +781,14 @@
       "url": "https://biomejs.dev/linter/rules/no-missing-var-function/"
     },
     {
+      "name": "noNestedComponentDefinitions",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallows defining React components inside other components.",
+      "url": "https://biomejs.dev/linter/rules/no-nested-component-definitions/"
+    },
+    {
       "name": "noNodejsModules",
       "recommended": false,
       "fix": "none",
@@ -765,12 +821,36 @@
       "url": "https://biomejs.dev/linter/rules/no-private-imports/"
     },
     {
+      "name": "noProcessGlobal",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow the use of process global.",
+      "url": "https://biomejs.dev/linter/rules/no-process-global/"
+    },
+    {
+      "name": "noReactPropAssignments",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow assigning to React component props.",
+      "url": "https://biomejs.dev/linter/rules/no-react-prop-assignments/"
+    },
+    {
       "name": "noRenderReturnValue",
       "recommended": false,
       "fix": "none",
       "severity": "error",
       "description": "Prevent the usage of the return value of React.render.",
       "url": "https://biomejs.dev/linter/rules/no-render-return-value/"
+    },
+    {
+      "name": "noRestrictedElements",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow the use of configured elements.",
+      "url": "https://biomejs.dev/linter/rules/no-restricted-elements/"
     },
     {
       "name": "noSelfAssign",
@@ -787,6 +867,14 @@
       "severity": "error",
       "description": "Disallow returning a value from a setter",
       "url": "https://biomejs.dev/linter/rules/no-setter-return/"
+    },
+    {
+      "name": "noSolidDestructuredProps",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow destructuring props inside JSX components in Solid projects.",
+      "url": "https://biomejs.dev/linter/rules/no-solid-destructured-props/"
     },
     {
       "name": "noStringCaseMismatch",
@@ -981,6 +1069,14 @@
       "url": "https://biomejs.dev/linter/rules/use-exhaustive-dependencies/"
     },
     {
+      "name": "useGraphqlNamedOperations",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "error",
+      "description": "Enforce specifying the name of GraphQL operations.",
+      "url": "https://biomejs.dev/linter/rules/use-graphql-named-operations/"
+    },
+    {
       "name": "useHookAtTopLevel",
       "recommended": false,
       "fix": "none",
@@ -1005,12 +1101,44 @@
       "url": "https://biomejs.dev/linter/rules/use-is-nan/"
     },
     {
+      "name": "useJsonImportAttributes",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Enforces the use of with { type: \"json\" } for JSON module imports.",
+      "url": "https://biomejs.dev/linter/rules/use-json-import-attributes/"
+    },
+    {
       "name": "useJsxKeyInIterable",
       "recommended": false,
       "fix": "none",
       "severity": "error",
       "description": "Disallow missing key props in iterators/collection literals.",
       "url": "https://biomejs.dev/linter/rules/use-jsx-key-in-iterable/"
+    },
+    {
+      "name": "useParseIntRadix",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce the consistent use of the radix argument when using parseInt().",
+      "url": "https://biomejs.dev/linter/rules/use-parse-int-radix/"
+    },
+    {
+      "name": "useSingleJsDocAsterisk",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce JSDoc comment lines to start with a single asterisk, except for the first one.",
+      "url": "https://biomejs.dev/linter/rules/use-single-js-doc-asterisk/"
+    },
+    {
+      "name": "useUniqueElementIds",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Prevent the usage of static string literal id attribute on elements.",
+      "url": "https://biomejs.dev/linter/rules/use-unique-element-ids/"
     },
     {
       "name": "useValidForDirection",
@@ -1039,68 +1167,12 @@
   ],
   "nursery": [
     {
-      "name": "noAwaitInLoop",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow await inside loops.",
-      "url": "https://biomejs.dev/linter/rules/no-await-in-loop/"
-    },
-    {
-      "name": "noBitwiseOperators",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow bitwise operators.",
-      "url": "https://biomejs.dev/linter/rules/no-bitwise-operators/"
-    },
-    {
-      "name": "noConstantBinaryExpression",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow expressions where the operation doesn't affect the value",
-      "url": "https://biomejs.dev/linter/rules/no-constant-binary-expression/"
-    },
-    {
-      "name": "noDestructuredProps",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow destructuring props inside JSX components in Solid projects.",
-      "url": "https://biomejs.dev/linter/rules/no-destructured-props/"
-    },
-    {
-      "name": "noExcessiveLinesPerFunction",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Restrict the number of lines of code in a function.",
-      "url": "https://biomejs.dev/linter/rules/no-excessive-lines-per-function/"
-    },
-    {
       "name": "noFloatingPromises",
       "recommended": false,
       "fix": "unsafe",
       "severity": "info",
       "description": "Require Promise-like statements to be handled appropriately.",
       "url": "https://biomejs.dev/linter/rules/no-floating-promises/"
-    },
-    {
-      "name": "noGlobalDirnameFilename",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Disallow the use of __dirname and __filename in the global scope.",
-      "url": "https://biomejs.dev/linter/rules/no-global-dirname-filename/"
-    },
-    {
-      "name": "noImplicitCoercion",
-      "recommended": false,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Disallow shorthand type conversions.",
-      "url": "https://biomejs.dev/linter/rules/no-implicit-coercion/"
     },
     {
       "name": "noImportCycles",
@@ -1111,22 +1183,6 @@
       "url": "https://biomejs.dev/linter/rules/no-import-cycles/"
     },
     {
-      "name": "noImportantStyles",
-      "recommended": true,
-      "fix": "unsafe",
-      "severity": "warn",
-      "description": "Disallow the use of the !important style.",
-      "url": "https://biomejs.dev/linter/rules/no-important-styles/"
-    },
-    {
-      "name": "noMagicNumbers",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Reports usage of \"magic numbers\" — numbers used directly instead of being assigned to named constants.",
-      "url": "https://biomejs.dev/linter/rules/no-magic-numbers/"
-    },
-    {
       "name": "noMisusedPromises",
       "recommended": false,
       "fix": "unsafe",
@@ -1135,12 +1191,12 @@
       "url": "https://biomejs.dev/linter/rules/no-misused-promises/"
     },
     {
-      "name": "noNestedComponentDefinitions",
+      "name": "noNextAsyncClientComponent",
       "recommended": false,
       "fix": "none",
-      "severity": "error",
-      "description": "Disallows defining React components inside other components.",
-      "url": "https://biomejs.dev/linter/rules/no-nested-component-definitions/"
+      "severity": "warn",
+      "description": "Prevent client components from being async functions.",
+      "url": "https://biomejs.dev/linter/rules/no-next-async-client-component/"
     },
     {
       "name": "noNonNullAssertedOptionalChain",
@@ -1151,52 +1207,12 @@
       "url": "https://biomejs.dev/linter/rules/no-non-null-asserted-optional-chain/"
     },
     {
-      "name": "noNoninteractiveElementInteractions",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow use event handlers on non-interactive elements.",
-      "url": "https://biomejs.dev/linter/rules/no-noninteractive-element-interactions/"
-    },
-    {
-      "name": "noProcessGlobal",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Disallow the use of process global.",
-      "url": "https://biomejs.dev/linter/rules/no-process-global/"
-    },
-    {
-      "name": "noQuickfixBiome",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Disallow the use if quickfix.biome inside editor settings file.",
-      "url": "https://biomejs.dev/linter/rules/no-quickfix-biome/"
-    },
-    {
       "name": "noQwikUseVisibleTask",
       "recommended": false,
       "fix": "none",
       "severity": "warn",
       "description": "Disallow useVisibleTask$() functions in Qwik components.",
       "url": "https://biomejs.dev/linter/rules/no-qwik-use-visible-task/"
-    },
-    {
-      "name": "noReactPropAssign",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow assigning to React component props.",
-      "url": "https://biomejs.dev/linter/rules/no-react-prop-assign/"
-    },
-    {
-      "name": "noRestrictedElements",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow the use of configured elements.",
-      "url": "https://biomejs.dev/linter/rules/no-restricted-elements/"
     },
     {
       "name": "noSecrets",
@@ -1215,30 +1231,6 @@
       "url": "https://biomejs.dev/linter/rules/no-shadow/"
     },
     {
-      "name": "noTsIgnore",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "warn",
-      "description": "Prevents the use of the TypeScript directive @ts-ignore.",
-      "url": "https://biomejs.dev/linter/rules/no-ts-ignore/"
-    },
-    {
-      "name": "noUnassignedVariables",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Disallow let or var variables that are read but never assigned.",
-      "url": "https://biomejs.dev/linter/rules/no-unassigned-variables/"
-    },
-    {
-      "name": "noUnknownAtRule",
-      "recommended": true,
-      "fix": "none",
-      "severity": "error",
-      "description": "Disallow unknown at-rules.",
-      "url": "https://biomejs.dev/linter/rules/no-unknown-at-rule/"
-    },
-    {
       "name": "noUnnecessaryConditions",
       "recommended": false,
       "fix": "none",
@@ -1253,30 +1245,6 @@
       "severity": "info",
       "description": "Warn when importing non-existing exports.",
       "url": "https://biomejs.dev/linter/rules/no-unresolved-imports/"
-    },
-    {
-      "name": "noUnwantedPolyfillio",
-      "recommended": false,
-      "fix": "none",
-      "severity": "warn",
-      "description": "Prevent duplicate polyfills from Polyfill.io.",
-      "url": "https://biomejs.dev/linter/rules/no-unwanted-polyfillio/"
-    },
-    {
-      "name": "noUselessBackrefInRegex",
-      "recommended": true,
-      "fix": "none",
-      "severity": "warn",
-      "description": "Disallow useless backreferences in regular expression literals that always match an empty string.",
-      "url": "https://biomejs.dev/linter/rules/no-useless-backref-in-regex/"
-    },
-    {
-      "name": "noUselessEscapeInString",
-      "recommended": true,
-      "fix": "safe",
-      "severity": "warn",
-      "description": "Disallow unnecessary escapes in string literals.",
-      "url": "https://biomejs.dev/linter/rules/no-useless-escape-in-string/"
     },
     {
       "name": "noUselessUndefined",
@@ -1311,36 +1279,12 @@
       "url": "https://biomejs.dev/linter/rules/no-vue-reserved-props/"
     },
     {
-      "name": "useAdjacentGetterSetter",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Enforce that getters and setters for the same property are adjacent in class and object definitions.",
-      "url": "https://biomejs.dev/linter/rules/use-adjacent-getter-setter/"
-    },
-    {
       "name": "useAnchorHref",
       "recommended": false,
       "fix": "none",
       "severity": "error",
       "description": "Enforces href attribute for \\<a> elements.",
       "url": "https://biomejs.dev/linter/rules/use-anchor-href/"
-    },
-    {
-      "name": "useConsistentObjectDefinition",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "error",
-      "description": "Require the consistent declaration of object literals. Defaults to explicit definitions.",
-      "url": "https://biomejs.dev/linter/rules/use-consistent-object-definition/"
-    },
-    {
-      "name": "useConsistentResponse",
-      "recommended": false,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Use static Response methods instead of new Response() constructor when possible.",
-      "url": "https://biomejs.dev/linter/rules/use-consistent-response/"
     },
     {
       "name": "useConsistentTypeDefinitions",
@@ -1367,30 +1311,6 @@
       "url": "https://biomejs.dev/linter/rules/use-explicit-type/"
     },
     {
-      "name": "useExportsLast",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Require that all exports are declared after all non-export statements.",
-      "url": "https://biomejs.dev/linter/rules/use-exports-last/"
-    },
-    {
-      "name": "useForComponent",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Enforce using Solid's \\<For /> component for mapping an array to JSX elements.",
-      "url": "https://biomejs.dev/linter/rules/use-for-component/"
-    },
-    {
-      "name": "useGoogleFontPreconnect",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Ensure the preconnect attribute is used when using Google Fonts.",
-      "url": "https://biomejs.dev/linter/rules/use-google-font-preconnect/"
-    },
-    {
       "name": "useImageSize",
       "recommended": false,
       "fix": "none",
@@ -1399,68 +1319,12 @@
       "url": "https://biomejs.dev/linter/rules/use-image-size/"
     },
     {
-      "name": "useIndexOf",
-      "recommended": true,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.",
-      "url": "https://biomejs.dev/linter/rules/use-index-of/"
-    },
-    {
-      "name": "useIterableCallbackReturn",
-      "recommended": true,
+      "name": "useMaxParams",
+      "recommended": false,
       "fix": "none",
-      "severity": "error",
-      "description": "Enforce consistent return values in iterable callbacks.",
-      "url": "https://biomejs.dev/linter/rules/use-iterable-callback-return/"
-    },
-    {
-      "name": "useJsonImportAttribute",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Enforces the use of with { type: \"json\" } for JSON module imports.",
-      "url": "https://biomejs.dev/linter/rules/use-json-import-attribute/"
-    },
-    {
-      "name": "useNamedOperation",
-      "recommended": true,
-      "fix": "unsafe",
-      "severity": "error",
-      "description": "Enforce specifying the name of GraphQL operations.",
-      "url": "https://biomejs.dev/linter/rules/use-named-operation/"
-    },
-    {
-      "name": "useNamingConvention",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Validates that all enum values are capitalized.",
-      "url": "https://biomejs.dev/linter/rules/use-naming-convention/"
-    },
-    {
-      "name": "useNumericSeparators",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Enforce the use of numeric separators in numeric literals.",
-      "url": "https://biomejs.dev/linter/rules/use-numeric-separators/"
-    },
-    {
-      "name": "useObjectSpread",
-      "recommended": false,
-      "fix": "safe",
-      "severity": "info",
-      "description": "Prefer object spread over Object.assign() when constructing new objects.",
-      "url": "https://biomejs.dev/linter/rules/use-object-spread/"
-    },
-    {
-      "name": "useParseIntRadix",
-      "recommended": true,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Enforce the consistent use of the radix argument when using parseInt().",
-      "url": "https://biomejs.dev/linter/rules/use-parse-int-radix/"
+      "severity": "warn",
+      "description": "Enforce a maximum number of parameters in function definitions.",
+      "url": "https://biomejs.dev/linter/rules/use-max-params/"
     },
     {
       "name": "useQwikClasslist",
@@ -1479,52 +1343,12 @@
       "url": "https://biomejs.dev/linter/rules/use-react-function-components/"
     },
     {
-      "name": "useReadonlyClassProperties",
-      "recommended": false,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Enforce marking members as readonly if they are never modified outside the constructor.",
-      "url": "https://biomejs.dev/linter/rules/use-readonly-class-properties/"
-    },
-    {
-      "name": "useSingleJsDocAsterisk",
-      "recommended": false,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Enforce JSDoc comment lines to start with a single asterisk, except for the first one.",
-      "url": "https://biomejs.dev/linter/rules/use-single-js-doc-asterisk/"
-    },
-    {
       "name": "useSortedClasses",
       "recommended": false,
       "fix": "unsafe",
       "severity": "info",
       "description": "Enforce the sorting of CSS utility classes.",
       "url": "https://biomejs.dev/linter/rules/use-sorted-classes/"
-    },
-    {
-      "name": "useSymbolDescription",
-      "recommended": false,
-      "fix": "none",
-      "severity": "info",
-      "description": "Require a description parameter for the Symbol().",
-      "url": "https://biomejs.dev/linter/rules/use-symbol-description/"
-    },
-    {
-      "name": "useUnifiedTypeSignature",
-      "recommended": false,
-      "fix": "unsafe",
-      "severity": "info",
-      "description": "Disallow overload signatures that can be unified into a single signature.",
-      "url": "https://biomejs.dev/linter/rules/use-unified-type-signature/"
-    },
-    {
-      "name": "useUniqueElementIds",
-      "recommended": false,
-      "fix": "none",
-      "severity": "error",
-      "description": "Prevent the usage of static string literal id attribute on elements.",
-      "url": "https://biomejs.dev/linter/rules/use-unique-element-ids/"
     }
   ],
   "performance": [
@@ -1535,6 +1359,14 @@
       "severity": "warn",
       "description": "Disallow the use of spread (...) syntax on accumulators.",
       "url": "https://biomejs.dev/linter/rules/no-accumulating-spread/"
+    },
+    {
+      "name": "noAwaitInLoops",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow await inside loops.",
+      "url": "https://biomejs.dev/linter/rules/no-await-in-loops/"
     },
     {
       "name": "noBarrelFile",
@@ -1583,6 +1415,30 @@
       "severity": "warn",
       "description": "Avoid re-export all.",
       "url": "https://biomejs.dev/linter/rules/no-re-export-all/"
+    },
+    {
+      "name": "noUnwantedPolyfillio",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Prevent duplicate polyfills from Polyfill.io.",
+      "url": "https://biomejs.dev/linter/rules/no-unwanted-polyfillio/"
+    },
+    {
+      "name": "useGoogleFontPreconnect",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Ensure the preconnect attribute is used when using Google Fonts.",
+      "url": "https://biomejs.dev/linter/rules/use-google-font-preconnect/"
+    },
+    {
+      "name": "useSolidForComponent",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforce using Solid's \\<For /> component for mapping an array to JSX elements.",
+      "url": "https://biomejs.dev/linter/rules/use-solid-for-component/"
     },
     {
       "name": "useTopLevelRegex",
@@ -1699,6 +1555,14 @@
       "severity": "info",
       "description": "Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.",
       "url": "https://biomejs.dev/linter/rules/no-inferrable-types/"
+    },
+    {
+      "name": "noMagicNumbers",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Reports usage of \"magic numbers\" — numbers used directly instead of being assigned to named constants.",
+      "url": "https://biomejs.dev/linter/rules/no-magic-numbers/"
     },
     {
       "name": "noNamespace",
@@ -1917,6 +1781,14 @@
       "url": "https://biomejs.dev/linter/rules/use-consistent-member-accessibility/"
     },
     {
+      "name": "useConsistentObjectDefinitions",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "warn",
+      "description": "Require the consistent declaration of object literals. Defaults to explicit definitions.",
+      "url": "https://biomejs.dev/linter/rules/use-consistent-object-definitions/"
+    },
+    {
       "name": "useConst",
       "recommended": true,
       "fix": "safe",
@@ -1981,6 +1853,14 @@
       "url": "https://biomejs.dev/linter/rules/use-export-type/"
     },
     {
+      "name": "useExportsLast",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require that all exports are declared after all non-export statements.",
+      "url": "https://biomejs.dev/linter/rules/use-exports-last/"
+    },
+    {
       "name": "useFilenamingConvention",
       "recommended": false,
       "fix": "none",
@@ -1993,7 +1873,7 @@
       "recommended": false,
       "fix": "none",
       "severity": "info",
-      "description": "This rule recommends a for-of loop when in a for loop, the index used to extract an item from the iterated array.",
+      "description": "Prefer using for...of loops over standard for loops where possible.",
       "url": "https://biomejs.dev/linter/rules/use-for-of/"
     },
     {
@@ -2003,6 +1883,22 @@
       "severity": "info",
       "description": "This rule enforces the use of \\<>...\\</> over \\<Fragment>...\\</Fragment>.",
       "url": "https://biomejs.dev/linter/rules/use-fragment-syntax/"
+    },
+    {
+      "name": "useGraphqlNamingConvention",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Validates that all enum values are capitalized.",
+      "url": "https://biomejs.dev/linter/rules/use-graphql-naming-convention/"
+    },
+    {
+      "name": "useGroupedAccessorPairs",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforce that getters and setters for the same property are adjacent in class and object definitions.",
+      "url": "https://biomejs.dev/linter/rules/use-grouped-accessor-pairs/"
     },
     {
       "name": "useImportType",
@@ -2053,6 +1949,30 @@
       "url": "https://biomejs.dev/linter/rules/use-number-namespace/"
     },
     {
+      "name": "useNumericSeparators",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Enforce the use of numeric separators in numeric literals.",
+      "url": "https://biomejs.dev/linter/rules/use-numeric-separators/"
+    },
+    {
+      "name": "useObjectSpread",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Prefer object spread over Object.assign() when constructing new objects.",
+      "url": "https://biomejs.dev/linter/rules/use-object-spread/"
+    },
+    {
+      "name": "useReadonlyClassProperties",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce marking members as readonly if they are never modified outside the constructor.",
+      "url": "https://biomejs.dev/linter/rules/use-readonly-class-properties/"
+    },
+    {
       "name": "useSelfClosingElements",
       "recommended": false,
       "fix": "safe",
@@ -2085,6 +2005,14 @@
       "url": "https://biomejs.dev/linter/rules/use-single-var-declarator/"
     },
     {
+      "name": "useSymbolDescription",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require a description parameter for the Symbol().",
+      "url": "https://biomejs.dev/linter/rules/use-symbol-description/"
+    },
+    {
       "name": "useTemplate",
       "recommended": true,
       "fix": "unsafe",
@@ -2115,6 +2043,14 @@
       "severity": "info",
       "description": "Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().",
       "url": "https://biomejs.dev/linter/rules/use-trim-start-end/"
+    },
+    {
+      "name": "useUnifiedTypeSignatures",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow overload signatures that can be unified into a single signature.",
+      "url": "https://biomejs.dev/linter/rules/use-unified-type-signatures/"
     }
   ],
   "suspicious": [
@@ -2157,6 +2093,22 @@
       "severity": "error",
       "description": "Disallows using an async function as a Promise executor.",
       "url": "https://biomejs.dev/linter/rules/no-async-promise-executor/"
+    },
+    {
+      "name": "noBiomeFirstException",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "error",
+      "description": "Prevents the use of the ! pattern in the first position of files.includes in the configuration file.",
+      "url": "https://biomejs.dev/linter/rules/no-biome-first-exception/"
+    },
+    {
+      "name": "noBitwiseOperators",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow bitwise operators.",
+      "url": "https://biomejs.dev/linter/rules/no-bitwise-operators/"
     },
     {
       "name": "noCatchAssign",
@@ -2221,6 +2173,14 @@
       "severity": "warn",
       "description": "Disallow TypeScript const enum",
       "url": "https://biomejs.dev/linter/rules/no-const-enum/"
+    },
+    {
+      "name": "noConstantBinaryExpressions",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow expressions where the operation doesn't affect the value",
+      "url": "https://biomejs.dev/linter/rules/no-constant-binary-expressions/"
     },
     {
       "name": "noControlCharactersInRegex",
@@ -2567,6 +2527,14 @@
       "url": "https://biomejs.dev/linter/rules/no-prototype-builtins/"
     },
     {
+      "name": "noQuickfixBiome",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow the use if quickfix.biome inside editor settings file.",
+      "url": "https://biomejs.dev/linter/rules/no-quickfix-biome/"
+    },
+    {
       "name": "noReactSpecificProps",
       "recommended": false,
       "fix": "safe",
@@ -2655,6 +2623,30 @@
       "url": "https://biomejs.dev/linter/rules/no-then-property/"
     },
     {
+      "name": "noTsIgnore",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "warn",
+      "description": "Prevents the use of the TypeScript directive @ts-ignore.",
+      "url": "https://biomejs.dev/linter/rules/no-ts-ignore/"
+    },
+    {
+      "name": "noUnassignedVariables",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow let or var variables that are read but never assigned.",
+      "url": "https://biomejs.dev/linter/rules/no-unassigned-variables/"
+    },
+    {
+      "name": "noUnknownAtRules",
+      "recommended": true,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow unknown at-rules.",
+      "url": "https://biomejs.dev/linter/rules/no-unknown-at-rules/"
+    },
+    {
       "name": "noUnsafeDeclarationMerging",
       "recommended": true,
       "fix": "none",
@@ -2669,6 +2661,22 @@
       "severity": "error",
       "description": "Disallow using unsafe negation.",
       "url": "https://biomejs.dev/linter/rules/no-unsafe-negation/"
+    },
+    {
+      "name": "noUselessEscapeInString",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "warn",
+      "description": "Disallow unnecessary escapes in string literals.",
+      "url": "https://biomejs.dev/linter/rules/no-useless-escape-in-string/"
+    },
+    {
+      "name": "noUselessRegexBackrefs",
+      "recommended": true,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow useless backreferences in regular expression literals that always match an empty string.",
+      "url": "https://biomejs.dev/linter/rules/no-useless-regex-backrefs/"
     },
     {
       "name": "noVar",
@@ -2701,6 +2709,14 @@
       "severity": "warn",
       "description": "Ensure async functions utilize await.",
       "url": "https://biomejs.dev/linter/rules/use-await/"
+    },
+    {
+      "name": "useBiomeIgnoreFolder",
+      "recommended": true,
+      "fix": "safe",
+      "severity": "warn",
+      "description": "Promotes the correct usage for ignoring folders in the configuration file.",
+      "url": "https://biomejs.dev/linter/rules/use-biome-ignore-folder/"
     },
     {
       "name": "useDefaultSwitchClauseLast",
@@ -2751,6 +2767,14 @@
       "url": "https://biomejs.dev/linter/rules/use-is-array/"
     },
     {
+      "name": "useIterableCallbackReturn",
+      "recommended": true,
+      "fix": "none",
+      "severity": "error",
+      "description": "Enforce consistent return values in iterable callbacks.",
+      "url": "https://biomejs.dev/linter/rules/use-iterable-callback-return/"
+    },
+    {
       "name": "useNamespaceKeyword",
       "recommended": true,
       "fix": "safe",
@@ -2765,6 +2789,14 @@
       "severity": "warn",
       "description": "Enforce using the digits argument with Number#toFixed().",
       "url": "https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument/"
+    },
+    {
+      "name": "useStaticResponseMethods",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Use static Response methods instead of new Response() constructor when possible.",
+      "url": "https://biomejs.dev/linter/rules/use-static-response-methods/"
     },
     {
       "name": "useStrictMode",
