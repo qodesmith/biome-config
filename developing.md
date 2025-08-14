@@ -6,7 +6,9 @@ Shows which packages have new versions available. If `@biomejs/biome` has a new 
 
 ### `bun update`
 
-Updates all packages to the latest version. For more granular control, run `bun update -i` for "interactive" mode, allowing you to select which packages to update.
+- Run `bun update` to update most packages
+- Change the version of `@biomejs/biome` in `package.json` to the latest version printed by `bun outdated`
+- Run `bun i` to install the newer version of `@biomejs/biome`
 
 ### `bun run build`
 
