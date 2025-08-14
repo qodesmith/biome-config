@@ -193,6 +193,7 @@ const currentRules = new Set(
 )
 
 type RuleChange = {name: string; url: string; group: RuleGroup}
+type PromotedRule = {name: string; url: string; oldGroup: RuleGroup; newGroup: RuleGroup}
 
 const newRules: RuleChange[] = []
 currentRules.forEach(name => {
@@ -216,6 +217,22 @@ rulesOnDisk.forEach(name => {
   }
 })
 
+const promotedRules: PromotedRule[] = []
+rulesOnDisk.forEach(name => {
+  const isDeletedRule = !currentRules.has(name)
+  const groupOnDisk = ruleToGroupOnDisk[name]
+  const currentGroup = ruleToGroup[name]
+
+  if (!isDeletedRule && groupOnDisk !== currentGroup) {
+    promotedRules.push({
+      name,
+      url: `${ruleBaseUrl}/${camelCaseToHyphens(name)}/`,
+      oldGroup: groupOnDisk,
+      newGroup: currentGroup
+    })
+  }
+})
+
 /////////////////////////////////////
 // Step 3: Write the data to files //
 /////////////////////////////////////
@@ -227,5 +244,5 @@ await Bun.write(
 
 await Bun.write(
   path.resolve(import.meta.dirname, './ruleChanges.json'),
-  `${JSON.stringify({newRules, deletedRules}, null, 2)}\n`
+  `${JSON.stringify({newRules, deletedRules, promotedRules}, null, 2)}\n`
 )

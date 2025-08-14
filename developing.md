@@ -18,7 +18,7 @@ Kicks off a few tasks:
     - If `@biomejs/biome` was updated, this will likely show an error message such as `Update the schema version in biome.jsonc to x.x.x`. Take care of that and run this command again.
 1. Generates Biome TypeScript types in `biomeSchema.d.ts`
 1. Checks for changes in Biome's list of rules
-    - Check `ruleChanges.json` for a list of new and deleted rules
+    - Check `ruleChanges.json` for a list of new, deleted, and promoted rules
     - `ruleData.json` will have a comprehensive list of rules and metadata. This file can also be checked for changes.
 1. Biome config files will be created in the `dist` folder
 
