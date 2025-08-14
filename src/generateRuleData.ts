@@ -79,6 +79,12 @@ for (const ruleGroupName of ruleGroupDefinitionNames) {
     const promise = $`bunx biome explain ${ruleName}`
       .text()
       .then(output => {
+        if (output.includes('Unrecognized option')) {
+          // biome-ignore lint/suspicious/noConsole: it's ok here
+          console.error('Rule not recognized:', ruleName)
+          return
+        }
+
         const recommended = output.includes('This rule is recommended')
         const fix: RuleInfo['fix'] = (() => {
           switch (true) {
