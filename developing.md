@@ -12,6 +12,8 @@ Shows which packages have new versions available. If `@biomejs/biome` has a new 
 
 ### `bun run build`
 
+⚠️ Error with the build? Check the `nursery` section of `createBiomeConfig.ts` for lint errors and the `promoted` section of `ruleChanges.json` for a match. A rule may have been promoted, causing a mismatch error with the schema.
+
 Kicks off a few tasks:
 
 1. Runs a schema check
