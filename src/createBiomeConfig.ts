@@ -123,7 +123,17 @@ export function createBiomeConfig({
         },
       },
     },
-    // css: {},
+    css: {
+      linter: {
+        enabled: true,
+      },
+      formatter: {
+        enabled: true,
+        indentStyle: 'space',
+        indentWidth: 2,
+        lineEnding: 'lf',
+      },
+    },
     // extends: [],
     files,
     formatter: {
@@ -204,6 +214,7 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          noImportantStyles: 'info',
           noUselessFragments: {
             level: 'on',
             fix: 'safe',
