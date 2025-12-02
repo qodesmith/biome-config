@@ -9,8 +9,7 @@ import type {
   Configuration,
   ImportMatcher,
   NegatablePredefinedSourceMatcher,
-  SeverityOrGroupFor_Correctness,
-  SeverityOrGroupFor_Nursery,
+  SeverityOrCorrectness,
 } from './biomeSchema'
 
 import pkgJson from '../package.json'
@@ -24,7 +23,7 @@ export function createBiomeConfig({
 }: {
   type: 'default' | 'react'
 }): Configuration {
-  const correctnessReact: SeverityOrGroupFor_Correctness = {
+  const correctnessReact: SeverityOrCorrectness = {
     noReactPropAssignments: 'error',
     useExhaustiveDependencies: {
       level: 'on',
@@ -36,10 +35,6 @@ export function createBiomeConfig({
     },
     useHookAtTopLevel: 'on',
     useJsxKeyInIterable: 'on',
-  }
-
-  const nurseryReact: SeverityOrGroupFor_Nursery = {
-    useReactFunctionComponents: 'error',
   }
 
   const biomeVersion = pkgJson.dependencies['@biomejs/biome'].replace('^', '')
@@ -289,7 +284,6 @@ export function createBiomeConfig({
          * find themselves into other groups.
          */
         nursery: {
-          ...(type === 'react' ? nurseryReact : {}),
           noFloatingPromises: 'warn',
           noImportCycles: 'on',
           useExhaustiveSwitchCases: 'warn',
@@ -364,6 +358,12 @@ export function createBiomeConfig({
               syntax: 'shorthand',
             },
           },
+          useConsistentTypeDefinitions: {
+            level: 'warn',
+            options: {
+              style: 'type'
+            }
+          },
           useConst: 'warn',
           useDefaultParameterLast: {
             level: 'warn',
@@ -419,6 +419,7 @@ export function createBiomeConfig({
             options: {},
           },
           useNumericSeparators: 'on',
+          useReactFunctionComponents: 'error',
           useSelfClosingElements: 'warn',
           useShorthandAssign: {
             level: 'warn',

@@ -41,11 +41,11 @@ type RuleData = Partial<Record<RuleGroup, RuleInfo[]>>
 
 const promises: Promise<void>[] = []
 const ruleGroupDefinitionNames = Object.keys(
-  configurationSchema.definitions.Rules.properties
+  configurationSchema.$defs.Rules.properties
 )
   .filter(property => {
     const obj =
-      configurationSchema.definitions.Rules.properties[property as keyof Rules]
+      configurationSchema.$defs.Rules.properties[property as keyof Rules]
 
     // Ensure the object is a rule-group definition.
     return !('type' in obj)
@@ -57,7 +57,7 @@ const ruleBaseUrl = 'https://biomejs.dev/linter/rules'
 for (const ruleGroupName of ruleGroupDefinitionNames) {
   const capitalizedRuleGroupName =
     `${ruleGroupName[0].toUpperCase()}${ruleGroupName.slice(1)}` as Capitalize<RuleGroup>
-  const ruleGroup = configurationSchema.definitions[capitalizedRuleGroupName]
+  const ruleGroup = configurationSchema.$defs[capitalizedRuleGroupName]
   const ruleNames = Object.keys(ruleGroup.properties).filter(name => {
     const obj = ruleGroup.properties[name as keyof typeof ruleGroup.properties]
     return !('type' in obj)
