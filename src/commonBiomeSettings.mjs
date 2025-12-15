@@ -26,8 +26,8 @@ export const files = {
   ignoreUnknown: true,
   includes: [
     '**', // Include all known files in all folders recursively.
-    '!**/node_modules/**',
-    '!dist/**',
+    '!**/node_modules',
+    '!dist',
     '!*.lock',
   ],
   // maxSize: 1048576, // Default value - (1024*1024, 1MB)
