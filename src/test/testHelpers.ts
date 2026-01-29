@@ -7,8 +7,13 @@ type CreateTestProjectOptions = {
   devDependencies?: Record<string, string>
   existingScripts?: Record<string, string>
   existingVscodeSettings?: Record<string, unknown>
+  existingVscodeSettingsRaw?: string
   hasBiomeJson?: boolean
   hasBiomeJsonc?: boolean
+  noPkgJson?: boolean
+  malformedPkgJson?: boolean
+  noScriptsField?: boolean
+  vscodeFolderOnly?: boolean
 }
 
 export function createTestProject(options: CreateTestProjectOptions = {}) {
@@ -17,25 +22,38 @@ export function createTestProject(options: CreateTestProjectOptions = {}) {
     devDependencies = {},
     existingScripts = {},
     existingVscodeSettings,
+    existingVscodeSettingsRaw,
     hasBiomeJson = false,
     hasBiomeJsonc = false,
+    noPkgJson = false,
+    malformedPkgJson = false,
+    noScriptsField = false,
+    vscodeFolderOnly = false,
   } = options
 
   // Create temp directory
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'biome-config-test-'))
 
   // Create package.json
-  const pkgJson = {
-    name: 'test-project',
-    version: '1.0.0',
-    scripts: existingScripts,
-    dependencies,
-    devDependencies,
+  if (!noPkgJson) {
+    if (malformedPkgJson) {
+      fs.writeFileSync(path.join(dir, 'package.json'), '{invalid json')
+    } else {
+      const pkgJson: Record<string, unknown> = {
+        name: 'test-project',
+        version: '1.0.0',
+        dependencies,
+        devDependencies,
+      }
+      if (!noScriptsField) {
+        pkgJson.scripts = existingScripts
+      }
+      fs.writeFileSync(
+        path.join(dir, 'package.json'),
+        JSON.stringify(pkgJson, null, 2)
+      )
+    }
   }
-  fs.writeFileSync(
-    path.join(dir, 'package.json'),
-    JSON.stringify(pkgJson, null, 2)
-  )
 
   // Create stub biome binary
   const nodeModulesBin = path.join(dir, 'node_modules', '.bin')
@@ -57,13 +75,18 @@ exit 0
   }
 
   // Create existing vscode settings if requested
-  if (existingVscodeSettings !== undefined) {
+  if (existingVscodeSettings !== undefined || existingVscodeSettingsRaw !== undefined || vscodeFolderOnly) {
     const vscodeDir = path.join(dir, '.vscode')
     fs.mkdirSync(vscodeDir, {recursive: true})
-    fs.writeFileSync(
-      path.join(vscodeDir, 'settings.json'),
-      JSON.stringify(existingVscodeSettings, null, 2)
-    )
+    if (existingVscodeSettingsRaw !== undefined) {
+      fs.writeFileSync(path.join(vscodeDir, 'settings.json'), existingVscodeSettingsRaw)
+    } else if (existingVscodeSettings !== undefined) {
+      fs.writeFileSync(
+        path.join(vscodeDir, 'settings.json'),
+        JSON.stringify(existingVscodeSettings, null, 2)
+      )
+    }
+    // vscodeFolderOnly creates folder but no settings.json
   }
 
   const cleanup = () => {

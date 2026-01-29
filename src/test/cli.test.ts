@@ -3,16 +3,40 @@ import {afterEach, describe, expect, test} from 'bun:test'
 import {run} from '../cli.mjs'
 import {createTestProject, fileExists, readJson} from './testHelpers'
 
-type DefaultBiomeConfig = {
-  $schema: string
-  extends: string[]
-  files: {
-    ignoreUnknown: boolean
-    includes: string[]
-  }
-}
+type DefaultBiomeConfig = typeof defaultBiomeconfig
 
 const devDependencies = {devDependencies: {'@qodestack/biome-config': '^1.0.0'}}
+const defaultBiomeconfig = {
+  $schema: './node_modules/@biomejs/biome/configuration_schema.json',
+  extends: ['@qodestack/biome-config/react'], // React is the default config to extend.
+  files: {
+    ignoreUnknown: true,
+    includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
+  },
+}
+const defaultVscodeSettings = {
+  'prettier.enable': false,
+  'eslint.enable': false,
+  'typescript.preferences.preferTypeOnlyAutoImports': true,
+  'biome.enabled': true,
+  '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]': {
+    'editor.defaultFormatter': 'biomejs.biome',
+  },
+  'editor.defaultFormatter': 'biomejs.biome',
+  'editor.formatOnSave': true,
+  'editor.codeActionsOnSave': {
+    'source.fixAll.biome': 'explicit',
+    'source.organizeImports.biome': 'explicit',
+  },
+}
+const defaultPkJsonScripts = {
+  check: 'biome check',
+  'check:fix': 'biome check --write .',
+  lint: 'biome lint',
+  'lint:fix': 'biome lint --write .',
+  format: 'biome format',
+  'format:fix': 'biome format --write .',
+}
 
 let cleanup = () => {}
 
@@ -64,9 +88,6 @@ describe('biome.json creation', () => {
 
     expect(fileExists(project.dir, 'biome.json')).toBe(true)
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(false)
-
-    const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
-    expect(config.extends).toEqual(['@qodestack/biome-config/react'])
   })
 
   test('creates biome.jsonc with --jsonc flag', () => {
@@ -86,14 +107,7 @@ describe('biome.json creation', () => {
     runCli(project.dir)
 
     const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
-    expect(config).toEqual({
-      $schema: './node_modules/@biomejs/biome/configuration_schema.json',
-      extends: ['@qodestack/biome-config/react'],
-      files: {
-        ignoreUnknown: true,
-        includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
-      },
-    })
+    expect(config).toEqual(defaultBiomeconfig)
   })
 
   test('vanilla biome settings', () => {
@@ -104,13 +118,9 @@ describe('biome.json creation', () => {
 
     const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
     expect(config).toEqual({
-      $schema: './node_modules/@biomejs/biome/configuration_schema.json',
+      ...defaultBiomeconfig,
       // As opposed to `@qodestack/biome-config/react`
       extends: ['@qodestack/biome-config'],
-      files: {
-        ignoreUnknown: true,
-        includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
-      },
     })
   })
 
@@ -180,19 +190,20 @@ describe('VSCode settings', () => {
       string,
       unknown
     >
-    expect(settings['biome.enabled']).toBe(true)
-    expect(settings['editor.formatOnSave']).toBe(true)
+
+    expect(settings).toEqual(defaultVscodeSettings)
   })
 
   test('merges with existing vscode settings', () => {
+    const existingVscodeSettings = {
+      customSetting: true,
+      'editor.codeActionsOnSave': {
+        'source.existingAction': 'explicit',
+      },
+    }
     const project = createTestProject({
       ...devDependencies,
-      existingVscodeSettings: {
-        customSetting: true,
-        'editor.codeActionsOnSave': {
-          'source.existingAction': 'explicit',
-        },
-      },
+      existingVscodeSettings,
     })
     cleanup = project.cleanup
 
@@ -202,14 +213,15 @@ describe('VSCode settings', () => {
       string,
       unknown
     >
-    expect(settings.customSetting).toBe(true)
-    expect(settings['biome.enabled']).toBe(true)
-    const codeActions = settings['editor.codeActionsOnSave'] as Record<
-      string,
-      string
-    >
-    expect(codeActions['source.existingAction']).toBe('explicit')
-    expect(codeActions['source.fixAll.biome']).toBe('explicit')
+
+    expect(settings).toEqual({
+      ...defaultVscodeSettings,
+      ...existingVscodeSettings,
+      'editor.codeActionsOnSave': {
+        ...defaultVscodeSettings['editor.codeActionsOnSave'],
+        ...existingVscodeSettings['editor.codeActionsOnSave'],
+      },
+    })
   })
 
   test('skips vscode with --no-vscode flag', () => {
@@ -229,6 +241,49 @@ describe('VSCode settings', () => {
 
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
+
+  test('creates settings.json when .vscode folder exists but settings.json does not', () => {
+    const project = createTestProject({
+      ...devDependencies,
+      vscodeFolderOnly: true,
+    })
+    cleanup = project.cleanup
+
+    runCli(project.dir)
+
+    expect(fileExists(project.dir, '.vscode/settings.json')).toBe(true)
+    const settings = readJson(project.dir, '.vscode/settings.json') as Record<
+      string,
+      unknown
+    >
+    expect(settings).toEqual(defaultVscodeSettings)
+  })
+
+  test('parses and merges JSONC settings with comments', () => {
+    const jsoncWithComments = `{
+      // This is a comment
+      "customSetting": true,
+      /* Another comment */
+      "anotherSetting": "value"
+    }`
+    const project = createTestProject({
+      ...devDependencies,
+      existingVscodeSettingsRaw: jsoncWithComments,
+    })
+    cleanup = project.cleanup
+
+    runCli(project.dir)
+
+    const settings = readJson(project.dir, '.vscode/settings.json') as Record<
+      string,
+      unknown
+    >
+    expect(settings).toEqual({
+      ...defaultVscodeSettings,
+      customSetting: true,
+      anotherSetting: 'value',
+    })
+  })
 })
 
 describe('package.json scripts', () => {
@@ -241,22 +296,15 @@ describe('package.json scripts', () => {
     const pkg = readJson(project.dir, 'package.json') as {
       scripts: Record<string, string>
     }
-    expect(pkg.scripts.check).toBe('biome check')
-    expect(pkg.scripts['check:fix']).toBe('biome check --write .')
-    expect(pkg.scripts.lint).toBe('biome lint')
-    expect(pkg.scripts['lint:fix']).toBe('biome lint --write .')
-    expect(pkg.scripts.format).toBe('biome format')
-    expect(pkg.scripts['format:fix']).toBe('biome format --write .')
+    expect(pkg.scripts).toEqual(defaultPkJsonScripts)
   })
 
   test('preserves existing scripts', () => {
-    const project = createTestProject({
-      ...devDependencies,
-      existingScripts: {
-        dev: 'vite',
-        build: 'tsc && vite build',
-      },
-    })
+    const existingScripts = {
+      dev: 'vite',
+      build: 'tsc && vite build',
+    }
+    const project = createTestProject({...devDependencies, existingScripts})
     cleanup = project.cleanup
 
     runCli(project.dir)
@@ -264,16 +312,12 @@ describe('package.json scripts', () => {
     const pkg = readJson(project.dir, 'package.json') as {
       scripts: Record<string, string>
     }
-    expect(pkg.scripts.dev).toBe('vite')
-    expect(pkg.scripts.build).toBe('tsc && vite build')
-    expect(pkg.scripts.check).toBe('biome check')
+    expect(pkg.scripts).toEqual({...defaultPkJsonScripts, ...existingScripts})
   })
 
   test('skips scripts with --no-includeScripts', () => {
-    const project = createTestProject({
-      ...devDependencies,
-      existingScripts: {dev: 'vite'},
-    })
+    const existingScripts = {dev: 'vite'}
+    const project = createTestProject({...devDependencies, existingScripts})
     cleanup = project.cleanup
 
     runCli(project.dir, ['--no-includeScripts'])
@@ -281,8 +325,7 @@ describe('package.json scripts', () => {
     const pkg = readJson(project.dir, 'package.json') as {
       scripts: Record<string, string | undefined>
     }
-    expect(pkg.scripts.dev).toBe('vite')
-    expect(pkg.scripts.check).toBeUndefined()
+    expect(pkg.scripts).toEqual(existingScripts)
   })
 })
 
@@ -295,7 +338,10 @@ describe('flag combinations', () => {
 
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(true)
     const config = readJson(project.dir, 'biome.jsonc') as DefaultBiomeConfig
-    expect(config.extends).toEqual(['@qodestack/biome-config'])
+    expect(config).toEqual({
+      ...defaultBiomeconfig,
+      extends: ['@qodestack/biome-config'],
+    })
   })
 
   test('all --no flags skips all file creation', () => {
@@ -315,7 +361,7 @@ describe('flag combinations', () => {
     const pkg = readJson(project.dir, 'package.json') as {
       scripts: Record<string, string | undefined>
     }
-    expect(pkg.scripts.check).toBeUndefined()
+    expect(pkg.scripts).toEqual({})
   })
 
   test('--no-vscode does not affect --no-includeVscode behavior', () => {
@@ -326,9 +372,59 @@ describe('flag combinations', () => {
     runCli(project.dir, ['--no-vscode'])
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
+
+  test('--no-vscode overrides --includeVscode (both must be true)', () => {
+    const project = createTestProject(devDependencies)
+    cleanup = project.cleanup
+
+    // isVscode=false && includeVscode=true => no vscode
+    runCli(project.dir, ['--no-vscode', '--includeVscode'])
+    expect(fileExists(project.dir, '.vscode')).toBe(false)
+  })
+
+  test('--vscode with --no-includeVscode skips vscode', () => {
+    const project = createTestProject(devDependencies)
+    cleanup = project.cleanup
+
+    // isVscode=true && includeVscode=false => no vscode
+    runCli(project.dir, ['--vscode', '--no-includeVscode'])
+    expect(fileExists(project.dir, '.vscode')).toBe(false)
+  })
 })
 
 describe('edge cases', () => {
+  test('exits with code 1 if no package.json exists', () => {
+    const project = createTestProject({noPkgJson: true})
+    cleanup = project.cleanup
+
+    const exitCode = runCli(project.dir)
+    expect(exitCode).toBe(1)
+  })
+
+  test('exits with code 1 if package.json is malformed', () => {
+    const project = createTestProject({malformedPkgJson: true})
+    cleanup = project.cleanup
+
+    const exitCode = runCli(project.dir)
+    expect(exitCode).toBe(1)
+  })
+
+  test('works when package.json has no scripts field', () => {
+    const project = createTestProject({
+      ...devDependencies,
+      noScriptsField: true,
+    })
+    cleanup = project.cleanup
+
+    const exitCode = runCli(project.dir)
+    expect(exitCode).toBe(0)
+
+    const pkg = readJson(project.dir, 'package.json') as {
+      scripts: Record<string, string>
+    }
+    expect(pkg.scripts).toEqual(defaultPkJsonScripts)
+  })
+
   test('both biome.json and biome.jsonc exist - exits without jsonc flag', () => {
     const project = createTestProject({
       ...devDependencies,
