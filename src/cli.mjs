@@ -90,6 +90,28 @@ const args = parseArgs({
       type: 'boolean',
       default: false,
     },
+
+    /**
+     * Boolean options to control creating the different assets. These are all
+     * on by default, but this allows the user to turn off any one of these:
+     *
+     * --no-include-biome-config
+     * --no-include-scripts
+     * --no-include-vscode
+     */
+
+    includeBiomeConfig: {
+      type: 'boolean',
+      default: true,
+    },
+    includeScripts: {
+      type: 'boolean',
+      default: true,
+    },
+    includeVscode: {
+      type: 'boolean',
+      default: true,
+    },
   },
   allowPositionals: true,
   allowNegative: true,
@@ -116,6 +138,7 @@ const isJsonc = args.values.jsonc
 const hasBiomeJson = fs.existsSync(biomeJsonPath)
 const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
 const biomeConfigStr = JSON.stringify(biomeConfig)
+const {includeBiomeConfig, includeScripts, includeVscode} = args.values
 
 /*
   - jsonc: true
@@ -126,34 +149,36 @@ const biomeConfigStr = JSON.stringify(biomeConfig)
     - has json - quit
 */
 
-if (isJsonc) {
-  if (hasBiomeJsonc) {
+if (includeBiomeConfig) {
+  if (isJsonc) {
+    if (hasBiomeJsonc) {
+      console.log(
+        `A ${color.bold('biome.jsonc')} file already exists. Delete this file first or proceed with a manual setup.`
+      )
+      console.log('')
+      process.exit()
+    } else if (hasBiomeJson) {
+      console.warn(
+        `⚠️ A ${color.bold('biome.json')} file already exists. ${color.bold('biome.jsonc')} will be created but Biome will default to reading ${color.bold('biome.json')}.`
+      )
+    }
+
+    fs.writeFileSync(biomeJsoncPath, biomeConfigStr)
+    console.log('-', 'created', color.cyan('biome.jsonc'))
+  } else if (hasBiomeJson) {
     console.log(
-      `A ${color.bold('biome.jsonc')} file already exists. Delete this file first or proceed with a manual setup.`
+      `A ${color.bold('biome.json')} file already exists. Delete this file first or proceed with a manual setup.`
     )
     console.log('')
     process.exit()
-  } else if (hasBiomeJson) {
+  } else if (hasBiomeJsonc) {
     console.warn(
-      `⚠️ A ${color.bold('biome.json')} file already exists. ${color.bold('biome.jsonc')} will be created but Biome will default to reading ${color.bold('biome.json')}.`
+      `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
     )
+  } else {
+    fs.writeFileSync(biomeJsonPath, biomeConfigStr)
+    console.log('-', 'created', color.cyan('biome.json'))
   }
-
-  fs.writeFileSync(biomeJsoncPath, biomeConfigStr)
-  console.log('-', 'created', color.cyan('biome.jsonc'))
-} else if (hasBiomeJson) {
-  console.log(
-    `A ${color.bold('biome.json')} file already exists. Delete this file first or proceed with a manual setup.`
-  )
-  console.log('')
-  process.exit()
-} else if (hasBiomeJsonc) {
-  console.warn(
-    `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
-  )
-} else {
-  fs.writeFileSync(biomeJsonPath, biomeConfigStr)
-  console.log('-', 'created', color.cyan('biome.json'))
 }
 
 /////////////
@@ -165,7 +190,7 @@ const vscodeFolderPath = path.resolve(process.cwd(), '.vscode')
 const vscodeFolderExists = existsSync(vscodeFolderPath)
 const vscodeSettingsPath = `${vscodeFolderPath}/settings.json`
 
-if (isVscode) {
+if (isVscode && includeVscode) {
   if (!vscodeFolderExists) {
     fs.mkdirSync(vscodeFolderPath)
   }
@@ -222,8 +247,10 @@ pkgJson.scripts = {
   'format:fix': 'biome format --write .',
 }
 
-const pkgJsonStr = JSON.stringify(pkgJson)
-fs.writeFileSync(pkgJsonPath, pkgJsonStr)
+if (includeScripts) {
+  const pkgJsonStr = JSON.stringify(pkgJson)
+  fs.writeFileSync(pkgJsonPath, pkgJsonStr)
+}
 
 //////////////////
 // FORMAT FILES //
@@ -231,18 +258,23 @@ fs.writeFileSync(pkgJsonPath, pkgJsonStr)
 
 const biomeExecPath = path.resolve(process.cwd(), './node_modules/.bin/biome')
 const filesToFormat = [
-  biomeJsoncPath,
-  biomeJsonPath,
-  vscodeSettingsPath,
-  pkgJsonPath,
+  includeBiomeConfig && biomeJsoncPath,
+  includeBiomeConfig && biomeJsonPath,
+  includeVscode && vscodeSettingsPath,
+  includeScripts && pkgJsonPath,
 ]
-  .filter(filePath => existsSync(filePath))
+  .filter(filePath => filePath && existsSync(filePath))
   .join(' ')
 
-execSync(`${biomeExecPath} format --write ${filesToFormat}`)
+if (filesToFormat) {
+  execSync(`${biomeExecPath} format --write ${filesToFormat}`)
+}
 
-console.log('-', 'updated', color.cyan('package.json'), 'scripts')
-console.log('')
+if (includeScripts) {
+  console.log('-', 'updated', color.cyan('package.json'), 'scripts')
+  console.log('')
+}
+
 console.log(color.greenBright('Biome setup complete!'))
 console.log('"Reload Window" in VS Code for Biome to take effect.')
 console.log('')
