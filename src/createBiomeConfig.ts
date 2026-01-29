@@ -361,8 +361,8 @@ export function createBiomeConfig({
           useConsistentTypeDefinitions: {
             level: 'warn',
             options: {
-              style: 'type'
-            }
+              style: 'type',
+            },
           },
           useConst: 'warn',
           useDefaultParameterLast: {

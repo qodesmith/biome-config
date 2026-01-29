@@ -309,19 +309,41 @@ export type UseValidForDirectionConfiguration = RulePlainConfiguration | RuleWit
 export type UseValidTypeofConfiguration = RulePlainConfiguration | RuleWithUseValidTypeofOptions
 export type UseYieldConfiguration = RulePlainConfiguration | RuleWithUseYieldOptions
 export type SeverityOrNursery = GroupPlainConfiguration | Nursery
+export type NoAmbiguousAnchorTextConfiguration = RulePlainConfiguration | RuleWithNoAmbiguousAnchorTextOptions
+export type NoBeforeInteractiveScriptOutsideDocumentConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions
 export type NoContinueConfiguration = RulePlainConfiguration | RuleWithNoContinueOptions
 export type NoDeprecatedImportsConfiguration = RulePlainConfiguration | RuleWithNoDeprecatedImportsOptions
+export type NoDivRegexConfiguration = RulePlainConfiguration | RuleWithNoDivRegexOptions
+export type NoDuplicateArgumentNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateArgumentNamesOptions
+export type NoDuplicateAttributesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateAttributesOptions
 export type NoDuplicateDependenciesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateDependenciesOptions
+export type NoDuplicateEnumValueNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateEnumValueNamesOptions
+export type NoDuplicateEnumValuesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateEnumValuesOptions
+export type NoDuplicateFieldDefinitionNamesConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoDuplicateFieldDefinitionNamesOptions
+export type NoDuplicateGraphqlOperationNameConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoDuplicateGraphqlOperationNameOptions
+export type NoDuplicateInputFieldNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateInputFieldNamesOptions
+export type NoDuplicateVariableNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateVariableNamesOptions
 export type NoDuplicatedSpreadPropsConfiguration = RulePlainConfiguration | RuleWithNoDuplicatedSpreadPropsOptions
 export type NoEmptySourceConfiguration = RulePlainConfiguration | RuleWithNoEmptySourceOptions
 export type NoEqualsToNullConfiguration = RulePlainConfiguration | RuleWithNoEqualsToNullOptions
+export type NoExcessiveClassesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveClassesPerFileOptions
+export type NoExcessiveLinesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveLinesPerFileOptions
+export type NoFloatingClassesConfiguration = RulePlainConfiguration | RuleWithNoFloatingClassesOptions
 export type NoFloatingPromisesConfiguration = RulePlainConfiguration | RuleWithNoFloatingPromisesOptions
 export type NoForInConfiguration = RulePlainConfiguration | RuleWithNoForInOptions
 export type NoImportCyclesConfiguration = RulePlainConfiguration | RuleWithNoImportCyclesOptions
 export type NoIncrementDecrementConfiguration = RulePlainConfiguration | RuleWithNoIncrementDecrementOptions
 export type NoJsxLiteralsConfiguration = RulePlainConfiguration | RuleWithNoJsxLiteralsOptions
+export type NoJsxPropsBindConfiguration = RulePlainConfiguration | RuleWithNoJsxPropsBindOptions
 export type NoLeakedRenderConfiguration = RulePlainConfiguration | RuleWithNoLeakedRenderOptions
 export type NoMisusedPromisesConfiguration = RulePlainConfiguration | RuleWithNoMisusedPromisesOptions
+export type NoMultiAssignConfiguration = RulePlainConfiguration | RuleWithNoMultiAssignOptions
 export type NoMultiStrConfiguration = RulePlainConfiguration | RuleWithNoMultiStrOptions
 export type NoNextAsyncClientComponentConfiguration = RulePlainConfiguration | RuleWithNoNextAsyncClientComponentOptions
 export type NoParametersOnlyUsedInRecursionConfiguration =
@@ -329,9 +351,14 @@ export type NoParametersOnlyUsedInRecursionConfiguration =
   | RuleWithNoParametersOnlyUsedInRecursionOptions
 export type NoProtoConfiguration = RulePlainConfiguration | RuleWithNoProtoOptions
 export type NoReactForwardRefConfiguration = RulePlainConfiguration | RuleWithNoReactForwardRefOptions
+export type NoReturnAssignConfiguration = RulePlainConfiguration | RuleWithNoReturnAssignOptions
+export type NoRootTypeConfiguration = RulePlainConfiguration | RuleWithNoRootTypeOptions
+export type NoScriptUrlConfiguration = RulePlainConfiguration | RuleWithNoScriptUrlOptions
 export type NoShadowConfiguration = RulePlainConfiguration | RuleWithNoShadowOptions
 export type NoSyncScriptsConfiguration = RulePlainConfiguration | RuleWithNoSyncScriptsOptions
 export type NoTernaryConfiguration = RulePlainConfiguration | RuleWithNoTernaryOptions
+export type NoUndeclaredEnvVarsConfiguration = RulePlainConfiguration | RuleWithNoUndeclaredEnvVarsOptions
+export type Regex = string
 export type NoUnknownAttributeConfiguration = RulePlainConfiguration | RuleWithNoUnknownAttributeOptions
 export type NoUnnecessaryConditionsConfiguration = RulePlainConfiguration | RuleWithNoUnnecessaryConditionsOptions
 export type NoUnresolvedImportsConfiguration = RulePlainConfiguration | RuleWithNoUnresolvedImportsOptions
@@ -340,12 +367,18 @@ export type NoUselessCatchBindingConfiguration = RulePlainConfiguration | RuleWi
 export type NoUselessUndefinedConfiguration = RulePlainConfiguration | RuleWithNoUselessUndefinedOptions
 export type NoVueDataObjectDeclarationConfiguration = RulePlainConfiguration | RuleWithNoVueDataObjectDeclarationOptions
 export type NoVueDuplicateKeysConfiguration = RulePlainConfiguration | RuleWithNoVueDuplicateKeysOptions
+export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
 export type NoVueReservedKeysConfiguration = RulePlainConfiguration | RuleWithNoVueReservedKeysOptions
 export type NoVueReservedPropsConfiguration = RulePlainConfiguration | RuleWithNoVueReservedPropsOptions
+export type NoVueSetupPropsReactivityLossConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoVueSetupPropsReactivityLossOptions
 export type NoVueVIfWithVForConfiguration = RulePlainConfiguration | RuleWithNoVueVIfWithVForOptions
 export type UseArraySortCompareConfiguration = RulePlainConfiguration | RuleWithUseArraySortCompareOptions
+export type UseAwaitThenableConfiguration = RulePlainConfiguration | RuleWithUseAwaitThenableOptions
 export type UseConsistentArrowReturnConfiguration = RulePlainConfiguration | RuleWithUseConsistentArrowReturnOptions
 export type UseConsistentArrowReturnStyle = 'asNeeded' | 'always' | 'never'
+export type UseConsistentEnumValueTypeConfiguration = RulePlainConfiguration | RuleWithUseConsistentEnumValueTypeOptions
 export type UseConsistentGraphqlDescriptionsConfiguration =
   | RulePlainConfiguration
   | RuleWithUseConsistentGraphqlDescriptionsOptions
@@ -354,29 +387,49 @@ export type UseConsistentGraphqlDescriptionsConfiguration =
  */
 export type UseConsistentGraphqlDescriptionsStyle = 'block' | 'inline'
 export type UseDeprecatedDateConfiguration = RulePlainConfiguration | RuleWithUseDeprecatedDateOptions
+export type UseDestructuringConfiguration = RulePlainConfiguration | RuleWithUseDestructuringOptions
+export type UseErrorCauseConfiguration = RulePlainConfiguration | RuleWithUseErrorCauseOptions
 export type UseExhaustiveSwitchCasesConfiguration = RulePlainConfiguration | RuleWithUseExhaustiveSwitchCasesOptions
 export type UseExplicitTypeConfiguration = RulePlainConfiguration | RuleWithUseExplicitTypeOptions
 export type UseFindConfiguration = RulePlainConfiguration | RuleWithUseFindOptions
+export type UseInlineScriptIdConfiguration = RulePlainConfiguration | RuleWithUseInlineScriptIdOptions
+export type UseLoneAnonymousOperationConfiguration = RulePlainConfiguration | RuleWithUseLoneAnonymousOperationOptions
+export type UseLoneExecutableDefinitionConfiguration =
+  | RulePlainConfiguration
+  | RuleWithUseLoneExecutableDefinitionOptions
 export type UseMaxParamsConfiguration = RulePlainConfiguration | RuleWithUseMaxParamsOptions
 export type UseQwikMethodUsageConfiguration = RulePlainConfiguration | RuleWithUseQwikMethodUsageOptions
 export type UseQwikValidLexicalScopeConfiguration = RulePlainConfiguration | RuleWithUseQwikValidLexicalScopeOptions
+export type UseRegexpExecConfiguration = RulePlainConfiguration | RuleWithUseRegexpExecOptions
+export type UseRequiredScriptsConfiguration = RulePlainConfiguration | RuleWithUseRequiredScriptsOptions
 export type UseSortedClassesConfiguration = RulePlainConfiguration | RuleWithUseSortedClassesOptions
 export type UseSpreadConfiguration = RulePlainConfiguration | RuleWithUseSpreadOptions
-export type UseUniqueGraphqlOperationNameConfiguration =
+export type UseVueConsistentDefinePropsDeclarationConfiguration =
   | RulePlainConfiguration
-  | RuleWithUseUniqueGraphqlOperationNameOptions
+  | RuleWithUseVueConsistentDefinePropsDeclarationOptions
+export type DeclarationStyle = 'type' | 'runtime'
+export type UseVueConsistentVBindStyleConfiguration = RulePlainConfiguration | RuleWithUseVueConsistentVBindStyleOptions
+export type VueDirectiveStyle = 'shorthand' | 'longhand'
+export type UseVueConsistentVOnStyleConfiguration = RulePlainConfiguration | RuleWithUseVueConsistentVOnStyleOptions
+export type VueDirectiveStyle2 = 'shorthand' | 'longhand'
 export type UseVueDefineMacrosOrderConfiguration = RulePlainConfiguration | RuleWithUseVueDefineMacrosOrderOptions
 export type UseVueHyphenatedAttributesConfiguration = RulePlainConfiguration | RuleWithUseVueHyphenatedAttributesOptions
 export type UseVueMultiWordComponentNamesConfiguration =
   | RulePlainConfiguration
   | RuleWithUseVueMultiWordComponentNamesOptions
+export type UseVueVForKeyConfiguration = RulePlainConfiguration | RuleWithUseVueVForKeyOptions
+export type UseVueValidTemplateRootConfiguration = RulePlainConfiguration | RuleWithUseVueValidTemplateRootOptions
 export type UseVueValidVBindConfiguration = RulePlainConfiguration | RuleWithUseVueValidVBindOptions
+export type UseVueValidVCloakConfiguration = RulePlainConfiguration | RuleWithUseVueValidVCloakOptions
 export type UseVueValidVElseConfiguration = RulePlainConfiguration | RuleWithUseVueValidVElseOptions
 export type UseVueValidVElseIfConfiguration = RulePlainConfiguration | RuleWithUseVueValidVElseIfOptions
 export type UseVueValidVHtmlConfiguration = RulePlainConfiguration | RuleWithUseVueValidVHtmlOptions
 export type UseVueValidVIfConfiguration = RulePlainConfiguration | RuleWithUseVueValidVIfOptions
 export type UseVueValidVOnConfiguration = RulePlainConfiguration | RuleWithUseVueValidVOnOptions
+export type UseVueValidVOnceConfiguration = RulePlainConfiguration | RuleWithUseVueValidVOnceOptions
+export type UseVueValidVPreConfiguration = RulePlainConfiguration | RuleWithUseVueValidVPreOptions
 export type UseVueValidVTextConfiguration = RulePlainConfiguration | RuleWithUseVueValidVTextOptions
+export type UseVueVaporConfiguration = RulePlainConfiguration | RuleWithUseVueVaporOptions
 export type SeverityOrPerformance = GroupPlainConfiguration | Performance
 export type NoAccumulatingSpreadConfiguration = RulePlainConfiguration | RuleWithNoAccumulatingSpreadOptions
 export type NoAwaitInLoopsConfiguration = RulePlainConfiguration | RuleWithNoAwaitInLoopsOptions
@@ -426,7 +479,6 @@ export type NoRestrictedGlobalsConfiguration = RulePlainConfiguration | RuleWith
 export type NoRestrictedImportsConfiguration = RulePlainConfiguration | RuleWithNoRestrictedImportsOptions
 export type Paths = string | PathOptions
 export type Patterns = PatternOptions
-export type Regex = string
 export type NoRestrictedTypesConfiguration = RulePlainConfiguration | RuleWithNoRestrictedTypesOptions
 export type CustomRestrictedType = string | CustomRestrictedTypeOptions
 export type NoShoutyConstantsConfiguration = RulePlainConfiguration | RuleWithNoShoutyConstantsOptions
@@ -2644,7 +2696,7 @@ export interface Correctness {
    */
   recommended?: boolean | null
   /**
-   * Enforce all dependencies are correctly specified in a React hook.
+   * Enforce correct dependency usage within React hooks.
    * See https://biomejs.dev/linter/rules/use-exhaustive-dependencies
    */
   useExhaustiveDependencies?: UseExhaustiveDependenciesConfiguration | null
@@ -3191,6 +3243,16 @@ export interface UseYieldOptions {}
  */
 export interface Nursery {
   /**
+   * Disallow ambiguous anchor descriptions.
+   * See https://biomejs.dev/linter/rules/no-ambiguous-anchor-text
+   */
+  noAmbiguousAnchorText?: NoAmbiguousAnchorTextConfiguration | null
+  /**
+   * Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.
+   * See https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document
+   */
+  noBeforeInteractiveScriptOutsideDocument?: NoBeforeInteractiveScriptOutsideDocumentConfiguration | null
+  /**
    * Disallow continue statements.
    * See https://biomejs.dev/linter/rules/no-continue
    */
@@ -3201,10 +3263,55 @@ export interface Nursery {
    */
   noDeprecatedImports?: NoDeprecatedImportsConfiguration | null
   /**
+   * Disallow equal signs explicitly at the beginning of regular expressions.
+   * See https://biomejs.dev/linter/rules/no-div-regex
+   */
+  noDivRegex?: NoDivRegexConfiguration | null
+  /**
+   * Require all argument names for fields & directives to be unique.
+   * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
+   */
+  noDuplicateArgumentNames?: NoDuplicateArgumentNamesConfiguration | null
+  /**
+   * Disallow duplication of attributes.
+   * See https://biomejs.dev/linter/rules/no-duplicate-attributes
+   */
+  noDuplicateAttributes?: NoDuplicateAttributesConfiguration | null
+  /**
    * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
    * See https://biomejs.dev/linter/rules/no-duplicate-dependencies
    */
   noDuplicateDependencies?: NoDuplicateDependenciesConfiguration | null
+  /**
+   * Require all enum value names to be unique.
+   * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
+   */
+  noDuplicateEnumValueNames?: NoDuplicateEnumValueNamesConfiguration | null
+  /**
+   * Disallow duplicate enum member values.
+   * See https://biomejs.dev/linter/rules/no-duplicate-enum-values
+   */
+  noDuplicateEnumValues?: NoDuplicateEnumValuesConfiguration | null
+  /**
+   * Require all fields of a type to be unique.
+   * See https://biomejs.dev/linter/rules/no-duplicate-field-definition-names
+   */
+  noDuplicateFieldDefinitionNames?: NoDuplicateFieldDefinitionNamesConfiguration | null
+  /**
+   * Enforce unique operation names across a GraphQL document.
+   * See https://biomejs.dev/linter/rules/no-duplicate-graphql-operation-name
+   */
+  noDuplicateGraphqlOperationName?: NoDuplicateGraphqlOperationNameConfiguration | null
+  /**
+   * Require fields within an input object to be unique.
+   * See https://biomejs.dev/linter/rules/no-duplicate-input-field-names
+   */
+  noDuplicateInputFieldNames?: NoDuplicateInputFieldNamesConfiguration | null
+  /**
+   * Require all variable definitions to be unique.
+   * See https://biomejs.dev/linter/rules/no-duplicate-variable-names
+   */
+  noDuplicateVariableNames?: NoDuplicateVariableNamesConfiguration | null
   /**
    * Disallow JSX prop spreading the same identifier multiple times.
    * See https://biomejs.dev/linter/rules/no-duplicated-spread-props
@@ -3220,6 +3327,21 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-equals-to-null
    */
   noEqualsToNull?: NoEqualsToNullConfiguration | null
+  /**
+   * Enforce a maximum number of classes per file.
+   * See https://biomejs.dev/linter/rules/no-excessive-classes-per-file
+   */
+  noExcessiveClassesPerFile?: NoExcessiveClassesPerFileConfiguration | null
+  /**
+   * Restrict the number of lines in a file.
+   * See https://biomejs.dev/linter/rules/no-excessive-lines-per-file
+   */
+  noExcessiveLinesPerFile?: NoExcessiveLinesPerFileConfiguration | null
+  /**
+   * Disallow new operators outside of assignments or comparisons.
+   * See https://biomejs.dev/linter/rules/no-floating-classes
+   */
+  noFloatingClasses?: NoFloatingClassesConfiguration | null
   /**
    * Require Promise-like statements to be handled appropriately.
    * See https://biomejs.dev/linter/rules/no-floating-promises
@@ -3246,6 +3368,11 @@ export interface Nursery {
    */
   noJsxLiterals?: NoJsxLiteralsConfiguration | null
   /**
+   * Disallow .bind(), arrow functions, or function expressions in JSX props.
+   * See https://biomejs.dev/linter/rules/no-jsx-props-bind
+   */
+  noJsxPropsBind?: NoJsxPropsBindConfiguration | null
+  /**
    * Prevent problematic leaked values from being rendered.
    * See https://biomejs.dev/linter/rules/no-leaked-render
    */
@@ -3255,6 +3382,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-misused-promises
    */
   noMisusedPromises?: NoMisusedPromisesConfiguration | null
+  /**
+   * Disallow use of chained assignment expressions.
+   * See https://biomejs.dev/linter/rules/no-multi-assign
+   */
+  noMultiAssign?: NoMultiAssignConfiguration | null
   /**
    * Disallow creating multiline strings by escaping newlines.
    * See https://biomejs.dev/linter/rules/no-multi-str
@@ -3271,7 +3403,7 @@ export interface Nursery {
    */
   noParametersOnlyUsedInRecursion?: NoParametersOnlyUsedInRecursionConfiguration | null
   /**
-   * Disallow the use of the __proto__ property.
+   * Disallow the use of the deprecated __proto__ object property.
    * See https://biomejs.dev/linter/rules/no-proto
    */
   noProto?: NoProtoConfiguration | null
@@ -3280,6 +3412,21 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-react-forward-ref
    */
   noReactForwardRef?: NoReactForwardRefConfiguration | null
+  /**
+   * Disallow assignments in return statements.
+   * See https://biomejs.dev/linter/rules/no-return-assign
+   */
+  noReturnAssign?: NoReturnAssignConfiguration | null
+  /**
+   * Disallow the usage of specified root types.
+   * See https://biomejs.dev/linter/rules/no-root-type
+   */
+  noRootType?: NoRootTypeConfiguration | null
+  /**
+   * Disallow javascript: URLs in HTML.
+   * See https://biomejs.dev/linter/rules/no-script-url
+   */
+  noScriptUrl?: NoScriptUrlConfiguration | null
   /**
    * Disallow variable declarations from shadowing variables declared in the outer scope.
    * See https://biomejs.dev/linter/rules/no-shadow
@@ -3295,6 +3442,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-ternary
    */
   noTernary?: NoTernaryConfiguration | null
+  /**
+   * Disallow the use of undeclared environment variables.
+   * See https://biomejs.dev/linter/rules/no-undeclared-env-vars
+   */
+  noUndeclaredEnvVars?: NoUndeclaredEnvVarsConfiguration | null
   /**
    * Disallow unknown DOM properties.
    * See https://biomejs.dev/linter/rules/no-unknown-attribute
@@ -3336,6 +3488,11 @@ export interface Nursery {
    */
   noVueDuplicateKeys?: NoVueDuplicateKeysConfiguration | null
   /**
+   * Disallow the use of Vue Options API.
+   * See https://biomejs.dev/linter/rules/no-vue-options-api
+   */
+  noVueOptionsApi?: NoVueOptionsApiConfiguration | null
+  /**
    * Disallow reserved keys in Vue component data and computed properties.
    * See https://biomejs.dev/linter/rules/no-vue-reserved-keys
    */
@@ -3345,6 +3502,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-vue-reserved-props
    */
   noVueReservedProps?: NoVueReservedPropsConfiguration | null
+  /**
+   * Disallow destructuring of props passed to setup in Vue projects.
+   * See https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss
+   */
+  noVueSetupPropsReactivityLoss?: NoVueSetupPropsReactivityLossConfiguration | null
   /**
    * Disallow using v-if and v-for directives on the same element.
    * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
@@ -3360,10 +3522,20 @@ export interface Nursery {
    */
   useArraySortCompare?: UseArraySortCompareConfiguration | null
   /**
+   * Enforce that await is only used on Promise values.
+   * See https://biomejs.dev/linter/rules/use-await-thenable
+   */
+  useAwaitThenable?: UseAwaitThenableConfiguration | null
+  /**
    * Enforce consistent arrow function bodies.
    * See https://biomejs.dev/linter/rules/use-consistent-arrow-return
    */
   useConsistentArrowReturn?: UseConsistentArrowReturnConfiguration | null
+  /**
+   * Disallow enums from having both number and string members.
+   * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
+   */
+  useConsistentEnumValueType?: UseConsistentEnumValueTypeConfiguration | null
   /**
    * Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.
    * See https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions
@@ -3374,6 +3546,16 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-deprecated-date
    */
   useDeprecatedDate?: UseDeprecatedDateConfiguration | null
+  /**
+   * Require destructuring from arrays and/or objects.
+   * See https://biomejs.dev/linter/rules/use-destructuring
+   */
+  useDestructuring?: UseDestructuringConfiguration | null
+  /**
+   * Enforce that new Error() is thrown with the original error as cause.
+   * See https://biomejs.dev/linter/rules/use-error-cause
+   */
+  useErrorCause?: UseErrorCauseConfiguration | null
   /**
    * Require switch-case statements to be exhaustive.
    * See https://biomejs.dev/linter/rules/use-exhaustive-switch-cases
@@ -3390,6 +3572,21 @@ export interface Nursery {
    */
   useFind?: UseFindConfiguration | null
   /**
+   * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
+   * See https://biomejs.dev/linter/rules/use-inline-script-id
+   */
+  useInlineScriptId?: UseInlineScriptIdConfiguration | null
+  /**
+   * Disallow anonymous operations when more than one operation specified in document.
+   * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
+   */
+  useLoneAnonymousOperation?: UseLoneAnonymousOperationConfiguration | null
+  /**
+   * Require queries, mutations, subscriptions or fragments each to be located in separate files.
+   * See https://biomejs.dev/linter/rules/use-lone-executable-definition
+   */
+  useLoneExecutableDefinition?: UseLoneExecutableDefinitionConfiguration | null
+  /**
    * Enforce a maximum number of parameters in function definitions.
    * See https://biomejs.dev/linter/rules/use-max-params
    */
@@ -3405,6 +3602,16 @@ export interface Nursery {
    */
   useQwikValidLexicalScope?: UseQwikValidLexicalScopeConfiguration | null
   /**
+   * Enforce RegExp#exec over String#match if no global flag is provided.
+   * See https://biomejs.dev/linter/rules/use-regexp-exec
+   */
+  useRegexpExec?: UseRegexpExecConfiguration | null
+  /**
+   * Enforce the presence of required scripts in package.json.
+   * See https://biomejs.dev/linter/rules/use-required-scripts
+   */
+  useRequiredScripts?: UseRequiredScriptsConfiguration | null
+  /**
    * Enforce the sorting of CSS utility classes.
    * See https://biomejs.dev/linter/rules/use-sorted-classes
    */
@@ -3415,10 +3622,20 @@ export interface Nursery {
    */
   useSpread?: UseSpreadConfiguration | null
   /**
-   * Enforce unique operation names across a GraphQL document.
-   * See https://biomejs.dev/linter/rules/use-unique-graphql-operation-name
+   * Enforce consistent defineProps declaration style.
+   * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
    */
-  useUniqueGraphqlOperationName?: UseUniqueGraphqlOperationNameConfiguration | null
+  useVueConsistentDefinePropsDeclaration?: UseVueConsistentDefinePropsDeclarationConfiguration | null
+  /**
+   * Enforce a consistent style for v-bind in Vue templates.
+   * See https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style
+   */
+  useVueConsistentVBindStyle?: UseVueConsistentVBindStyleConfiguration | null
+  /**
+   * Enforce a consistent style for v-on in Vue templates.
+   * See https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style
+   */
+  useVueConsistentVOnStyle?: UseVueConsistentVOnStyleConfiguration | null
   /**
    * Enforce specific order of Vue compiler macros.
    * See https://biomejs.dev/linter/rules/use-vue-define-macros-order
@@ -3435,10 +3652,25 @@ export interface Nursery {
    */
   useVueMultiWordComponentNames?: UseVueMultiWordComponentNamesConfiguration | null
   /**
+   * Enforce that elements using v-for also specify a unique key.
+   * See https://biomejs.dev/linter/rules/use-vue-v-for-key
+   */
+  useVueVForKey?: UseVueVForKeyConfiguration | null
+  /**
+   * Enforce valid Vue \<template> root usage.
+   * See https://biomejs.dev/linter/rules/use-vue-valid-template-root
+   */
+  useVueValidTemplateRoot?: UseVueValidTemplateRootConfiguration | null
+  /**
    * Forbids v-bind directives with missing arguments or invalid modifiers.
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-bind
    */
   useVueValidVBind?: UseVueValidVBindConfiguration | null
+  /**
+   * Enforce valid v-cloak Vue directives.
+   * See https://biomejs.dev/linter/rules/use-vue-valid-v-cloak
+   */
+  useVueValidVCloak?: UseVueValidVCloakConfiguration | null
   /**
    * Enforce valid usage of v-else.
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-else
@@ -3465,11 +3697,41 @@ export interface Nursery {
    */
   useVueValidVOn?: UseVueValidVOnConfiguration | null
   /**
+   * Enforce valid v-once Vue directives.
+   * See https://biomejs.dev/linter/rules/use-vue-valid-v-once
+   */
+  useVueValidVOnce?: UseVueValidVOnceConfiguration | null
+  /**
+   * Enforce valid v-pre Vue directives.
+   * See https://biomejs.dev/linter/rules/use-vue-valid-v-pre
+   */
+  useVueValidVPre?: UseVueValidVPreConfiguration | null
+  /**
    * Enforce valid v-text Vue directives.
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-text
    */
   useVueValidVText?: UseVueValidVTextConfiguration | null
+  /**
+   * Enforce opting in to Vue Vapor mode in \<script setup> blocks.
+   * See https://biomejs.dev/linter/rules/use-vue-vapor
+   */
+  useVueVapor?: UseVueVaporConfiguration | null
 }
+export interface RuleWithNoAmbiguousAnchorTextOptions {
+  level: RulePlainConfiguration
+  options?: NoAmbiguousAnchorTextOptions
+}
+export interface NoAmbiguousAnchorTextOptions {
+  /**
+   * It allows users to modify the strings that can be checked for in the anchor text. Useful for specifying other words in other languages
+   */
+  words?: string[] | null
+}
+export interface RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions {
+  level: RulePlainConfiguration
+  options?: NoBeforeInteractiveScriptOutsideDocumentOptions
+}
+export interface NoBeforeInteractiveScriptOutsideDocumentOptions {}
 export interface RuleWithNoContinueOptions {
   level: RulePlainConfiguration
   options?: NoContinueOptions
@@ -3480,11 +3742,57 @@ export interface RuleWithNoDeprecatedImportsOptions {
   options?: NoDeprecatedImportsOptions
 }
 export interface NoDeprecatedImportsOptions {}
+export interface RuleWithNoDivRegexOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoDivRegexOptions
+}
+export interface NoDivRegexOptions {}
+export interface RuleWithNoDuplicateArgumentNamesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateArgumentNamesOptions
+}
+export interface NoDuplicateArgumentNamesOptions {}
+export interface RuleWithNoDuplicateAttributesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateAttributesOptions
+}
+export interface NoDuplicateAttributesOptions {}
 export interface RuleWithNoDuplicateDependenciesOptions {
   level: RulePlainConfiguration
   options?: NoDuplicateDependenciesOptions
 }
 export interface NoDuplicateDependenciesOptions {}
+export interface RuleWithNoDuplicateEnumValueNamesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateEnumValueNamesOptions
+}
+export interface NoDuplicateEnumValueNamesOptions {}
+export interface RuleWithNoDuplicateEnumValuesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateEnumValuesOptions
+}
+export interface NoDuplicateEnumValuesOptions {}
+export interface RuleWithNoDuplicateFieldDefinitionNamesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateFieldDefinitionNamesOptions
+}
+export interface NoDuplicateFieldDefinitionNamesOptions {}
+export interface RuleWithNoDuplicateGraphqlOperationNameOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateGraphqlOperationNameOptions
+}
+export interface NoDuplicateGraphqlOperationNameOptions {}
+export interface RuleWithNoDuplicateInputFieldNamesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateInputFieldNamesOptions
+}
+export interface NoDuplicateInputFieldNamesOptions {}
+export interface RuleWithNoDuplicateVariableNamesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateVariableNamesOptions
+}
+export interface NoDuplicateVariableNamesOptions {}
 export interface RuleWithNoDuplicatedSpreadPropsOptions {
   level: RulePlainConfiguration
   options?: NoDuplicatedSpreadPropsOptions
@@ -3506,6 +3814,35 @@ export interface RuleWithNoEqualsToNullOptions {
   options?: NoEqualsToNullOptions
 }
 export interface NoEqualsToNullOptions {}
+export interface RuleWithNoExcessiveClassesPerFileOptions {
+  level: RulePlainConfiguration
+  options?: NoExcessiveClassesPerFileOptions
+}
+export interface NoExcessiveClassesPerFileOptions {
+  /**
+   * The maximum number of classes allowed in a file.
+   */
+  maxClasses?: number | null
+}
+export interface RuleWithNoExcessiveLinesPerFileOptions {
+  level: RulePlainConfiguration
+  options?: NoExcessiveLinesPerFileOptions
+}
+export interface NoExcessiveLinesPerFileOptions {
+  /**
+   * The maximum number of lines allowed in a file.
+   */
+  maxLines?: number | null
+  /**
+   * When this option is set to `true`, blank lines are not counted towards the maximum line limit.
+   */
+  skipBlankLines?: boolean | null
+}
+export interface RuleWithNoFloatingClassesOptions {
+  level: RulePlainConfiguration
+  options?: NoFloatingClassesOptions
+}
+export interface NoFloatingClassesOptions {}
 export interface RuleWithNoFloatingPromisesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3558,6 +3895,11 @@ export interface NoJsxLiteralsOptions {
    */
   noStrings?: boolean | null
 }
+export interface RuleWithNoJsxPropsBindOptions {
+  level: RulePlainConfiguration
+  options?: NoJsxPropsBindOptions
+}
+export interface NoJsxPropsBindOptions {}
 export interface RuleWithNoLeakedRenderOptions {
   level: RulePlainConfiguration
   options?: NoLeakedRenderOptions
@@ -3571,6 +3913,11 @@ export interface RuleWithNoMisusedPromisesOptions {
   options?: NoMisusedPromisesOptions
 }
 export interface NoMisusedPromisesOptions {}
+export interface RuleWithNoMultiAssignOptions {
+  level: RulePlainConfiguration
+  options?: NoMultiAssignOptions
+}
+export interface NoMultiAssignOptions {}
 export interface RuleWithNoMultiStrOptions {
   level: RulePlainConfiguration
   options?: NoMultiStrOptions
@@ -3598,6 +3945,27 @@ export interface RuleWithNoReactForwardRefOptions {
   options?: NoReactForwardRefOptions
 }
 export interface NoReactForwardRefOptions {}
+export interface RuleWithNoReturnAssignOptions {
+  level: RulePlainConfiguration
+  options?: NoReturnAssignOptions
+}
+export interface NoReturnAssignOptions {}
+export interface RuleWithNoRootTypeOptions {
+  level: RulePlainConfiguration
+  options?: NoRootTypeOptions
+}
+export interface NoRootTypeOptions {
+  /**
+   * A list of disallowed root types (e.g. "mutation" and/or "subscription").
+   * The values of the list are case-insensitive.
+   */
+  disallow?: string[]
+}
+export interface RuleWithNoScriptUrlOptions {
+  level: RulePlainConfiguration
+  options?: NoScriptUrlOptions
+}
+export interface NoScriptUrlOptions {}
 export interface RuleWithNoShadowOptions {
   level: RulePlainConfiguration
   options?: NoShadowOptions
@@ -3613,6 +3981,19 @@ export interface RuleWithNoTernaryOptions {
   options?: NoTernaryOptions
 }
 export interface NoTernaryOptions {}
+export interface RuleWithNoUndeclaredEnvVarsOptions {
+  level: RulePlainConfiguration
+  options?: NoUndeclaredEnvVarsOptions
+}
+export interface NoUndeclaredEnvVarsOptions {
+  /**
+   * Environment variables that should always be allowed.
+   * Use this to specify environment variables that are always available
+   * in your environment, even when not declared in turbo.json.
+   * Supports regular expressions, e.g. `["MY_ENV_.*"]`.
+   */
+  allowedEnvVars?: Regex[] | null
+}
 export interface RuleWithNoUnknownAttributeOptions {
   level: RulePlainConfiguration
   options?: NoUnknownAttributeOptions
@@ -3662,6 +4043,11 @@ export interface RuleWithNoVueDuplicateKeysOptions {
   options?: NoVueDuplicateKeysOptions
 }
 export interface NoVueDuplicateKeysOptions {}
+export interface RuleWithNoVueOptionsApiOptions {
+  level: RulePlainConfiguration
+  options?: NoVueOptionsApiOptions
+}
+export interface NoVueOptionsApiOptions {}
 export interface RuleWithNoVueReservedKeysOptions {
   level: RulePlainConfiguration
   options?: NoVueReservedKeysOptions
@@ -3672,6 +4058,11 @@ export interface RuleWithNoVueReservedPropsOptions {
   options?: NoVueReservedPropsOptions
 }
 export interface NoVueReservedPropsOptions {}
+export interface RuleWithNoVueSetupPropsReactivityLossOptions {
+  level: RulePlainConfiguration
+  options?: NoVueSetupPropsReactivityLossOptions
+}
+export interface NoVueSetupPropsReactivityLossOptions {}
 export interface RuleWithNoVueVIfWithVForOptions {
   level: RulePlainConfiguration
   options?: NoVueVIfWithVForOptions
@@ -3682,6 +4073,11 @@ export interface RuleWithUseArraySortCompareOptions {
   options?: UseArraySortCompareOptions
 }
 export interface UseArraySortCompareOptions {}
+export interface RuleWithUseAwaitThenableOptions {
+  level: RulePlainConfiguration
+  options?: UseAwaitThenableOptions
+}
+export interface UseAwaitThenableOptions {}
 export interface RuleWithUseConsistentArrowReturnOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3702,6 +4098,11 @@ export interface UseConsistentArrowReturnOptions {
    */
   style?: UseConsistentArrowReturnStyle | null
 }
+export interface RuleWithUseConsistentEnumValueTypeOptions {
+  level: RulePlainConfiguration
+  options?: UseConsistentEnumValueTypeOptions
+}
+export interface UseConsistentEnumValueTypeOptions {}
 export interface RuleWithUseConsistentGraphqlDescriptionsOptions {
   level: RulePlainConfiguration
   options?: UseConsistentGraphqlDescriptionsOptions
@@ -3719,6 +4120,24 @@ export interface RuleWithUseDeprecatedDateOptions {
 export interface UseDeprecatedDateOptions {
   argumentName?: string | null
 }
+export interface RuleWithUseDestructuringOptions {
+  level: RulePlainConfiguration
+  options?: UseDestructuringOptions
+}
+export interface UseDestructuringOptions {}
+export interface RuleWithUseErrorCauseOptions {
+  level: RulePlainConfiguration
+  options?: UseErrorCauseOptions
+}
+/**
+ * Options for the `useErrorCause` rule.
+ */
+export interface UseErrorCauseOptions {
+  /**
+   * When set to `true`, the rule requires that `catch` clauses have a parameter.
+   */
+  requireCatchParameter?: boolean
+}
 export interface RuleWithUseExhaustiveSwitchCasesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3735,6 +4154,21 @@ export interface RuleWithUseFindOptions {
   options?: UseFindOptions
 }
 export interface UseFindOptions {}
+export interface RuleWithUseInlineScriptIdOptions {
+  level: RulePlainConfiguration
+  options?: UseInlineScriptIdOptions
+}
+export interface UseInlineScriptIdOptions {}
+export interface RuleWithUseLoneAnonymousOperationOptions {
+  level: RulePlainConfiguration
+  options?: UseLoneAnonymousOperationOptions
+}
+export interface UseLoneAnonymousOperationOptions {}
+export interface RuleWithUseLoneExecutableDefinitionOptions {
+  level: RulePlainConfiguration
+  options?: UseLoneExecutableDefinitionOptions
+}
+export interface UseLoneExecutableDefinitionOptions {}
 export interface RuleWithUseMaxParamsOptions {
   level: RulePlainConfiguration
   options?: UseMaxParamsOptions
@@ -3755,6 +4189,21 @@ export interface RuleWithUseQwikValidLexicalScopeOptions {
   options?: UseQwikValidLexicalScopeOptions
 }
 export interface UseQwikValidLexicalScopeOptions {}
+export interface RuleWithUseRegexpExecOptions {
+  level: RulePlainConfiguration
+  options?: UseRegexpExecOptions
+}
+export interface UseRegexpExecOptions {}
+export interface RuleWithUseRequiredScriptsOptions {
+  level: RulePlainConfiguration
+  options?: UseRequiredScriptsOptions
+}
+export interface UseRequiredScriptsOptions {
+  /**
+   * List of script names that must be present in package.json
+   */
+  requiredScripts?: string[]
+}
 export interface RuleWithUseSortedClassesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3776,11 +4225,37 @@ export interface RuleWithUseSpreadOptions {
   options?: UseSpreadOptions
 }
 export interface UseSpreadOptions {}
-export interface RuleWithUseUniqueGraphqlOperationNameOptions {
+export interface RuleWithUseVueConsistentDefinePropsDeclarationOptions {
   level: RulePlainConfiguration
-  options?: UseUniqueGraphqlOperationNameOptions
+  options?: UseVueConsistentDefinePropsDeclarationOptions
 }
-export interface UseUniqueGraphqlOperationNameOptions {}
+export interface UseVueConsistentDefinePropsDeclarationOptions {
+  style?: DeclarationStyle | null
+}
+export interface RuleWithUseVueConsistentVBindStyleOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueConsistentVBindStyleOptions
+}
+export interface UseVueConsistentVBindStyleOptions {
+  /**
+   * Preferred style for `v-bind` usage: "shorthand" or "longhand".
+   * If omitted, shorthand is preferred.
+   */
+  style?: VueDirectiveStyle | null
+}
+export interface RuleWithUseVueConsistentVOnStyleOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueConsistentVOnStyleOptions
+}
+export interface UseVueConsistentVOnStyleOptions {
+  /**
+   * Preferred style for `v-on` usage: "shorthand" or "longhand".
+   * If omitted, shorthand is preferred.
+   */
+  style?: VueDirectiveStyle2 | null
+}
 export interface RuleWithUseVueDefineMacrosOrderOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3817,11 +4292,28 @@ export interface UseVueMultiWordComponentNamesOptions {
    */
   ignores?: string[]
 }
+export interface RuleWithUseVueVForKeyOptions {
+  level: RulePlainConfiguration
+  options?: UseVueVForKeyOptions
+}
+export interface UseVueVForKeyOptions {}
+export interface RuleWithUseVueValidTemplateRootOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueValidTemplateRootOptions
+}
+export interface UseVueValidTemplateRootOptions {}
 export interface RuleWithUseVueValidVBindOptions {
   level: RulePlainConfiguration
   options?: UseVueValidVBindOptions
 }
 export interface UseVueValidVBindOptions {}
+export interface RuleWithUseVueValidVCloakOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueValidVCloakOptions
+}
+export interface UseVueValidVCloakOptions {}
 export interface RuleWithUseVueValidVElseOptions {
   level: RulePlainConfiguration
   options?: UseVueValidVElseOptions
@@ -3852,11 +4344,29 @@ export interface UseVueValidVOnOptions {
    */
   modifiers?: string[] | null
 }
+export interface RuleWithUseVueValidVOnceOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueValidVOnceOptions
+}
+export interface UseVueValidVOnceOptions {}
+export interface RuleWithUseVueValidVPreOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueValidVPreOptions
+}
+export interface UseVueValidVPreOptions {}
 export interface RuleWithUseVueValidVTextOptions {
   level: RulePlainConfiguration
   options?: UseVueValidVTextOptions
 }
 export interface UseVueValidVTextOptions {}
+export interface RuleWithUseVueVaporOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseVueVaporOptions
+}
+export interface UseVueVaporOptions {}
 /**
  * A list of rules that belong to this group
  */
@@ -5074,7 +5584,7 @@ export interface Suspicious {
    */
   noAsyncPromiseExecutor?: NoAsyncPromiseExecutorConfiguration | null
   /**
-   * Prevents the use of the ! pattern in the first position of files.includes in the configuration file.
+   * Prevents the misuse of glob patterns inside the files.includes field.
    * See https://biomejs.dev/linter/rules/no-biome-first-exception
    */
   noBiomeFirstException?: NoBiomeFirstExceptionConfiguration | null

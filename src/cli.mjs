@@ -14,35 +14,6 @@ import {files} from './commonBiomeSettings.mjs'
 
 // biome-ignore-start lint/suspicious/noConsole: intentionally used
 
-////////////////////
-// PKG JSON CHECK //
-////////////////////
-
-const pkgJsonPath = path.resolve(process.cwd(), 'package.json')
-const pkgJson = (() => {
-  try {
-    return JSON.parse(fs.readFileSync(pkgJsonPath, {encoding: 'utf8'}))
-  } catch {
-    return {}
-  }
-})()
-
-try {
-  const {dependencies, devDependencies} = pkgJson
-
-  if (
-    !(
-      dependencies?.['@qodestack/biome-config'] ||
-      devDependencies?.['@qodestack/biome-config']
-    )
-  ) {
-    throw new Error('Package not found')
-  }
-} catch {
-  console.error(`Please first install ${color.bold('@qodestack/biome-config')}`)
-  process.exit(1)
-}
-
 ///////////
 // TITLE //
 ///////////
@@ -62,189 +33,272 @@ const title = [
   .join('\n')
   .replaceAll('f', '/')
   .replaceAll('B', '\\')
-const titleGradient = mindGradient(title)
 
-console.log(titleGradient)
+/**
+ * @param {{cwd?: string, argv?: string[]}} options
+ * @returns {number} exit code
+ */
+export function run({cwd = process.cwd(), argv = process.argv} = {}) {
+  ////////////////////
+  // PKG JSON CHECK //
+  ////////////////////
 
-//////////////////
-// BIOME CONFIG //
-//////////////////
-
-const args = parseArgs({
-  args: process.argv,
-  options: {
-    // Default to creating React projects.
-    vanilla: {
-      type: 'boolean',
-      default: false,
-    },
-
-    // Default to using VS Code.
-    vscode: {
-      type: 'boolean',
-      default: true,
-    },
-
-    // Default to using json over jsonc.
-    jsonc: {
-      type: 'boolean',
-      default: false,
-    },
-  },
-  allowPositionals: true,
-  allowNegative: true,
-})
-
-const isVanilla = args.values.vanilla
-const biomeConfig = {
-  $schema: './node_modules/@biomejs/biome/configuration_schema.json',
-  extends: [`@qodestack/biome-config${isVanilla ? '' : '/react'}`],
-
-  /**
-   * Settings likekly to be customized by the user.
-   *
-   * Exposing these as opposed to keeping them opaque in the generated biome
-   * settings files provided by this package.
-   */
-  files,
-}
-
-// biome.json takes precedence over biome.jsonc
-const biomeJsonPath = path.resolve(process.cwd(), 'biome.json')
-const biomeJsoncPath = path.resolve(process.cwd(), 'biome.jsonc')
-const isJsonc = args.values.jsonc
-const hasBiomeJson = fs.existsSync(biomeJsonPath)
-const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
-const biomeConfigStr = JSON.stringify(biomeConfig)
-
-/*
-  - jsonc: true
-    - has jsonc - quit
-    - has json - warn & proceed
-  - jsonc: false
-    - has jsonc - warn & proceed
-    - has json - quit
-*/
-
-if (isJsonc) {
-  if (hasBiomeJsonc) {
-    console.log(
-      `A ${color.bold('biome.jsonc')} file already exists. Delete this file first or proceed with a manual setup.`
-    )
-    console.log('')
-    process.exit()
-  } else if (hasBiomeJson) {
-    console.warn(
-      `⚠️ A ${color.bold('biome.json')} file already exists. ${color.bold('biome.jsonc')} will be created but Biome will default to reading ${color.bold('biome.json')}.`
-    )
-  }
-
-  fs.writeFileSync(biomeJsoncPath, biomeConfigStr)
-  console.log('-', 'created', color.cyan('biome.jsonc'))
-} else if (hasBiomeJson) {
-  console.log(
-    `A ${color.bold('biome.json')} file already exists. Delete this file first or proceed with a manual setup.`
-  )
-  console.log('')
-  process.exit()
-} else if (hasBiomeJsonc) {
-  console.warn(
-    `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
-  )
-} else {
-  fs.writeFileSync(biomeJsonPath, biomeConfigStr)
-  console.log('-', 'created', color.cyan('biome.json'))
-}
-
-/////////////
-// VS CODE //
-/////////////
-
-const isVscode = args.values.vscode
-const vscodeFolderPath = path.resolve(process.cwd(), '.vscode')
-const vscodeFolderExists = existsSync(vscodeFolderPath)
-const vscodeSettingsPath = `${vscodeFolderPath}/settings.json`
-
-if (isVscode) {
-  if (!vscodeFolderExists) {
-    fs.mkdirSync(vscodeFolderPath)
-  }
-
-  const currentVscodeSettings = (() => {
+  const pkgJsonPath = path.resolve(cwd, 'package.json')
+  const pkgJson = (() => {
     try {
-      return parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
+      return JSON.parse(fs.readFileSync(pkgJsonPath, {encoding: 'utf8'}))
     } catch {
-      return undefined
+      return {}
     }
   })()
 
-  const vscodeSettings = {
-    ...currentVscodeSettings,
-    'prettier.enable': false,
-    'eslint.enable': false,
+  try {
+    const {dependencies, devDependencies} = pkgJson
 
-    // https://next.biomejs.dev/linter/rules/use-import-type/#description
-    'typescript.preferences.preferTypeOnlyAutoImports': true,
-
-    'biome.enabled': true,
-    '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]': {
-      'editor.defaultFormatter': 'biomejs.biome',
-    },
-    'editor.defaultFormatter': 'biomejs.biome',
-    'editor.formatOnSave': true,
-    'editor.codeActionsOnSave': {
-      ...currentVscodeSettings?.['editor.codeActionsOnSave'],
-      'source.fixAll.biome': 'explicit',
-      'source.organizeImports.biome': 'explicit',
-    },
+    if (
+      !(
+        dependencies?.['@qodestack/biome-config'] ||
+        devDependencies?.['@qodestack/biome-config']
+      )
+    ) {
+      throw new Error('Package not found')
+    }
+  } catch {
+    console.error(
+      `Please first install ${color.bold('@qodestack/biome-config')}`
+    )
+    return 1
   }
-  const vscodeSettingsStr = JSON.stringify(vscodeSettings)
 
-  fs.writeFileSync(vscodeSettingsPath, vscodeSettingsStr)
-  console.log(
-    '-',
-    currentVscodeSettings ? 'updated' : 'created',
-    color.cyan('./vscode/settings.json')
-  )
+  ///////////
+  // TITLE //
+  ///////////
+
+  const titleGradient = mindGradient(title)
+  console.log(titleGradient)
+
+  //////////////////
+  // BIOME CONFIG //
+  //////////////////
+
+  const args = parseArgs({
+    args: argv,
+    options: {
+      // Default to creating React projects.
+      vanilla: {
+        type: 'boolean',
+        default: false,
+      },
+
+      // Default to using VS Code.
+      vscode: {
+        type: 'boolean',
+        default: true,
+      },
+
+      // Default to using json over jsonc.
+      jsonc: {
+        type: 'boolean',
+        default: false,
+      },
+
+      /**
+       * Boolean options to control creating the different assets. These are all
+       * on by default, but this allows the user to turn off any one of these:
+       *
+       * --no-include-biome-config
+       * --no-include-scripts
+       * --no-include-vscode
+       */
+
+      includeBiomeConfig: {
+        type: 'boolean',
+        default: true,
+      },
+      includeScripts: {
+        type: 'boolean',
+        default: true,
+      },
+      includeVscode: {
+        type: 'boolean',
+        default: true,
+      },
+    },
+    allowPositionals: true,
+    allowNegative: true,
+  })
+
+  const isVanilla = args.values.vanilla
+  const biomeConfig = {
+    $schema: './node_modules/@biomejs/biome/configuration_schema.json',
+    extends: [`@qodestack/biome-config${isVanilla ? '' : '/react'}`],
+
+    /**
+     * Settings likekly to be customized by the user.
+     *
+     * Exposing these as opposed to keeping them opaque in the generated biome
+     * settings files provided by this package.
+     */
+    files,
+  }
+
+  // biome.json takes precedence over biome.jsonc
+  const biomeJsonPath = path.resolve(cwd, 'biome.json')
+  const biomeJsoncPath = path.resolve(cwd, 'biome.jsonc')
+  const isJsonc = args.values.jsonc
+  const hasBiomeJson = fs.existsSync(biomeJsonPath)
+  const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
+  const biomeConfigStr = JSON.stringify(biomeConfig)
+  const {includeBiomeConfig, includeScripts, includeVscode} = args.values
+
+  /*
+    - jsonc: true
+      - has jsonc - quit
+      - has json - warn & proceed
+    - jsonc: false
+      - has jsonc - warn & proceed
+      - has json - quit
+  */
+
+  if (includeBiomeConfig) {
+    if (isJsonc) {
+      if (hasBiomeJsonc) {
+        console.log(
+          `A ${color.bold('biome.jsonc')} file already exists. Delete this file first or proceed with a manual setup.`
+        )
+        console.log('')
+        return 0
+      }
+      if (hasBiomeJson) {
+        console.warn(
+          `⚠️ A ${color.bold('biome.json')} file already exists. ${color.bold('biome.jsonc')} will be created but Biome will default to reading ${color.bold('biome.json')}.`
+        )
+      }
+
+      fs.writeFileSync(biomeJsoncPath, biomeConfigStr)
+      console.log('-', 'created', color.cyan('biome.jsonc'))
+    } else if (hasBiomeJson) {
+      console.log(
+        `A ${color.bold('biome.json')} file already exists. Delete this file first or proceed with a manual setup.`
+      )
+      console.log('')
+      return 0
+    } else if (hasBiomeJsonc) {
+      console.warn(
+        `⚠️ A ${color.bold('biome.jsonc')} file already exists. Proceeding without creating a new config...`
+      )
+    } else {
+      fs.writeFileSync(biomeJsonPath, biomeConfigStr)
+      console.log('-', 'created', color.cyan('biome.json'))
+    }
+  }
+
+  /////////////
+  // VS CODE //
+  /////////////
+
+  const isVscode = args.values.vscode
+  const vscodeFolderPath = path.resolve(cwd, '.vscode')
+  const vscodeFolderExists = existsSync(vscodeFolderPath)
+  const vscodeSettingsPath = `${vscodeFolderPath}/settings.json`
+
+  if (isVscode && includeVscode) {
+    if (!vscodeFolderExists) {
+      fs.mkdirSync(vscodeFolderPath)
+    }
+
+    const currentVscodeSettings = (() => {
+      try {
+        return parse(fs.readFileSync(vscodeSettingsPath, {encoding: 'utf8'}))
+      } catch {
+        return undefined
+      }
+    })()
+
+    const vscodeSettings = {
+      ...currentVscodeSettings,
+      'prettier.enable': false,
+      'eslint.enable': false,
+
+      // https://next.biomejs.dev/linter/rules/use-import-type/#description
+      'typescript.preferences.preferTypeOnlyAutoImports': true,
+
+      'biome.enabled': true,
+      '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]':
+        {
+          'editor.defaultFormatter': 'biomejs.biome',
+        },
+      'editor.defaultFormatter': 'biomejs.biome',
+      'editor.formatOnSave': true,
+      'editor.codeActionsOnSave': {
+        ...currentVscodeSettings?.['editor.codeActionsOnSave'],
+        'source.fixAll.biome': 'explicit',
+        'source.organizeImports.biome': 'explicit',
+      },
+    }
+    const vscodeSettingsStr = JSON.stringify(vscodeSettings)
+
+    fs.writeFileSync(vscodeSettingsPath, vscodeSettingsStr)
+    console.log(
+      '-',
+      currentVscodeSettings ? 'updated' : 'created',
+      color.cyan('./vscode/settings.json')
+    )
+  }
+
+  //////////////////////
+  // PKG JSON SCRIPTS //
+  //////////////////////
+
+  pkgJson.scripts = {
+    ...pkgJson.scripts,
+    check: 'biome check',
+    'check:fix': 'biome check --write .',
+    lint: 'biome lint',
+    'lint:fix': 'biome lint --write .',
+    format: 'biome format',
+    'format:fix': 'biome format --write .',
+  }
+
+  if (includeScripts) {
+    const pkgJsonStr = JSON.stringify(pkgJson)
+    fs.writeFileSync(pkgJsonPath, pkgJsonStr)
+  }
+
+  //////////////////
+  // FORMAT FILES //
+  //////////////////
+
+  const biomeExecPath = path.resolve(cwd, './node_modules/.bin/biome')
+  const filesToFormat = [
+    includeBiomeConfig && biomeJsoncPath,
+    includeBiomeConfig && biomeJsonPath,
+    includeVscode && vscodeSettingsPath,
+    includeScripts && pkgJsonPath,
+  ]
+    .filter(filePath => filePath && existsSync(filePath))
+    .join(' ')
+
+  if (filesToFormat) {
+    execSync(`${biomeExecPath} format --write ${filesToFormat}`)
+  }
+
+  if (includeScripts) {
+    console.log('-', 'updated', color.cyan('package.json'), 'scripts')
+    console.log('')
+  }
+
+  console.log(color.greenBright('Biome setup complete!'))
+  console.log('"Reload Window" in VS Code for Biome to take effect.')
+  console.log('')
+
+  return 0
 }
 
-//////////////////////
-// PKG JSON SCRIPTS //
-//////////////////////
-
-pkgJson.scripts = {
-  ...pkgJson.scripts,
-  check: 'biome check',
-  'check:fix': 'biome check --write .',
-  lint: 'biome lint',
-  'lint:fix': 'biome lint --write .',
-  format: 'biome format',
-  'format:fix': 'biome format --write .',
+// Auto-run when executed directly
+if (import.meta.main) {
+  const exitCode = run()
+  process.exit(exitCode)
 }
-
-const pkgJsonStr = JSON.stringify(pkgJson)
-fs.writeFileSync(pkgJsonPath, pkgJsonStr)
-
-//////////////////
-// FORMAT FILES //
-//////////////////
-
-const biomeExecPath = path.resolve(process.cwd(), './node_modules/.bin/biome')
-const filesToFormat = [
-  biomeJsoncPath,
-  biomeJsonPath,
-  vscodeSettingsPath,
-  pkgJsonPath,
-]
-  .filter(filePath => existsSync(filePath))
-  .join(' ')
-
-execSync(`${biomeExecPath} format --write ${filesToFormat}`)
-
-console.log('-', 'updated', color.cyan('package.json'), 'scripts')
-console.log('')
-console.log(color.greenBright('Biome setup complete!'))
-console.log('"Reload Window" in VS Code for Biome to take effect.')
-console.log('')
 
 // biome-ignore-end lint/suspicious/noConsole: intentionally used
