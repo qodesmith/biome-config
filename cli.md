@@ -14,8 +14,11 @@ Running the command with no arguments will:
 
 ## Options
 
-| Option        | Description                                          |
-|---------------|------------------------------------------------------|
-| `--no-vscode` | Prevent creating `.vscode/settings.json`             |
-| `--vanilla`   | Prevent including React settings in the Biome config |
-| `--jsonc`     | Create a `biome.jsonc` file instead of `biome.json`  |
+| Option                    | Description                                          |
+|---------------------------|------------------------------------------------------|
+| `--no-vscode`             | Prevent creating `.vscode/settings.json`             |
+| `--vanilla`               | Prevent including React settings in the Biome config |
+| `--jsonc`                 | Create a `biome.jsonc` file instead of `biome.json`  |
+| `--no-includeBiomeConfig` | Prevent creating a `biome.json(c)` file              |
+| `--no-includeScripts `    | Prevent updating `package.json` scripts              |
+| `--no-includeVscode       | Prevent update / creating `.vscode/settings.json`    |
