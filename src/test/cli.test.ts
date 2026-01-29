@@ -19,7 +19,7 @@ function runCli(testDir: string, args: string[] = []) {
 
 describe('dependency validation', () => {
   test('exits with code 1 if @qodestack/biome-config not installed', () => {
-    const project = createTestProject({devDependencies: {}})
+    const project = createTestProject()
     cleanup = project.cleanup
 
     const exitCode = runCli(project.dir)
