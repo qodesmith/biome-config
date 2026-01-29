@@ -3,6 +3,15 @@ import {afterEach, describe, expect, test} from 'bun:test'
 import {run} from '../cli.mjs'
 import {createTestProject, fileExists, readJson} from './testHelpers'
 
+type DefaultBiomeConfig = {
+  $schema: string
+  extends: string[]
+  files: {
+    ignoreUnknown: boolean
+    includes: string[]
+  }
+}
+
 const devDependencies = {devDependencies: {'@qodestack/biome-config': '^1.0.0'}}
 
 let cleanup = () => {}
@@ -56,7 +65,7 @@ describe('biome.json creation', () => {
     expect(fileExists(project.dir, 'biome.json')).toBe(true)
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(false)
 
-    const config = readJson(project.dir, 'biome.json') as {extends: string[]}
+    const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
     expect(config.extends).toEqual(['@qodestack/biome-config/react'])
   })
 
@@ -70,14 +79,39 @@ describe('biome.json creation', () => {
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(true)
   })
 
-  test('uses vanilla extends with --vanilla flag', () => {
+  test('default biome settings', () => {
+    const project = createTestProject(devDependencies)
+    cleanup = project.cleanup
+
+    runCli(project.dir)
+
+    const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
+    expect(config).toEqual({
+      $schema: './node_modules/@biomejs/biome/configuration_schema.json',
+      extends: ['@qodestack/biome-config/react'],
+      files: {
+        ignoreUnknown: true,
+        includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
+      },
+    })
+  })
+
+  test('vanilla biome settings', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
     runCli(project.dir, ['--vanilla'])
 
-    const config = readJson(project.dir, 'biome.json') as {extends: string[]}
-    expect(config.extends).toEqual(['@qodestack/biome-config'])
+    const config = readJson(project.dir, 'biome.json') as DefaultBiomeConfig
+    expect(config).toEqual({
+      $schema: './node_modules/@biomejs/biome/configuration_schema.json',
+      // As opposed to `@qodestack/biome-config/react`
+      extends: ['@qodestack/biome-config'],
+      files: {
+        ignoreUnknown: true,
+        includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
+      },
+    })
   })
 
   test('skips biome config with --no-includeBiomeConfig', () => {
@@ -260,7 +294,7 @@ describe('flag combinations', () => {
     runCli(project.dir, ['--vanilla', '--jsonc'])
 
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(true)
-    const config = readJson(project.dir, 'biome.jsonc') as {extends: string[]}
+    const config = readJson(project.dir, 'biome.jsonc') as DefaultBiomeConfig
     expect(config.extends).toEqual(['@qodestack/biome-config'])
   })
 
