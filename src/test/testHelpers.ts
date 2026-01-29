@@ -75,11 +75,18 @@ exit 0
   }
 
   // Create existing vscode settings if requested
-  if (existingVscodeSettings !== undefined || existingVscodeSettingsRaw !== undefined || vscodeFolderOnly) {
+  if (
+    existingVscodeSettings !== undefined ||
+    existingVscodeSettingsRaw !== undefined ||
+    vscodeFolderOnly
+  ) {
     const vscodeDir = path.join(dir, '.vscode')
     fs.mkdirSync(vscodeDir, {recursive: true})
     if (existingVscodeSettingsRaw !== undefined) {
-      fs.writeFileSync(path.join(vscodeDir, 'settings.json'), existingVscodeSettingsRaw)
+      fs.writeFileSync(
+        path.join(vscodeDir, 'settings.json'),
+        existingVscodeSettingsRaw
+      )
     } else if (existingVscodeSettings !== undefined) {
       fs.writeFileSync(
         path.join(vscodeDir, 'settings.json'),
