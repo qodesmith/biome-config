@@ -30,7 +30,7 @@
     "build:tsc": "tsc -p tsconfig.build.json",
     "check": "biome check",
     "check:fix": "biome check --write .",
-    "release": "bun run test && bun run build && release-it",
+    "release": "bun run test && bun run build && npm login && release-it",
     "test": "bun test src/test"
   },
   "dependencies": {
