@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import {execSync} from 'node:child_process'
 import fs, {existsSync} from 'node:fs'
