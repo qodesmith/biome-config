@@ -126,7 +126,12 @@ export function createBiomeConfig({
         enabled: true,
         indentStyle: 'space',
         indentWidth: 2,
-        lineEnding: 'lf',
+        lineEnding: 'auto',
+        lineWidth: 80,
+        quoteStyle: 'double',
+      },
+      parser: {
+        tailwindDirectives: true,
       },
     },
     // extends: [],
