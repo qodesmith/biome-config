@@ -124,11 +124,11 @@ describe('biome.json creation', () => {
     })
   })
 
-  test('skips biome config with --no-includeBiomeConfig', () => {
+  test('skips biome config with --no-include-biome-config', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
-    runCli(project.dir, ['--no-includeBiomeConfig'])
+    runCli(project.dir, ['--no-include-biome-config'])
 
     expect(fileExists(project.dir, 'biome.json')).toBe(false)
     expect(fileExists(project.dir, 'biome.jsonc')).toBe(false)
@@ -233,11 +233,11 @@ describe('VSCode settings', () => {
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
 
-  test('skips vscode with --no-includeVscode flag', () => {
+  test('skips vscode with --no-include-vscode flag', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
-    runCli(project.dir, ['--no-includeVscode'])
+    runCli(project.dir, ['--no-include-vscode'])
 
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
@@ -315,12 +315,12 @@ describe('package.json scripts', () => {
     expect(pkg.scripts).toEqual({...defaultPkJsonScripts, ...existingScripts})
   })
 
-  test('skips scripts with --no-includeScripts', () => {
+  test('skips scripts with --no-include-scripts', () => {
     const existingScripts = {dev: 'vite'}
     const project = createTestProject({...devDependencies, existingScripts})
     cleanup = project.cleanup
 
-    runCli(project.dir, ['--no-includeScripts'])
+    runCli(project.dir, ['--no-include-scripts'])
 
     const pkg = readJson(project.dir, 'package.json') as {
       scripts: Record<string, string | undefined>
@@ -349,9 +349,9 @@ describe('flag combinations', () => {
     cleanup = project.cleanup
 
     runCli(project.dir, [
-      '--no-includeBiomeConfig',
-      '--no-includeVscode',
-      '--no-includeScripts',
+      '--no-include-biome-config',
+      '--no-include-vscode',
+      '--no-include-scripts',
     ])
 
     expect(fileExists(project.dir, 'biome.json')).toBe(false)
@@ -364,7 +364,7 @@ describe('flag combinations', () => {
     expect(pkg.scripts).toEqual({})
   })
 
-  test('--no-vscode does not affect --no-includeVscode behavior', () => {
+  test('--no-vscode does not affect --no-include-vscode behavior', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
@@ -373,21 +373,21 @@ describe('flag combinations', () => {
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
 
-  test('--no-vscode overrides --includeVscode (both must be true)', () => {
+  test('--no-vscode overrides --include-vscode (both must be true)', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
-    // isVscode=false && includeVscode=true => no vscode
-    runCli(project.dir, ['--no-vscode', '--includeVscode'])
+    // isVscode=false && include-vscode=true => no vscode
+    runCli(project.dir, ['--no-vscode', '--include-vscode'])
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
 
-  test('--vscode with --no-includeVscode skips vscode', () => {
+  test('--vscode with --no-include-vscode skips vscode', () => {
     const project = createTestProject(devDependencies)
     cleanup = project.cleanup
 
-    // isVscode=true && includeVscode=false => no vscode
-    runCli(project.dir, ['--vscode', '--no-includeVscode'])
+    // isVscode=true && include-vscode=false => no vscode
+    runCli(project.dir, ['--vscode', '--no-include-vscode'])
     expect(fileExists(project.dir, '.vscode')).toBe(false)
   })
 })
