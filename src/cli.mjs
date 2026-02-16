@@ -111,15 +111,15 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
        * --no-include-vscode
        */
 
-      includeBiomeConfig: {
+      'include-biome-config': {
         type: 'boolean',
         default: true,
       },
-      includeScripts: {
+      'include-scripts': {
         type: 'boolean',
         default: true,
       },
-      includeVscode: {
+      'include-vscode': {
         type: 'boolean',
         default: true,
       },
