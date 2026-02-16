@@ -149,7 +149,9 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
   const hasBiomeJson = fs.existsSync(biomeJsonPath)
   const hasBiomeJsonc = fs.existsSync(biomeJsoncPath)
   const biomeConfigStr = JSON.stringify(biomeConfig)
-  const {includeBiomeConfig, includeScripts, includeVscode} = args.values
+  const includeBiomeConfig = args.values['include-biome-config']
+  const includeScripts = args.values['include-scripts']
+  const includeVscode = args.values['include-vscode']
 
   /*
     - jsonc: true
