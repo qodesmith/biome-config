@@ -157,6 +157,8 @@ export function createBiomeConfig({
     html: {
       formatter: {
         enabled: true,
+        indentStyle: 'space',
+        indentScriptAndStyle: true,
       },
     },
     javascript: {
@@ -290,7 +292,6 @@ export function createBiomeConfig({
          */
         nursery: {
           noFloatingPromises: 'warn',
-          noImportCycles: 'on',
           useExhaustiveSwitchCases: 'warn',
           useSortedClasses: {
             level: 'info',
@@ -469,8 +470,10 @@ export function createBiomeConfig({
             fix: 'safe',
             options: {},
           },
+          noImportCycles: 'on',
           noIrregularWhitespace: 'error',
           noTemplateCurlyInString: 'on',
+          noReactForwardRef: 'on',
           noSkippedTests: 'warn',
           noUnsafeNegation: {
             level: 'on',

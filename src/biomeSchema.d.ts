@@ -6,8 +6,9 @@
  */
 
 export type Schema = string
-export type OrganizeImportsConfiguration = RuleAssistPlainConfiguration | RuleAssistWithOrganizeImportsOptions
+export type NoDuplicateClassesConfiguration = RuleAssistPlainConfiguration | RuleAssistWithNoDuplicateClassesOptions
 export type RuleAssistPlainConfiguration = 'off' | 'on'
+export type OrganizeImportsConfiguration = RuleAssistPlainConfiguration | RuleAssistWithOrganizeImportsOptions
 export type ImportGroup = null | GroupMatcher | GroupMatcher[]
 export type GroupMatcher = ImportMatcher | SourceMatcher
 export type SourcesMatcher = SourceMatcher | SourceMatcher[]
@@ -30,6 +31,9 @@ export type NegatablePredefinedSourceMatcher =
 export type ImportGroups = ImportGroup[]
 export type SortOrder = 'natural' | 'lexicographic'
 export type UseSortedAttributesConfiguration = RuleAssistPlainConfiguration | RuleAssistWithUseSortedAttributesOptions
+export type UseSortedInterfaceMembersConfiguration =
+  | RuleAssistPlainConfiguration
+  | RuleAssistWithUseSortedInterfaceMembersOptions
 export type UseSortedKeysConfiguration = RuleAssistPlainConfiguration | RuleAssistWithUseSortedKeysOptions
 export type UseSortedPropertiesConfiguration = RuleAssistPlainConfiguration | RuleAssistWithUseSortedPropertiesOptions
 export type Bool = boolean
@@ -47,6 +51,7 @@ export type LineEnding = 'lf' | 'crlf' | 'cr' | 'auto'
  */
 export type LineWidth = number
 export type QuoteStyle = 'double' | 'single'
+export type TrailingNewline = boolean
 export type Extends = string[] | string
 export type MaxSize = number
 export type AttributePosition = 'auto' | 'multiline'
@@ -188,6 +193,7 @@ export type NoImportantStylesConfiguration = RulePlainConfiguration | RuleWithNo
 export type NoStaticOnlyClassConfiguration = RulePlainConfiguration | RuleWithNoStaticOnlyClassOptions
 export type NoThisInStaticConfiguration = RulePlainConfiguration | RuleWithNoThisInStaticOptions
 export type NoUselessCatchConfiguration = RulePlainConfiguration | RuleWithNoUselessCatchOptions
+export type NoUselessCatchBindingConfiguration = RulePlainConfiguration | RuleWithNoUselessCatchBindingOptions
 export type NoUselessConstructorConfiguration = RulePlainConfiguration | RuleWithNoUselessConstructorOptions
 export type NoUselessContinueConfiguration = RulePlainConfiguration | RuleWithNoUselessContinueOptions
 export type NoUselessEmptyExportConfiguration = RulePlainConfiguration | RuleWithNoUselessEmptyExportOptions
@@ -204,6 +210,7 @@ export type NoUselessSwitchCaseConfiguration = RulePlainConfiguration | RuleWith
 export type NoUselessTernaryConfiguration = RulePlainConfiguration | RuleWithNoUselessTernaryOptions
 export type NoUselessThisAliasConfiguration = RulePlainConfiguration | RuleWithNoUselessThisAliasOptions
 export type NoUselessTypeConstraintConfiguration = RulePlainConfiguration | RuleWithNoUselessTypeConstraintOptions
+export type NoUselessUndefinedConfiguration = RulePlainConfiguration | RuleWithNoUselessUndefinedOptions
 export type NoUselessUndefinedInitializationConfiguration =
   | RulePlainConfiguration
   | RuleWithNoUselessUndefinedInitializationOptions
@@ -213,6 +220,7 @@ export type UseDateNowConfiguration = RulePlainConfiguration | RuleWithUseDateNo
 export type UseFlatMapConfiguration = RulePlainConfiguration | RuleWithUseFlatMapOptions
 export type UseIndexOfConfiguration = RulePlainConfiguration | RuleWithUseIndexOfOptions
 export type UseLiteralKeysConfiguration = RulePlainConfiguration | RuleWithUseLiteralKeysOptions
+export type UseMaxParamsConfiguration = RulePlainConfiguration | RuleWithUseMaxParamsOptions
 export type UseNumericLiteralsConfiguration = RulePlainConfiguration | RuleWithUseNumericLiteralsOptions
 export type UseOptionalChainConfiguration = RulePlainConfiguration | RuleWithUseOptionalChainOptions
 export type UseRegexLiteralsConfiguration = RulePlainConfiguration | RuleWithUseRegexLiteralsOptions
@@ -252,6 +260,7 @@ export type NoMissingVarFunctionConfiguration = RulePlainConfiguration | RuleWit
 export type NoNestedComponentDefinitionsConfiguration =
   | RulePlainConfiguration
   | RuleWithNoNestedComponentDefinitionsOptions
+export type NoNextAsyncClientComponentConfiguration = RulePlainConfiguration | RuleWithNoNextAsyncClientComponentOptions
 export type NoNodejsModulesConfiguration = RulePlainConfiguration | RuleWithNoNodejsModulesOptions
 export type NoNonoctalDecimalEscapeConfiguration = RulePlainConfiguration | RuleWithNoNonoctalDecimalEscapeOptions
 export type NoPrecisionLossConfiguration = RulePlainConfiguration | RuleWithNoPrecisionLossOptions
@@ -280,6 +289,7 @@ export type NoUnknownUnitConfiguration = RulePlainConfiguration | RuleWithNoUnkn
 export type NoUnmatchableAnbSelectorConfiguration = RulePlainConfiguration | RuleWithNoUnmatchableAnbSelectorOptions
 export type NoUnreachableConfiguration = RulePlainConfiguration | RuleWithNoUnreachableOptions
 export type NoUnreachableSuperConfiguration = RulePlainConfiguration | RuleWithNoUnreachableSuperOptions
+export type NoUnresolvedImportsConfiguration = RulePlainConfiguration | RuleWithNoUnresolvedImportsOptions
 export type NoUnsafeFinallyConfiguration = RulePlainConfiguration | RuleWithNoUnsafeFinallyOptions
 export type NoUnsafeOptionalChainingConfiguration = RulePlainConfiguration | RuleWithNoUnsafeOptionalChainingOptions
 export type NoUnusedFunctionParametersConfiguration = RulePlainConfiguration | RuleWithNoUnusedFunctionParametersOptions
@@ -291,6 +301,13 @@ export type NoUnusedPrivateClassMembersConfiguration =
 export type NoUnusedVariablesConfiguration = RulePlainConfiguration | RuleWithNoUnusedVariablesOptions
 export type NoVoidElementsWithChildrenConfiguration = RulePlainConfiguration | RuleWithNoVoidElementsWithChildrenOptions
 export type NoVoidTypeReturnConfiguration = RulePlainConfiguration | RuleWithNoVoidTypeReturnOptions
+export type NoVueDataObjectDeclarationConfiguration = RulePlainConfiguration | RuleWithNoVueDataObjectDeclarationOptions
+export type NoVueDuplicateKeysConfiguration = RulePlainConfiguration | RuleWithNoVueDuplicateKeysOptions
+export type NoVueReservedKeysConfiguration = RulePlainConfiguration | RuleWithNoVueReservedKeysOptions
+export type NoVueReservedPropsConfiguration = RulePlainConfiguration | RuleWithNoVueReservedPropsOptions
+export type NoVueSetupPropsReactivityLossConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoVueSetupPropsReactivityLossOptions
 export type UseExhaustiveDependenciesConfiguration = RulePlainConfiguration | RuleWithUseExhaustiveDependenciesOptions
 export type StableHookResult = boolean | number[] | string[]
 export type UseGraphqlNamedOperationsConfiguration = RulePlainConfiguration | RuleWithUseGraphqlNamedOperationsOptions
@@ -303,6 +320,8 @@ export type UseJsonImportAttributesConfiguration = RulePlainConfiguration | Rule
 export type UseJsxKeyInIterableConfiguration = RulePlainConfiguration | RuleWithUseJsxKeyInIterableOptions
 export type UseParseIntRadixConfiguration = RulePlainConfiguration | RuleWithUseParseIntRadixOptions
 export type UseQwikClasslistConfiguration = RulePlainConfiguration | RuleWithUseQwikClasslistOptions
+export type UseQwikMethodUsageConfiguration = RulePlainConfiguration | RuleWithUseQwikMethodUsageOptions
+export type UseQwikValidLexicalScopeConfiguration = RulePlainConfiguration | RuleWithUseQwikValidLexicalScopeOptions
 export type UseSingleJsDocAsteriskConfiguration = RulePlainConfiguration | RuleWithUseSingleJsDocAsteriskOptions
 export type UseUniqueElementIdsConfiguration = RulePlainConfiguration | RuleWithUseUniqueElementIdsOptions
 export type UseValidForDirectionConfiguration = RulePlainConfiguration | RuleWithUseValidForDirectionOptions
@@ -313,12 +332,12 @@ export type NoAmbiguousAnchorTextConfiguration = RulePlainConfiguration | RuleWi
 export type NoBeforeInteractiveScriptOutsideDocumentConfiguration =
   | RulePlainConfiguration
   | RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions
+export type NoConditionalExpectConfiguration = RulePlainConfiguration | RuleWithNoConditionalExpectOptions
 export type NoContinueConfiguration = RulePlainConfiguration | RuleWithNoContinueOptions
-export type NoDeprecatedImportsConfiguration = RulePlainConfiguration | RuleWithNoDeprecatedImportsOptions
+export type NoDeprecatedMediaTypeConfiguration = RulePlainConfiguration | RuleWithNoDeprecatedMediaTypeOptions
 export type NoDivRegexConfiguration = RulePlainConfiguration | RuleWithNoDivRegexOptions
 export type NoDuplicateArgumentNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateArgumentNamesOptions
 export type NoDuplicateAttributesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateAttributesOptions
-export type NoDuplicateDependenciesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateDependenciesOptions
 export type NoDuplicateEnumValueNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateEnumValueNamesOptions
 export type NoDuplicateEnumValuesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateEnumValuesOptions
 export type NoDuplicateFieldDefinitionNamesConfiguration =
@@ -330,27 +349,39 @@ export type NoDuplicateGraphqlOperationNameConfiguration =
 export type NoDuplicateInputFieldNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateInputFieldNamesOptions
 export type NoDuplicateVariableNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateVariableNamesOptions
 export type NoDuplicatedSpreadPropsConfiguration = RulePlainConfiguration | RuleWithNoDuplicatedSpreadPropsOptions
-export type NoEmptySourceConfiguration = RulePlainConfiguration | RuleWithNoEmptySourceOptions
 export type NoEqualsToNullConfiguration = RulePlainConfiguration | RuleWithNoEqualsToNullOptions
 export type NoExcessiveClassesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveClassesPerFileOptions
 export type NoExcessiveLinesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveLinesPerFileOptions
 export type NoFloatingClassesConfiguration = RulePlainConfiguration | RuleWithNoFloatingClassesOptions
 export type NoFloatingPromisesConfiguration = RulePlainConfiguration | RuleWithNoFloatingPromisesOptions
 export type NoForInConfiguration = RulePlainConfiguration | RuleWithNoForInOptions
-export type NoImportCyclesConfiguration = RulePlainConfiguration | RuleWithNoImportCyclesOptions
+export type NoHexColorsConfiguration = RulePlainConfiguration | RuleWithNoHexColorsOptions
 export type NoIncrementDecrementConfiguration = RulePlainConfiguration | RuleWithNoIncrementDecrementOptions
-export type NoJsxLiteralsConfiguration = RulePlainConfiguration | RuleWithNoJsxLiteralsOptions
 export type NoJsxPropsBindConfiguration = RulePlainConfiguration | RuleWithNoJsxPropsBindOptions
 export type NoLeakedRenderConfiguration = RulePlainConfiguration | RuleWithNoLeakedRenderOptions
 export type NoMisusedPromisesConfiguration = RulePlainConfiguration | RuleWithNoMisusedPromisesOptions
 export type NoMultiAssignConfiguration = RulePlainConfiguration | RuleWithNoMultiAssignOptions
 export type NoMultiStrConfiguration = RulePlainConfiguration | RuleWithNoMultiStrOptions
-export type NoNextAsyncClientComponentConfiguration = RulePlainConfiguration | RuleWithNoNextAsyncClientComponentOptions
+export type NoNestedPromisesConfiguration = RulePlainConfiguration | RuleWithNoNestedPromisesOptions
 export type NoParametersOnlyUsedInRecursionConfiguration =
   | RulePlainConfiguration
   | RuleWithNoParametersOnlyUsedInRecursionOptions
+export type NoPlaywrightElementHandleConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightElementHandleOptions
+export type NoPlaywrightEvalConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightEvalOptions
+export type NoPlaywrightForceOptionConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightForceOptionOptions
+export type NoPlaywrightMissingAwaitConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightMissingAwaitOptions
+export type NoPlaywrightNetworkidleConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightNetworkidleOptions
+export type NoPlaywrightPagePauseConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightPagePauseOptions
+export type NoPlaywrightUselessAwaitConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightUselessAwaitOptions
+export type NoPlaywrightWaitForNavigationConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoPlaywrightWaitForNavigationOptions
+export type NoPlaywrightWaitForSelectorConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoPlaywrightWaitForSelectorOptions
+export type NoPlaywrightWaitForTimeoutConfiguration = RulePlainConfiguration | RuleWithNoPlaywrightWaitForTimeoutOptions
 export type NoProtoConfiguration = RulePlainConfiguration | RuleWithNoProtoOptions
-export type NoReactForwardRefConfiguration = RulePlainConfiguration | RuleWithNoReactForwardRefOptions
+export type NoRedundantDefaultExportConfiguration = RulePlainConfiguration | RuleWithNoRedundantDefaultExportOptions
 export type NoReturnAssignConfiguration = RulePlainConfiguration | RuleWithNoReturnAssignOptions
 export type NoRootTypeConfiguration = RulePlainConfiguration | RuleWithNoRootTypeOptions
 export type NoScriptUrlConfiguration = RulePlainConfiguration | RuleWithNoScriptUrlOptions
@@ -361,23 +392,12 @@ export type NoUndeclaredEnvVarsConfiguration = RulePlainConfiguration | RuleWith
 export type Regex = string
 export type NoUnknownAttributeConfiguration = RulePlainConfiguration | RuleWithNoUnknownAttributeOptions
 export type NoUnnecessaryConditionsConfiguration = RulePlainConfiguration | RuleWithNoUnnecessaryConditionsOptions
-export type NoUnresolvedImportsConfiguration = RulePlainConfiguration | RuleWithNoUnresolvedImportsOptions
-export type NoUnusedExpressionsConfiguration = RulePlainConfiguration | RuleWithNoUnusedExpressionsOptions
-export type NoUselessCatchBindingConfiguration = RulePlainConfiguration | RuleWithNoUselessCatchBindingOptions
-export type NoUselessUndefinedConfiguration = RulePlainConfiguration | RuleWithNoUselessUndefinedOptions
-export type NoVueDataObjectDeclarationConfiguration = RulePlainConfiguration | RuleWithNoVueDataObjectDeclarationOptions
-export type NoVueDuplicateKeysConfiguration = RulePlainConfiguration | RuleWithNoVueDuplicateKeysOptions
+export type NoUselessReturnConfiguration = RulePlainConfiguration | RuleWithNoUselessReturnOptions
+export type NoVueArrowFuncInWatchConfiguration = RulePlainConfiguration | RuleWithNoVueArrowFuncInWatchOptions
 export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
-export type NoVueReservedKeysConfiguration = RulePlainConfiguration | RuleWithNoVueReservedKeysOptions
-export type NoVueReservedPropsConfiguration = RulePlainConfiguration | RuleWithNoVueReservedPropsOptions
-export type NoVueSetupPropsReactivityLossConfiguration =
-  | RulePlainConfiguration
-  | RuleWithNoVueSetupPropsReactivityLossOptions
 export type NoVueVIfWithVForConfiguration = RulePlainConfiguration | RuleWithNoVueVIfWithVForOptions
 export type UseArraySortCompareConfiguration = RulePlainConfiguration | RuleWithUseArraySortCompareOptions
 export type UseAwaitThenableConfiguration = RulePlainConfiguration | RuleWithUseAwaitThenableOptions
-export type UseConsistentArrowReturnConfiguration = RulePlainConfiguration | RuleWithUseConsistentArrowReturnOptions
-export type UseConsistentArrowReturnStyle = 'asNeeded' | 'always' | 'never'
 export type UseConsistentEnumValueTypeConfiguration = RulePlainConfiguration | RuleWithUseConsistentEnumValueTypeOptions
 export type UseConsistentGraphqlDescriptionsConfiguration =
   | RulePlainConfiguration
@@ -386,20 +406,27 @@ export type UseConsistentGraphqlDescriptionsConfiguration =
  * The GraphQL description style to enforce.
  */
 export type UseConsistentGraphqlDescriptionsStyle = 'block' | 'inline'
-export type UseDeprecatedDateConfiguration = RulePlainConfiguration | RuleWithUseDeprecatedDateOptions
+export type UseConsistentMethodSignaturesConfiguration =
+  | RulePlainConfiguration
+  | RuleWithUseConsistentMethodSignaturesOptions
+export type MethodSignatureStyle = 'property' | 'method'
 export type UseDestructuringConfiguration = RulePlainConfiguration | RuleWithUseDestructuringOptions
 export type UseErrorCauseConfiguration = RulePlainConfiguration | RuleWithUseErrorCauseOptions
 export type UseExhaustiveSwitchCasesConfiguration = RulePlainConfiguration | RuleWithUseExhaustiveSwitchCasesOptions
+export type UseExpectConfiguration = RulePlainConfiguration | RuleWithUseExpectOptions
 export type UseExplicitTypeConfiguration = RulePlainConfiguration | RuleWithUseExplicitTypeOptions
 export type UseFindConfiguration = RulePlainConfiguration | RuleWithUseFindOptions
+export type UseGlobalThisConfiguration = RulePlainConfiguration | RuleWithUseGlobalThisOptions
 export type UseInlineScriptIdConfiguration = RulePlainConfiguration | RuleWithUseInlineScriptIdOptions
+export type UseInputNameConfiguration = RulePlainConfiguration | RuleWithUseInputNameOptions
+export type CheckInputType = 'off' | 'loose' | 'strict'
 export type UseLoneAnonymousOperationConfiguration = RulePlainConfiguration | RuleWithUseLoneAnonymousOperationOptions
 export type UseLoneExecutableDefinitionConfiguration =
   | RulePlainConfiguration
   | RuleWithUseLoneExecutableDefinitionOptions
-export type UseMaxParamsConfiguration = RulePlainConfiguration | RuleWithUseMaxParamsOptions
-export type UseQwikMethodUsageConfiguration = RulePlainConfiguration | RuleWithUseQwikMethodUsageOptions
-export type UseQwikValidLexicalScopeConfiguration = RulePlainConfiguration | RuleWithUseQwikValidLexicalScopeOptions
+export type UsePlaywrightValidDescribeCallbackConfiguration =
+  | RulePlainConfiguration
+  | RuleWithUsePlaywrightValidDescribeCallbackOptions
 export type UseRegexpExecConfiguration = RulePlainConfiguration | RuleWithUseRegexpExecOptions
 export type UseRequiredScriptsConfiguration = RulePlainConfiguration | RuleWithUseRequiredScriptsOptions
 export type UseSortedClassesConfiguration = RulePlainConfiguration | RuleWithUseSortedClassesOptions
@@ -463,6 +490,7 @@ export type NoExportedImportsConfiguration = RulePlainConfiguration | RuleWithNo
 export type NoHeadElementConfiguration = RulePlainConfiguration | RuleWithNoHeadElementOptions
 export type NoImplicitBooleanConfiguration = RulePlainConfiguration | RuleWithNoImplicitBooleanOptions
 export type NoInferrableTypesConfiguration = RulePlainConfiguration | RuleWithNoInferrableTypesOptions
+export type NoJsxLiteralsConfiguration = RulePlainConfiguration | RuleWithNoJsxLiteralsOptions
 export type NoMagicNumbersConfiguration = RulePlainConfiguration | RuleWithNoMagicNumbersOptions
 export type NoNamespaceConfiguration = RulePlainConfiguration | RuleWithNoNamespaceOptions
 export type NoNegationElseConfiguration = RulePlainConfiguration | RuleWithNoNegationElseOptions
@@ -498,6 +526,8 @@ export type UseComponentExportOnlyModulesConfiguration =
   | RuleWithUseComponentExportOnlyModulesOptions
 export type UseConsistentArrayTypeConfiguration = RulePlainConfiguration | RuleWithUseConsistentArrayTypeOptions
 export type ConsistentArrayType = 'shorthand' | 'generic'
+export type UseConsistentArrowReturnConfiguration = RulePlainConfiguration | RuleWithUseConsistentArrowReturnOptions
+export type UseConsistentArrowReturnStyle = 'asNeeded' | 'always' | 'never'
 export type UseConsistentBuiltinInstantiationConfiguration =
   | RulePlainConfiguration
   | RuleWithUseConsistentBuiltinInstantiationOptions
@@ -593,6 +623,7 @@ export type NoConstantBinaryExpressionsConfiguration =
   | RuleWithNoConstantBinaryExpressionsOptions
 export type NoControlCharactersInRegexConfiguration = RulePlainConfiguration | RuleWithNoControlCharactersInRegexOptions
 export type NoDebuggerConfiguration = RulePlainConfiguration | RuleWithNoDebuggerOptions
+export type NoDeprecatedImportsConfiguration = RulePlainConfiguration | RuleWithNoDeprecatedImportsOptions
 export type NoDocumentCookieConfiguration = RulePlainConfiguration | RuleWithNoDocumentCookieOptions
 export type NoDocumentImportInPageConfiguration = RulePlainConfiguration | RuleWithNoDocumentImportInPageOptions
 export type NoDoubleEqualsConfiguration = RulePlainConfiguration | RuleWithNoDoubleEqualsOptions
@@ -602,6 +633,7 @@ export type NoDuplicateClassMembersConfiguration = RulePlainConfiguration | Rule
 export type NoDuplicateCustomPropertiesConfiguration =
   | RulePlainConfiguration
   | RuleWithNoDuplicateCustomPropertiesOptions
+export type NoDuplicateDependenciesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateDependenciesOptions
 export type NoDuplicateElseIfConfiguration = RulePlainConfiguration | RuleWithNoDuplicateElseIfOptions
 export type NoDuplicateFieldsConfiguration = RulePlainConfiguration | RuleWithNoDuplicateFieldsOptions
 export type NoDuplicateFontNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateFontNamesOptions
@@ -616,6 +648,7 @@ export type NoDuplicateTestHooksConfiguration = RulePlainConfiguration | RuleWit
 export type NoEmptyBlockConfiguration = RulePlainConfiguration | RuleWithNoEmptyBlockOptions
 export type NoEmptyBlockStatementsConfiguration = RulePlainConfiguration | RuleWithNoEmptyBlockStatementsOptions
 export type NoEmptyInterfaceConfiguration = RulePlainConfiguration | RuleWithNoEmptyInterfaceOptions
+export type NoEmptySourceConfiguration = RulePlainConfiguration | RuleWithNoEmptySourceOptions
 export type NoEvolvingTypesConfiguration = RulePlainConfiguration | RuleWithNoEvolvingTypesOptions
 export type NoExplicitAnyConfiguration = RulePlainConfiguration | RuleWithNoExplicitAnyOptions
 export type NoExportsInTestConfiguration = RulePlainConfiguration | RuleWithNoExportsInTestOptions
@@ -629,6 +662,7 @@ export type NoGlobalIsNanConfiguration = RulePlainConfiguration | RuleWithNoGlob
 export type NoHeadImportInDocumentConfiguration = RulePlainConfiguration | RuleWithNoHeadImportInDocumentOptions
 export type NoImplicitAnyLetConfiguration = RulePlainConfiguration | RuleWithNoImplicitAnyLetOptions
 export type NoImportAssignConfiguration = RulePlainConfiguration | RuleWithNoImportAssignOptions
+export type NoImportCyclesConfiguration = RulePlainConfiguration | RuleWithNoImportCyclesOptions
 export type NoImportantInKeyframeConfiguration = RulePlainConfiguration | RuleWithNoImportantInKeyframeOptions
 export type NoIrregularWhitespaceConfiguration = RulePlainConfiguration | RuleWithNoIrregularWhitespaceOptions
 export type NoLabelVarConfiguration = RulePlainConfiguration | RuleWithNoLabelVarOptions
@@ -644,6 +678,7 @@ export type NoNonNullAssertedOptionalChainConfiguration =
 export type NoOctalEscapeConfiguration = RulePlainConfiguration | RuleWithNoOctalEscapeOptions
 export type NoPrototypeBuiltinsConfiguration = RulePlainConfiguration | RuleWithNoPrototypeBuiltinsOptions
 export type NoQuickfixBiomeConfiguration = RulePlainConfiguration | RuleWithNoQuickfixBiomeOptions
+export type NoReactForwardRefConfiguration = RulePlainConfiguration | RuleWithNoReactForwardRefOptions
 export type NoReactSpecificPropsConfiguration = RulePlainConfiguration | RuleWithNoReactSpecificPropsOptions
 export type NoRedeclareConfiguration = RulePlainConfiguration | RuleWithNoRedeclareOptions
 export type NoRedundantUseStrictConfiguration = RulePlainConfiguration | RuleWithNoRedundantUseStrictOptions
@@ -662,6 +697,7 @@ export type NoUnassignedVariablesConfiguration = RulePlainConfiguration | RuleWi
 export type NoUnknownAtRulesConfiguration = RulePlainConfiguration | RuleWithNoUnknownAtRulesOptions
 export type NoUnsafeDeclarationMergingConfiguration = RulePlainConfiguration | RuleWithNoUnsafeDeclarationMergingOptions
 export type NoUnsafeNegationConfiguration = RulePlainConfiguration | RuleWithNoUnsafeNegationOptions
+export type NoUnusedExpressionsConfiguration = RulePlainConfiguration | RuleWithNoUnusedExpressionsOptions
 export type NoUselessEscapeInStringConfiguration = RulePlainConfiguration | RuleWithNoUselessEscapeInStringOptions
 export type NoUselessRegexBackrefsConfiguration = RulePlainConfiguration | RuleWithNoUselessRegexBackrefsOptions
 export type NoVarConfiguration = RulePlainConfiguration | RuleWithNoVarOptions
@@ -672,6 +708,7 @@ export type UseAdjacentOverloadSignaturesConfiguration =
 export type UseAwaitConfiguration = RulePlainConfiguration | RuleWithUseAwaitOptions
 export type UseBiomeIgnoreFolderConfiguration = RulePlainConfiguration | RuleWithUseBiomeIgnoreFolderOptions
 export type UseDefaultSwitchClauseLastConfiguration = RulePlainConfiguration | RuleWithUseDefaultSwitchClauseLastOptions
+export type UseDeprecatedDateConfiguration = RulePlainConfiguration | RuleWithUseDeprecatedDateOptions
 export type UseErrorMessageConfiguration = RulePlainConfiguration | RuleWithUseErrorMessageOptions
 export type UseGetterReturnConfiguration = RulePlainConfiguration | RuleWithUseGetterReturnOptions
 export type UseGoogleFontDisplayConfiguration = RulePlainConfiguration | RuleWithUseGoogleFontDisplayOptions
@@ -788,6 +825,11 @@ export interface Actions {
  */
 export interface Source {
   /**
+   * Remove duplicate CSS classes.
+   * See https://biomejs.dev/assist/actions/no-duplicate-classes
+   */
+  noDuplicateClasses?: NoDuplicateClassesConfiguration | null
+  /**
    * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
    * See https://biomejs.dev/assist/actions/organize-imports
    */
@@ -802,6 +844,11 @@ export interface Source {
    */
   useSortedAttributes?: UseSortedAttributesConfiguration | null
   /**
+   * Sort interface members by key.
+   * See https://biomejs.dev/assist/actions/use-sorted-interface-members
+   */
+  useSortedInterfaceMembers?: UseSortedInterfaceMembersConfiguration | null
+  /**
    * Sort the keys of a JSON object in natural order.
    * See https://biomejs.dev/assist/actions/use-sorted-keys
    */
@@ -811,6 +858,21 @@ export interface Source {
    * See https://biomejs.dev/assist/actions/use-sorted-properties
    */
   useSortedProperties?: UseSortedPropertiesConfiguration | null
+}
+export interface RuleAssistWithNoDuplicateClassesOptions {
+  level: RuleAssistPlainConfiguration
+  options: NoDuplicateClassesOptions
+  [k: string]: unknown
+}
+export interface NoDuplicateClassesOptions {
+  /**
+   * Additional attributes that will be sorted.
+   */
+  attributes?: string[] | null
+  /**
+   * Names of the functions or tagged templates that will be sorted.
+   */
+  functions?: string[] | null
 }
 export interface RuleAssistWithOrganizeImportsOptions {
   level: RuleAssistPlainConfiguration
@@ -834,12 +896,24 @@ export interface RuleAssistWithUseSortedAttributesOptions {
 export interface UseSortedAttributesOptions {
   sortOrder?: SortOrder | null
 }
+export interface RuleAssistWithUseSortedInterfaceMembersOptions {
+  level: RuleAssistPlainConfiguration
+  options: UseSortedInterfaceMembersOptions
+  [k: string]: unknown
+}
+export interface UseSortedInterfaceMembersOptions {}
 export interface RuleAssistWithUseSortedKeysOptions {
   level: RuleAssistPlainConfiguration
   options: UseSortedKeysOptions
   [k: string]: unknown
 }
 export interface UseSortedKeysOptions {
+  /**
+   * When enabled, groups object keys by their value's nesting depth before sorting.
+   * Simple values (primitives, single-line arrays, single-line objects) are sorted first,
+   * followed by nested values (multi-line objects, multi-line arrays).
+   */
+  groupByNesting?: boolean | null
   sortOrder?: SortOrder | null
 }
 export interface RuleAssistWithUseSortedPropertiesOptions {
@@ -910,6 +984,19 @@ export interface CssFormatterConfiguration {
    * The type of quotes used in CSS code. Defaults to double.
    */
   quoteStyle?: QuoteStyle | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 /**
  * Options that changes how the CSS linter behaves
@@ -929,7 +1016,8 @@ export interface CssParserConfiguration {
    */
   allowWrongLineComments?: Bool | null
   /**
-   * Enables parsing of CSS Modules specific features.
+   * Enables parsing of CSS Modules specific features. Enable this feature only
+   * when your files don't end in `.module.css`.
    */
   cssModules?: Bool | null
   /**
@@ -1017,10 +1105,23 @@ export interface FormatterConfiguration {
    */
   lineWidth?: LineWidth | null
   /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
+  /**
    * Use any `.editorconfig` files to configure the formatter. Configuration
    * in `biome.json` will override `.editorconfig` configuration.
    *
-   * Default: `true`.
+   * Default: `false`.
    */
   useEditorconfig?: Bool | null
 }
@@ -1079,6 +1180,19 @@ export interface GraphqlFormatterConfiguration {
    * The type of quotes used in GraphQL code. Defaults to double.
    */
   quoteStyle?: QuoteStyle | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 /**
  * Options that change how the GraphQL linter behaves.
@@ -1133,6 +1247,19 @@ export interface GritFormatterConfiguration {
    * What's the max width of a line applied to Grit files. Defaults to 80.
    */
   lineWidth?: LineWidth | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 export interface GritLinterConfiguration {
   /**
@@ -1212,6 +1339,19 @@ export interface HtmlFormatterConfiguration {
    */
   selfCloseVoidElements?: SelfCloseVoidElements | null
   /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
+  /**
    * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
    */
   whitespaceSensitivity?: WhitespaceSensitivity | null
@@ -1242,6 +1382,10 @@ export interface JsConfiguration {
    * Assist options
    */
   assist?: JsAssistConfiguration | null
+  /**
+   * Enables support for embedding snippets.
+   */
+  experimentalEmbeddedSnippetsEnabled?: Bool | null
   /**
    * Formatting options
    */
@@ -1347,6 +1491,19 @@ export interface JsFormatterConfiguration {
    * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
    */
   trailingCommas?: JsTrailingCommas | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 /**
  * Linter options specific to the JavaScript linter
@@ -1447,6 +1604,19 @@ export interface JsonFormatterConfiguration {
    * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "none".
    */
   trailingCommas?: JsonTrailingCommas | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 /**
  * Linter options specific to the JSON linter
@@ -1511,7 +1681,7 @@ export interface Rules {
  */
 export interface A11Y {
   /**
-   * Enforce that the accessKey attribute is not used on any HTML element.
+   * Enforce that the accesskey attribute is not used on any HTML element.
    * See https://biomejs.dev/linter/rules/no-access-key
    */
   noAccessKey?: NoAccessKeyConfiguration | null
@@ -1526,7 +1696,7 @@ export interface A11Y {
    */
   noAriaUnsupportedElements?: NoAriaUnsupportedElementsConfiguration | null
   /**
-   * Enforce that autoFocus prop is not used on elements.
+   * Enforce that the autofocus attribute is not used on elements.
    * See https://biomejs.dev/linter/rules/no-autofocus
    */
   noAutofocus?: NoAutofocusConfiguration | null
@@ -1566,7 +1736,7 @@ export interface A11Y {
    */
   noNoninteractiveTabindex?: NoNoninteractiveTabindexConfiguration | null
   /**
-   * Prevent the usage of positive integers on tabIndex property.
+   * Prevent the usage of positive integers on tabindex attribute.
    * See https://biomejs.dev/linter/rules/no-positive-tabindex
    */
   noPositiveTabindex?: NoPositiveTabindexConfiguration | null
@@ -1620,7 +1790,7 @@ export interface A11Y {
    */
   useAriaPropsSupportedByRole?: UseAriaPropsSupportedByRoleConfiguration | null
   /**
-   * Enforces the usage of the attribute type for the element button.
+   * Enforces the usage and validity of the attribute type for the element button.
    * See https://biomejs.dev/linter/rules/use-button-type
    */
   useButtonType?: UseButtonTypeConfiguration | null
@@ -2012,6 +2182,11 @@ export interface Complexity {
    */
   noUselessCatch?: NoUselessCatchConfiguration | null
   /**
+   * Disallow unused catch bindings.
+   * See https://biomejs.dev/linter/rules/no-useless-catch-binding
+   */
+  noUselessCatchBinding?: NoUselessCatchBindingConfiguration | null
+  /**
    * Disallow unnecessary constructors.
    * See https://biomejs.dev/linter/rules/no-useless-constructor
    */
@@ -2082,6 +2257,11 @@ export interface Complexity {
    */
   noUselessTypeConstraint?: NoUselessTypeConstraintConfiguration | null
   /**
+   * Disallow the use of useless undefined.
+   * See https://biomejs.dev/linter/rules/no-useless-undefined
+   */
+  noUselessUndefined?: NoUselessUndefinedConfiguration | null
+  /**
    * Disallow initializing variables to undefined.
    * See https://biomejs.dev/linter/rules/no-useless-undefined-initialization
    */
@@ -2120,6 +2300,11 @@ export interface Complexity {
    * See https://biomejs.dev/linter/rules/use-literal-keys
    */
   useLiteralKeys?: UseLiteralKeysConfiguration | null
+  /**
+   * Enforce a maximum number of parameters in function definitions.
+   * See https://biomejs.dev/linter/rules/use-max-params
+   */
+  useMaxParams?: UseMaxParamsConfiguration | null
   /**
    * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals.
    * See https://biomejs.dev/linter/rules/use-numeric-literals
@@ -2262,6 +2447,16 @@ export interface RuleWithNoUselessCatchOptions {
   options?: NoUselessCatchOptions
 }
 export interface NoUselessCatchOptions {}
+export interface RuleWithNoUselessCatchBindingOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoUselessCatchBindingOptions
+}
+/**
+ * Options for the `noUselessCatchBinding` rule.
+ * Currently empty; reserved for future extensions (e.g. allowlist of names).
+ */
+export interface NoUselessCatchBindingOptions {}
 export interface RuleWithNoUselessConstructorOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -2345,6 +2540,12 @@ export interface RuleWithNoUselessTypeConstraintOptions {
   options?: NoUselessTypeConstraintOptions
 }
 export interface NoUselessTypeConstraintOptions {}
+export interface RuleWithNoUselessUndefinedOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoUselessUndefinedOptions
+}
+export interface NoUselessUndefinedOptions {}
 export interface RuleWithNoUselessUndefinedInitializationOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -2386,6 +2587,16 @@ export interface RuleWithUseLiteralKeysOptions {
   options?: UseLiteralKeysOptions
 }
 export interface UseLiteralKeysOptions {}
+export interface RuleWithUseMaxParamsOptions {
+  level: RulePlainConfiguration
+  options?: UseMaxParamsOptions
+}
+export interface UseMaxParamsOptions {
+  /**
+   * Maximum number of parameters allowed (default: 4)
+   */
+  max?: number | null
+}
 export interface RuleWithUseNumericLiteralsOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -2517,6 +2728,11 @@ export interface Correctness {
    */
   noNestedComponentDefinitions?: NoNestedComponentDefinitionsConfiguration | null
   /**
+   * Prevent client components from being async functions.
+   * See https://biomejs.dev/linter/rules/no-next-async-client-component
+   */
+  noNextAsyncClientComponent?: NoNextAsyncClientComponentConfiguration | null
+  /**
    * Forbid the use of Node.js builtin modules.
    * See https://biomejs.dev/linter/rules/no-nodejs-modules
    */
@@ -2647,6 +2863,11 @@ export interface Correctness {
    */
   noUnreachableSuper?: NoUnreachableSuperConfiguration | null
   /**
+   * Warn when importing non-existing exports.
+   * See https://biomejs.dev/linter/rules/no-unresolved-imports
+   */
+  noUnresolvedImports?: NoUnresolvedImportsConfiguration | null
+  /**
    * Disallow control flow statements in finally blocks.
    * See https://biomejs.dev/linter/rules/no-unsafe-finally
    */
@@ -2691,6 +2912,31 @@ export interface Correctness {
    * See https://biomejs.dev/linter/rules/no-void-type-return
    */
   noVoidTypeReturn?: NoVoidTypeReturnConfiguration | null
+  /**
+   * Enforce that Vue component data options are declared as functions.
+   * See https://biomejs.dev/linter/rules/no-vue-data-object-declaration
+   */
+  noVueDataObjectDeclaration?: NoVueDataObjectDeclarationConfiguration | null
+  /**
+   * Disallow duplicate keys in Vue component data, methods, computed properties, and other options.
+   * See https://biomejs.dev/linter/rules/no-vue-duplicate-keys
+   */
+  noVueDuplicateKeys?: NoVueDuplicateKeysConfiguration | null
+  /**
+   * Disallow reserved keys in Vue component data and computed properties.
+   * See https://biomejs.dev/linter/rules/no-vue-reserved-keys
+   */
+  noVueReservedKeys?: NoVueReservedKeysConfiguration | null
+  /**
+   * Disallow reserved names to be used as props.
+   * See https://biomejs.dev/linter/rules/no-vue-reserved-props
+   */
+  noVueReservedProps?: NoVueReservedPropsConfiguration | null
+  /**
+   * Disallow destructuring of props passed to setup in Vue projects.
+   * See https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss
+   */
+  noVueSetupPropsReactivityLoss?: NoVueSetupPropsReactivityLossConfiguration | null
   /**
    * Enables the recommended rules for this group
    */
@@ -2745,6 +2991,16 @@ export interface Correctness {
    * See https://biomejs.dev/linter/rules/use-qwik-classlist
    */
   useQwikClasslist?: UseQwikClasslistConfiguration | null
+  /**
+   * Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.
+   * See https://biomejs.dev/linter/rules/use-qwik-method-usage
+   */
+  useQwikMethodUsage?: UseQwikMethodUsageConfiguration | null
+  /**
+   * Disallow unserializable expressions in Qwik dollar ($) scopes.
+   * See https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope
+   */
+  useQwikValidLexicalScope?: UseQwikValidLexicalScopeConfiguration | null
   /**
    * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
    * See https://biomejs.dev/linter/rules/use-single-js-doc-asterisk
@@ -2865,6 +3121,11 @@ export interface RuleWithNoNestedComponentDefinitionsOptions {
   options?: NoNestedComponentDefinitionsOptions
 }
 export interface NoNestedComponentDefinitionsOptions {}
+export interface RuleWithNoNextAsyncClientComponentOptions {
+  level: RulePlainConfiguration
+  options?: NoNextAsyncClientComponentOptions
+}
+export interface NoNextAsyncClientComponentOptions {}
 export interface RuleWithNoNodejsModulesOptions {
   level: RulePlainConfiguration
   options?: NoNodejsModulesOptions
@@ -2990,7 +3251,12 @@ export interface RuleWithNoUnknownFunctionOptions {
   level: RulePlainConfiguration
   options?: NoUnknownFunctionOptions
 }
-export interface NoUnknownFunctionOptions {}
+export interface NoUnknownFunctionOptions {
+  /**
+   * A list of unknown function names to ignore (case-insensitive).
+   */
+  ignore?: string[]
+}
 export interface RuleWithNoUnknownMediaFeatureNameOptions {
   level: RulePlainConfiguration
   options?: NoUnknownMediaFeatureNameOptions
@@ -3000,17 +3266,32 @@ export interface RuleWithNoUnknownPropertyOptions {
   level: RulePlainConfiguration
   options?: NoUnknownPropertyOptions
 }
-export interface NoUnknownPropertyOptions {}
+export interface NoUnknownPropertyOptions {
+  /**
+   * A list of unknown property names to ignore (case-insensitive).
+   */
+  ignore?: string[]
+}
 export interface RuleWithNoUnknownPseudoClassOptions {
   level: RulePlainConfiguration
   options?: NoUnknownPseudoClassOptions
 }
-export interface NoUnknownPseudoClassOptions {}
+export interface NoUnknownPseudoClassOptions {
+  /**
+   * A list of unknown pseudo-class names to ignore (case-insensitive).
+   */
+  ignore?: string[]
+}
 export interface RuleWithNoUnknownPseudoElementOptions {
   level: RulePlainConfiguration
   options?: NoUnknownPseudoElementOptions
 }
-export interface NoUnknownPseudoElementOptions {}
+export interface NoUnknownPseudoElementOptions {
+  /**
+   * A list of unknown pseudo-element names to ignore (case-insensitive).
+   */
+  ignore?: string[]
+}
 export interface RuleWithNoUnknownTypeSelectorOptions {
   level: RulePlainConfiguration
   options?: NoUnknownTypeSelectorOptions
@@ -3036,6 +3317,11 @@ export interface RuleWithNoUnreachableSuperOptions {
   options?: NoUnreachableSuperOptions
 }
 export interface NoUnreachableSuperOptions {}
+export interface RuleWithNoUnresolvedImportsOptions {
+  level: RulePlainConfiguration
+  options?: NoUnresolvedImportsOptions
+}
+export interface NoUnresolvedImportsOptions {}
 export interface RuleWithNoUnsafeFinallyOptions {
   level: RulePlainConfiguration
   options?: NoUnsafeFinallyOptions
@@ -3097,6 +3383,32 @@ export interface RuleWithNoVoidTypeReturnOptions {
   options?: NoVoidTypeReturnOptions
 }
 export interface NoVoidTypeReturnOptions {}
+export interface RuleWithNoVueDataObjectDeclarationOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoVueDataObjectDeclarationOptions
+}
+export interface NoVueDataObjectDeclarationOptions {}
+export interface RuleWithNoVueDuplicateKeysOptions {
+  level: RulePlainConfiguration
+  options?: NoVueDuplicateKeysOptions
+}
+export interface NoVueDuplicateKeysOptions {}
+export interface RuleWithNoVueReservedKeysOptions {
+  level: RulePlainConfiguration
+  options?: NoVueReservedKeysOptions
+}
+export interface NoVueReservedKeysOptions {}
+export interface RuleWithNoVueReservedPropsOptions {
+  level: RulePlainConfiguration
+  options?: NoVueReservedPropsOptions
+}
+export interface NoVueReservedPropsOptions {}
+export interface RuleWithNoVueSetupPropsReactivityLossOptions {
+  level: RulePlainConfiguration
+  options?: NoVueSetupPropsReactivityLossOptions
+}
+export interface NoVueSetupPropsReactivityLossOptions {}
 export interface RuleWithUseExhaustiveDependenciesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3155,7 +3467,13 @@ export interface RuleWithUseHookAtTopLevelOptions {
   level: RulePlainConfiguration
   options?: UseHookAtTopLevelOptions
 }
-export interface UseHookAtTopLevelOptions {}
+export interface UseHookAtTopLevelOptions {
+  /**
+   * List of function names that should not be treated as hooks.
+   * Functions in this list will be ignored by the rule even if they follow the `use*` naming convention.
+   */
+  ignore?: string[] | null
+}
 export interface RuleWithUseImageSizeOptions {
   level: RulePlainConfiguration
   options?: UseImageSizeOptions
@@ -3166,6 +3484,13 @@ export interface RuleWithUseImportExtensionsOptions {
   options?: UseImportExtensionsOptions
 }
 export interface UseImportExtensionsOptions {
+  /**
+   * A map of file extensions to their suggested replacements.
+   * For example, `{"ts": "js"}` would suggest `.js` extensions for TypeScript imports.
+   */
+  extensionMappings?: {
+    [k: string]: string
+  } | null
   /**
    * If `true`, the suggested extension is always `.js` regardless of what
    * extension the source file has in your project.
@@ -3205,6 +3530,16 @@ export interface RuleWithUseQwikClasslistOptions {
   options?: UseQwikClasslistOptions
 }
 export interface UseQwikClasslistOptions {}
+export interface RuleWithUseQwikMethodUsageOptions {
+  level: RulePlainConfiguration
+  options?: UseQwikMethodUsageOptions
+}
+export interface UseQwikMethodUsageOptions {}
+export interface RuleWithUseQwikValidLexicalScopeOptions {
+  level: RulePlainConfiguration
+  options?: UseQwikValidLexicalScopeOptions
+}
+export interface UseQwikValidLexicalScopeOptions {}
 export interface RuleWithUseSingleJsDocAsteriskOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3253,15 +3588,20 @@ export interface Nursery {
    */
   noBeforeInteractiveScriptOutsideDocument?: NoBeforeInteractiveScriptOutsideDocumentConfiguration | null
   /**
+   * Disallow conditional expect() calls inside tests.
+   * See https://biomejs.dev/linter/rules/no-conditional-expect
+   */
+  noConditionalExpect?: NoConditionalExpectConfiguration | null
+  /**
    * Disallow continue statements.
    * See https://biomejs.dev/linter/rules/no-continue
    */
   noContinue?: NoContinueConfiguration | null
   /**
-   * Restrict imports of deprecated exports.
-   * See https://biomejs.dev/linter/rules/no-deprecated-imports
+   * Disallow deprecated media types.
+   * See https://biomejs.dev/linter/rules/no-deprecated-media-type
    */
-  noDeprecatedImports?: NoDeprecatedImportsConfiguration | null
+  noDeprecatedMediaType?: NoDeprecatedMediaTypeConfiguration | null
   /**
    * Disallow equal signs explicitly at the beginning of regular expressions.
    * See https://biomejs.dev/linter/rules/no-div-regex
@@ -3277,11 +3617,6 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-duplicate-attributes
    */
   noDuplicateAttributes?: NoDuplicateAttributesConfiguration | null
-  /**
-   * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
-   * See https://biomejs.dev/linter/rules/no-duplicate-dependencies
-   */
-  noDuplicateDependencies?: NoDuplicateDependenciesConfiguration | null
   /**
    * Require all enum value names to be unique.
    * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
@@ -3318,11 +3653,6 @@ export interface Nursery {
    */
   noDuplicatedSpreadProps?: NoDuplicatedSpreadPropsConfiguration | null
   /**
-   * Disallow empty sources.
-   * See https://biomejs.dev/linter/rules/no-empty-source
-   */
-  noEmptySource?: NoEmptySourceConfiguration | null
-  /**
    * Require the use of === or !== for comparison with null.
    * See https://biomejs.dev/linter/rules/no-equals-to-null
    */
@@ -3353,20 +3683,15 @@ export interface Nursery {
    */
   noForIn?: NoForInConfiguration | null
   /**
-   * Prevent import cycles.
-   * See https://biomejs.dev/linter/rules/no-import-cycles
+   * Disallow hex colors.
+   * See https://biomejs.dev/linter/rules/no-hex-colors
    */
-  noImportCycles?: NoImportCyclesConfiguration | null
+  noHexColors?: NoHexColorsConfiguration | null
   /**
    * Disallows the usage of the unary operators ++ and --.
    * See https://biomejs.dev/linter/rules/no-increment-decrement
    */
   noIncrementDecrement?: NoIncrementDecrementConfiguration | null
-  /**
-   * Disallow string literals inside JSX elements.
-   * See https://biomejs.dev/linter/rules/no-jsx-literals
-   */
-  noJsxLiterals?: NoJsxLiteralsConfiguration | null
   /**
    * Disallow .bind(), arrow functions, or function expressions in JSX props.
    * See https://biomejs.dev/linter/rules/no-jsx-props-bind
@@ -3393,25 +3718,75 @@ export interface Nursery {
    */
   noMultiStr?: NoMultiStrConfiguration | null
   /**
-   * Prevent client components from being async functions.
-   * See https://biomejs.dev/linter/rules/no-next-async-client-component
+   * Disallow nested .then() or .catch() promise calls.
+   * See https://biomejs.dev/linter/rules/no-nested-promises
    */
-  noNextAsyncClientComponent?: NoNextAsyncClientComponentConfiguration | null
+  noNestedPromises?: NoNestedPromisesConfiguration | null
   /**
    * Disallow function parameters that are only used in recursive calls.
    * See https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion
    */
   noParametersOnlyUsedInRecursion?: NoParametersOnlyUsedInRecursionConfiguration | null
   /**
+   * Disallow usage of element handles (page.$() and page.$$()).
+   * See https://biomejs.dev/linter/rules/no-playwright-element-handle
+   */
+  noPlaywrightElementHandle?: NoPlaywrightElementHandleConfiguration | null
+  /**
+   * Disallow usage of page.$eval() and page.$$eval().
+   * See https://biomejs.dev/linter/rules/no-playwright-eval
+   */
+  noPlaywrightEval?: NoPlaywrightEvalConfiguration | null
+  /**
+   * Disallow usage of the { force: true } option.
+   * See https://biomejs.dev/linter/rules/no-playwright-force-option
+   */
+  noPlaywrightForceOption?: NoPlaywrightForceOptionConfiguration | null
+  /**
+   * Enforce Playwright async APIs to be awaited or returned.
+   * See https://biomejs.dev/linter/rules/no-playwright-missing-await
+   */
+  noPlaywrightMissingAwait?: NoPlaywrightMissingAwaitConfiguration | null
+  /**
+   * Disallow usage of the networkidle option.
+   * See https://biomejs.dev/linter/rules/no-playwright-networkidle
+   */
+  noPlaywrightNetworkidle?: NoPlaywrightNetworkidleConfiguration | null
+  /**
+   * Disallow using page.pause().
+   * See https://biomejs.dev/linter/rules/no-playwright-page-pause
+   */
+  noPlaywrightPagePause?: NoPlaywrightPagePauseConfiguration | null
+  /**
+   * Disallow unnecessary await for Playwright methods that don't return promises.
+   * See https://biomejs.dev/linter/rules/no-playwright-useless-await
+   */
+  noPlaywrightUselessAwait?: NoPlaywrightUselessAwaitConfiguration | null
+  /**
+   * Disallow using page.waitForNavigation().
+   * See https://biomejs.dev/linter/rules/no-playwright-wait-for-navigation
+   */
+  noPlaywrightWaitForNavigation?: NoPlaywrightWaitForNavigationConfiguration | null
+  /**
+   * Disallow using page.waitForSelector().
+   * See https://biomejs.dev/linter/rules/no-playwright-wait-for-selector
+   */
+  noPlaywrightWaitForSelector?: NoPlaywrightWaitForSelectorConfiguration | null
+  /**
+   * Disallow using page.waitForTimeout().
+   * See https://biomejs.dev/linter/rules/no-playwright-wait-for-timeout
+   */
+  noPlaywrightWaitForTimeout?: NoPlaywrightWaitForTimeoutConfiguration | null
+  /**
    * Disallow the use of the deprecated __proto__ object property.
    * See https://biomejs.dev/linter/rules/no-proto
    */
   noProto?: NoProtoConfiguration | null
   /**
-   * Replaces usages of forwardRef with passing ref as a prop.
-   * See https://biomejs.dev/linter/rules/no-react-forward-ref
+   * Checks if a default export exports the same symbol as a named export.
+   * See https://biomejs.dev/linter/rules/no-redundant-default-export
    */
-  noReactForwardRef?: NoReactForwardRefConfiguration | null
+  noRedundantDefaultExport?: NoRedundantDefaultExportConfiguration | null
   /**
    * Disallow assignments in return statements.
    * See https://biomejs.dev/linter/rules/no-return-assign
@@ -3458,55 +3833,20 @@ export interface Nursery {
    */
   noUnnecessaryConditions?: NoUnnecessaryConditionsConfiguration | null
   /**
-   * Warn when importing non-existing exports.
-   * See https://biomejs.dev/linter/rules/no-unresolved-imports
+   * Disallow redundant return statements.
+   * See https://biomejs.dev/linter/rules/no-useless-return
    */
-  noUnresolvedImports?: NoUnresolvedImportsConfiguration | null
+  noUselessReturn?: NoUselessReturnConfiguration | null
   /**
-   * Disallow expression statements that are neither a function call nor an assignment.
-   * See https://biomejs.dev/linter/rules/no-unused-expressions
+   * Disallows using arrow functions when defining a watcher.
+   * See https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch
    */
-  noUnusedExpressions?: NoUnusedExpressionsConfiguration | null
-  /**
-   * Disallow unused catch bindings.
-   * See https://biomejs.dev/linter/rules/no-useless-catch-binding
-   */
-  noUselessCatchBinding?: NoUselessCatchBindingConfiguration | null
-  /**
-   * Disallow the use of useless undefined.
-   * See https://biomejs.dev/linter/rules/no-useless-undefined
-   */
-  noUselessUndefined?: NoUselessUndefinedConfiguration | null
-  /**
-   * Enforce that Vue component data options are declared as functions.
-   * See https://biomejs.dev/linter/rules/no-vue-data-object-declaration
-   */
-  noVueDataObjectDeclaration?: NoVueDataObjectDeclarationConfiguration | null
-  /**
-   * Disallow duplicate keys in Vue component data, methods, computed properties, and other options.
-   * See https://biomejs.dev/linter/rules/no-vue-duplicate-keys
-   */
-  noVueDuplicateKeys?: NoVueDuplicateKeysConfiguration | null
+  noVueArrowFuncInWatch?: NoVueArrowFuncInWatchConfiguration | null
   /**
    * Disallow the use of Vue Options API.
    * See https://biomejs.dev/linter/rules/no-vue-options-api
    */
   noVueOptionsApi?: NoVueOptionsApiConfiguration | null
-  /**
-   * Disallow reserved keys in Vue component data and computed properties.
-   * See https://biomejs.dev/linter/rules/no-vue-reserved-keys
-   */
-  noVueReservedKeys?: NoVueReservedKeysConfiguration | null
-  /**
-   * Disallow reserved names to be used as props.
-   * See https://biomejs.dev/linter/rules/no-vue-reserved-props
-   */
-  noVueReservedProps?: NoVueReservedPropsConfiguration | null
-  /**
-   * Disallow destructuring of props passed to setup in Vue projects.
-   * See https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss
-   */
-  noVueSetupPropsReactivityLoss?: NoVueSetupPropsReactivityLossConfiguration | null
   /**
    * Disallow using v-if and v-for directives on the same element.
    * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
@@ -3527,11 +3867,6 @@ export interface Nursery {
    */
   useAwaitThenable?: UseAwaitThenableConfiguration | null
   /**
-   * Enforce consistent arrow function bodies.
-   * See https://biomejs.dev/linter/rules/use-consistent-arrow-return
-   */
-  useConsistentArrowReturn?: UseConsistentArrowReturnConfiguration | null
-  /**
    * Disallow enums from having both number and string members.
    * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
    */
@@ -3542,10 +3877,10 @@ export interface Nursery {
    */
   useConsistentGraphqlDescriptions?: UseConsistentGraphqlDescriptionsConfiguration | null
   /**
-   * Require the @deprecated directive to specify a deletion date.
-   * See https://biomejs.dev/linter/rules/use-deprecated-date
+   * Enforce consistent use of either method signatures or function properties within interfaces and type aliases.
+   * See https://biomejs.dev/linter/rules/use-consistent-method-signatures
    */
-  useDeprecatedDate?: UseDeprecatedDateConfiguration | null
+  useConsistentMethodSignatures?: UseConsistentMethodSignaturesConfiguration | null
   /**
    * Require destructuring from arrays and/or objects.
    * See https://biomejs.dev/linter/rules/use-destructuring
@@ -3562,6 +3897,11 @@ export interface Nursery {
    */
   useExhaustiveSwitchCases?: UseExhaustiveSwitchCasesConfiguration | null
   /**
+   * Ensure that test functions contain at least one expect() assertion.
+   * See https://biomejs.dev/linter/rules/use-expect
+   */
+  useExpect?: UseExpectConfiguration | null
+  /**
    * Enforce types in functions, methods, variables, and parameters.
    * See https://biomejs.dev/linter/rules/use-explicit-type
    */
@@ -3572,10 +3912,20 @@ export interface Nursery {
    */
   useFind?: UseFindConfiguration | null
   /**
+   * Enforce the use of globalThis over window, self, and global.
+   * See https://biomejs.dev/linter/rules/use-global-this
+   */
+  useGlobalThis?: UseGlobalThisConfiguration | null
+  /**
    * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
    * See https://biomejs.dev/linter/rules/use-inline-script-id
    */
   useInlineScriptId?: UseInlineScriptIdConfiguration | null
+  /**
+   * Require mutation argument to be always called "input".
+   * See https://biomejs.dev/linter/rules/use-input-name
+   */
+  useInputName?: UseInputNameConfiguration | null
   /**
    * Disallow anonymous operations when more than one operation specified in document.
    * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
@@ -3587,20 +3937,10 @@ export interface Nursery {
    */
   useLoneExecutableDefinition?: UseLoneExecutableDefinitionConfiguration | null
   /**
-   * Enforce a maximum number of parameters in function definitions.
-   * See https://biomejs.dev/linter/rules/use-max-params
+   * Enforce valid describe() callback.
+   * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
    */
-  useMaxParams?: UseMaxParamsConfiguration | null
-  /**
-   * Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.
-   * See https://biomejs.dev/linter/rules/use-qwik-method-usage
-   */
-  useQwikMethodUsage?: UseQwikMethodUsageConfiguration | null
-  /**
-   * Disallow unserializable expressions in Qwik dollar ($) scopes.
-   * See https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope
-   */
-  useQwikValidLexicalScope?: UseQwikValidLexicalScopeConfiguration | null
+  usePlaywrightValidDescribeCallback?: UsePlaywrightValidDescribeCallbackConfiguration | null
   /**
    * Enforce RegExp#exec over String#match if no global flag is provided.
    * See https://biomejs.dev/linter/rules/use-regexp-exec
@@ -3732,16 +4072,26 @@ export interface RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions {
   options?: NoBeforeInteractiveScriptOutsideDocumentOptions
 }
 export interface NoBeforeInteractiveScriptOutsideDocumentOptions {}
+export interface RuleWithNoConditionalExpectOptions {
+  level: RulePlainConfiguration
+  options?: NoConditionalExpectOptions
+}
+export interface NoConditionalExpectOptions {}
 export interface RuleWithNoContinueOptions {
   level: RulePlainConfiguration
   options?: NoContinueOptions
 }
 export interface NoContinueOptions {}
-export interface RuleWithNoDeprecatedImportsOptions {
+export interface RuleWithNoDeprecatedMediaTypeOptions {
   level: RulePlainConfiguration
-  options?: NoDeprecatedImportsOptions
+  options?: NoDeprecatedMediaTypeOptions
 }
-export interface NoDeprecatedImportsOptions {}
+export interface NoDeprecatedMediaTypeOptions {
+  /**
+   * Media types to allow (case-insensitive).
+   */
+  allow?: string[] | null
+}
 export interface RuleWithNoDivRegexOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3758,11 +4108,6 @@ export interface RuleWithNoDuplicateAttributesOptions {
   options?: NoDuplicateAttributesOptions
 }
 export interface NoDuplicateAttributesOptions {}
-export interface RuleWithNoDuplicateDependenciesOptions {
-  level: RulePlainConfiguration
-  options?: NoDuplicateDependenciesOptions
-}
-export interface NoDuplicateDependenciesOptions {}
 export interface RuleWithNoDuplicateEnumValueNamesOptions {
   level: RulePlainConfiguration
   options?: NoDuplicateEnumValueNamesOptions
@@ -3798,16 +4143,6 @@ export interface RuleWithNoDuplicatedSpreadPropsOptions {
   options?: NoDuplicatedSpreadPropsOptions
 }
 export interface NoDuplicatedSpreadPropsOptions {}
-export interface RuleWithNoEmptySourceOptions {
-  level: RulePlainConfiguration
-  options?: NoEmptySourceOptions
-}
-export interface NoEmptySourceOptions {
-  /**
-   * Whether comments are considered meaningful
-   */
-  allowComments?: boolean | null
-}
 export interface RuleWithNoEqualsToNullOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -3854,19 +4189,11 @@ export interface RuleWithNoForInOptions {
   options?: NoForInOptions
 }
 export interface NoForInOptions {}
-export interface RuleWithNoImportCyclesOptions {
+export interface RuleWithNoHexColorsOptions {
   level: RulePlainConfiguration
-  options?: NoImportCyclesOptions
+  options?: NoHexColorsOptions
 }
-export interface NoImportCyclesOptions {
-  /**
-   * Ignores type-only imports when finding an import cycle. A type-only import (`import type`)
-   * will be removed by the compiler, so it cuts an import cycle at runtime. Note that named type
-   * imports (`import { type Foo }`) aren't considered as type-only because it's not removed by
-   * the compiler if the `verbatimModuleSyntax` option is enabled. Enabled by default.
-   */
-  ignoreTypes?: boolean | null
-}
+export interface NoHexColorsOptions {}
 export interface RuleWithNoIncrementDecrementOptions {
   level: RulePlainConfiguration
   options?: NoIncrementDecrementOptions
@@ -3876,24 +4203,6 @@ export interface NoIncrementDecrementOptions {
    * Allows unary operators ++ and -- in the afterthought (final expression) of a for loop.
    */
   allowForLoopAfterthoughts?: boolean | null
-}
-export interface RuleWithNoJsxLiteralsOptions {
-  level: RulePlainConfiguration
-  options?: NoJsxLiteralsOptions
-}
-export interface NoJsxLiteralsOptions {
-  /**
-   * An array of strings that won't trigger the rule. Whitespaces are taken into consideration
-   */
-  allowedStrings?: string[] | null
-  /**
-   * When enabled, strings inside props are always ignored
-   */
-  ignoreProps?: boolean | null
-  /**
-   * When enabled, also flag string literals inside JSX expressions and attributes
-   */
-  noStrings?: boolean | null
 }
 export interface RuleWithNoJsxPropsBindOptions {
   level: RulePlainConfiguration
@@ -3923,28 +4232,81 @@ export interface RuleWithNoMultiStrOptions {
   options?: NoMultiStrOptions
 }
 export interface NoMultiStrOptions {}
-export interface RuleWithNoNextAsyncClientComponentOptions {
+export interface RuleWithNoNestedPromisesOptions {
   level: RulePlainConfiguration
-  options?: NoNextAsyncClientComponentOptions
+  options?: NoNestedPromisesOptions
 }
-export interface NoNextAsyncClientComponentOptions {}
+export interface NoNestedPromisesOptions {}
 export interface RuleWithNoParametersOnlyUsedInRecursionOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
   options?: NoParametersOnlyUsedInRecursionOptions
 }
 export interface NoParametersOnlyUsedInRecursionOptions {}
+export interface RuleWithNoPlaywrightElementHandleOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoPlaywrightElementHandleOptions
+}
+export interface NoPlaywrightElementHandleOptions {}
+export interface RuleWithNoPlaywrightEvalOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightEvalOptions
+}
+export interface NoPlaywrightEvalOptions {}
+export interface RuleWithNoPlaywrightForceOptionOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightForceOptionOptions
+}
+export interface NoPlaywrightForceOptionOptions {}
+export interface RuleWithNoPlaywrightMissingAwaitOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoPlaywrightMissingAwaitOptions
+}
+export interface NoPlaywrightMissingAwaitOptions {}
+export interface RuleWithNoPlaywrightNetworkidleOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightNetworkidleOptions
+}
+export interface NoPlaywrightNetworkidleOptions {}
+export interface RuleWithNoPlaywrightPagePauseOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightPagePauseOptions
+}
+export interface NoPlaywrightPagePauseOptions {}
+export interface RuleWithNoPlaywrightUselessAwaitOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoPlaywrightUselessAwaitOptions
+}
+export interface NoPlaywrightUselessAwaitOptions {}
+export interface RuleWithNoPlaywrightWaitForNavigationOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightWaitForNavigationOptions
+}
+export interface NoPlaywrightWaitForNavigationOptions {}
+export interface RuleWithNoPlaywrightWaitForSelectorOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoPlaywrightWaitForSelectorOptions
+}
+export interface NoPlaywrightWaitForSelectorOptions {}
+export interface RuleWithNoPlaywrightWaitForTimeoutOptions {
+  level: RulePlainConfiguration
+  options?: NoPlaywrightWaitForTimeoutOptions
+}
+export interface NoPlaywrightWaitForTimeoutOptions {}
 export interface RuleWithNoProtoOptions {
   level: RulePlainConfiguration
   options?: NoProtoOptions
 }
 export interface NoProtoOptions {}
-export interface RuleWithNoReactForwardRefOptions {
-  fix?: FixKind | null
+export interface RuleWithNoRedundantDefaultExportOptions {
   level: RulePlainConfiguration
-  options?: NoReactForwardRefOptions
+  options?: NoRedundantDefaultExportOptions
 }
-export interface NoReactForwardRefOptions {}
+export interface NoRedundantDefaultExportOptions {}
 export interface RuleWithNoReturnAssignOptions {
   level: RulePlainConfiguration
   options?: NoReturnAssignOptions
@@ -4006,63 +4368,23 @@ export interface RuleWithNoUnnecessaryConditionsOptions {
   options?: NoUnnecessaryConditionsOptions
 }
 export interface NoUnnecessaryConditionsOptions {}
-export interface RuleWithNoUnresolvedImportsOptions {
-  level: RulePlainConfiguration
-  options?: NoUnresolvedImportsOptions
-}
-export interface NoUnresolvedImportsOptions {}
-export interface RuleWithNoUnusedExpressionsOptions {
-  level: RulePlainConfiguration
-  options?: NoUnusedExpressionsOptions
-}
-export interface NoUnusedExpressionsOptions {}
-export interface RuleWithNoUselessCatchBindingOptions {
+export interface RuleWithNoUselessReturnOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
-  options?: NoUselessCatchBindingOptions
+  options?: NoUselessReturnOptions
 }
-/**
- * Options for the `noUselessCatchBinding` rule.
- * Currently empty; reserved for future extensions (e.g. allowlist of names).
- */
-export interface NoUselessCatchBindingOptions {}
-export interface RuleWithNoUselessUndefinedOptions {
+export interface NoUselessReturnOptions {}
+export interface RuleWithNoVueArrowFuncInWatchOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
-  options?: NoUselessUndefinedOptions
+  options?: NoVueArrowFuncInWatchOptions
 }
-export interface NoUselessUndefinedOptions {}
-export interface RuleWithNoVueDataObjectDeclarationOptions {
-  fix?: FixKind | null
-  level: RulePlainConfiguration
-  options?: NoVueDataObjectDeclarationOptions
-}
-export interface NoVueDataObjectDeclarationOptions {}
-export interface RuleWithNoVueDuplicateKeysOptions {
-  level: RulePlainConfiguration
-  options?: NoVueDuplicateKeysOptions
-}
-export interface NoVueDuplicateKeysOptions {}
+export interface NoVueArrowFuncInWatchOptions {}
 export interface RuleWithNoVueOptionsApiOptions {
   level: RulePlainConfiguration
   options?: NoVueOptionsApiOptions
 }
 export interface NoVueOptionsApiOptions {}
-export interface RuleWithNoVueReservedKeysOptions {
-  level: RulePlainConfiguration
-  options?: NoVueReservedKeysOptions
-}
-export interface NoVueReservedKeysOptions {}
-export interface RuleWithNoVueReservedPropsOptions {
-  level: RulePlainConfiguration
-  options?: NoVueReservedPropsOptions
-}
-export interface NoVueReservedPropsOptions {}
-export interface RuleWithNoVueSetupPropsReactivityLossOptions {
-  level: RulePlainConfiguration
-  options?: NoVueSetupPropsReactivityLossOptions
-}
-export interface NoVueSetupPropsReactivityLossOptions {}
 export interface RuleWithNoVueVIfWithVForOptions {
   level: RulePlainConfiguration
   options?: NoVueVIfWithVForOptions
@@ -4078,26 +4400,6 @@ export interface RuleWithUseAwaitThenableOptions {
   options?: UseAwaitThenableOptions
 }
 export interface UseAwaitThenableOptions {}
-export interface RuleWithUseConsistentArrowReturnOptions {
-  fix?: FixKind | null
-  level: RulePlainConfiguration
-  options?: UseConsistentArrowReturnOptions
-}
-/**
- * Options for the `useConsistentArrowReturn` rule.
- */
-export interface UseConsistentArrowReturnOptions {
-  /**
-   * Determines whether the rule enforces a consistent style when the return value is an object literal.
-   *
-   * This option is only applicable when used in conjunction with the `asNeeded` option.
-   */
-  requireForObjectLiteral?: boolean | null
-  /**
-   * The style to enforce for arrow function return statements.
-   */
-  style?: UseConsistentArrowReturnStyle | null
-}
 export interface RuleWithUseConsistentEnumValueTypeOptions {
   level: RulePlainConfiguration
   options?: UseConsistentEnumValueTypeOptions
@@ -4113,12 +4415,20 @@ export interface UseConsistentGraphqlDescriptionsOptions {
    */
   style?: UseConsistentGraphqlDescriptionsStyle | null
 }
-export interface RuleWithUseDeprecatedDateOptions {
+export interface RuleWithUseConsistentMethodSignaturesOptions {
   level: RulePlainConfiguration
-  options?: UseDeprecatedDateOptions
+  options?: UseConsistentMethodSignaturesOptions
 }
-export interface UseDeprecatedDateOptions {
-  argumentName?: string | null
+/**
+ * Options type for `useConsistentMethodSignatures`.
+ */
+export interface UseConsistentMethodSignaturesOptions {
+  /**
+   * The style of method signatures whose usage will be enforced.
+   *
+   * Default: "property"
+   */
+  style?: MethodSignatureStyle | null
 }
 export interface RuleWithUseDestructuringOptions {
   level: RulePlainConfiguration
@@ -4144,6 +4454,11 @@ export interface RuleWithUseExhaustiveSwitchCasesOptions {
   options?: UseExhaustiveSwitchCasesOptions
 }
 export interface UseExhaustiveSwitchCasesOptions {}
+export interface RuleWithUseExpectOptions {
+  level: RulePlainConfiguration
+  options?: UseExpectOptions
+}
+export interface UseExpectOptions {}
 export interface RuleWithUseExplicitTypeOptions {
   level: RulePlainConfiguration
   options?: UseExplicitTypeOptions
@@ -4154,11 +4469,26 @@ export interface RuleWithUseFindOptions {
   options?: UseFindOptions
 }
 export interface UseFindOptions {}
+export interface RuleWithUseGlobalThisOptions {
+  level: RulePlainConfiguration
+  options?: UseGlobalThisOptions
+}
+export interface UseGlobalThisOptions {}
 export interface RuleWithUseInlineScriptIdOptions {
   level: RulePlainConfiguration
   options?: UseInlineScriptIdOptions
 }
 export interface UseInlineScriptIdOptions {}
+export interface RuleWithUseInputNameOptions {
+  level: RulePlainConfiguration
+  options?: UseInputNameOptions
+}
+export interface UseInputNameOptions {
+  /**
+   * Check that the input type name follows the convention <mutationName>Input
+   */
+  checkInputType?: CheckInputType | null
+}
 export interface RuleWithUseLoneAnonymousOperationOptions {
   level: RulePlainConfiguration
   options?: UseLoneAnonymousOperationOptions
@@ -4169,26 +4499,11 @@ export interface RuleWithUseLoneExecutableDefinitionOptions {
   options?: UseLoneExecutableDefinitionOptions
 }
 export interface UseLoneExecutableDefinitionOptions {}
-export interface RuleWithUseMaxParamsOptions {
+export interface RuleWithUsePlaywrightValidDescribeCallbackOptions {
   level: RulePlainConfiguration
-  options?: UseMaxParamsOptions
+  options?: UsePlaywrightValidDescribeCallbackOptions
 }
-export interface UseMaxParamsOptions {
-  /**
-   * Maximum number of parameters allowed (default: 4)
-   */
-  max?: number | null
-}
-export interface RuleWithUseQwikMethodUsageOptions {
-  level: RulePlainConfiguration
-  options?: UseQwikMethodUsageOptions
-}
-export interface UseQwikMethodUsageOptions {}
-export interface RuleWithUseQwikValidLexicalScopeOptions {
-  level: RulePlainConfiguration
-  options?: UseQwikValidLexicalScopeOptions
-}
-export interface UseQwikValidLexicalScopeOptions {}
+export interface UsePlaywrightValidDescribeCallbackOptions {}
 export interface RuleWithUseRegexpExecOptions {
   level: RulePlainConfiguration
   options?: UseRegexpExecOptions
@@ -4623,6 +4938,11 @@ export interface Style {
    */
   noInferrableTypes?: NoInferrableTypesConfiguration | null
   /**
+   * Disallow string literals inside JSX elements.
+   * See https://biomejs.dev/linter/rules/no-jsx-literals
+   */
+  noJsxLiterals?: NoJsxLiteralsConfiguration | null
+  /**
    * Reports usage of "magic numbers" — numbers used directly instead of being assigned to named constants.
    * See https://biomejs.dev/linter/rules/no-magic-numbers
    */
@@ -4698,7 +5018,7 @@ export interface Style {
    */
   noUselessElse?: NoUselessElseConfiguration | null
   /**
-   * Disallow use of @value rule in css modules.
+   * Disallow use of @value rule in CSS modules.
    * See https://biomejs.dev/linter/rules/no-value-at-rule
    */
   noValueAtRule?: NoValueAtRuleConfiguration | null
@@ -4751,6 +5071,11 @@ export interface Style {
    * See https://biomejs.dev/linter/rules/use-consistent-array-type
    */
   useConsistentArrayType?: UseConsistentArrayTypeConfiguration | null
+  /**
+   * Enforce consistent arrow function bodies.
+   * See https://biomejs.dev/linter/rules/use-consistent-arrow-return
+   */
+  useConsistentArrowReturn?: UseConsistentArrowReturnConfiguration | null
   /**
    * Enforce the use of new for all builtins, except String, Number and Boolean.
    * See https://biomejs.dev/linter/rules/use-consistent-builtin-instantiation
@@ -4994,6 +5319,24 @@ export interface RuleWithNoInferrableTypesOptions {
   options?: NoInferrableTypesOptions
 }
 export interface NoInferrableTypesOptions {}
+export interface RuleWithNoJsxLiteralsOptions {
+  level: RulePlainConfiguration
+  options?: NoJsxLiteralsOptions
+}
+export interface NoJsxLiteralsOptions {
+  /**
+   * An array of strings that won't trigger the rule. Whitespaces are taken into consideration
+   */
+  allowedStrings?: string[] | null
+  /**
+   * When enabled, strings inside props are always ignored
+   */
+  ignoreProps?: boolean | null
+  /**
+   * When enabled, also flag string literals inside JSX expressions and attributes
+   */
+  noStrings?: boolean | null
+}
 export interface RuleWithNoMagicNumbersOptions {
   level: RulePlainConfiguration
   options?: NoMagicNumbersOptions
@@ -5210,6 +5553,26 @@ export interface RuleWithUseConsistentArrayTypeOptions {
 }
 export interface UseConsistentArrayTypeOptions {
   syntax?: ConsistentArrayType | null
+}
+export interface RuleWithUseConsistentArrowReturnOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseConsistentArrowReturnOptions
+}
+/**
+ * Options for the `useConsistentArrowReturn` rule.
+ */
+export interface UseConsistentArrowReturnOptions {
+  /**
+   * Determines whether the rule enforces a consistent style when the return value is an object literal.
+   *
+   * This option is only applicable when used in conjunction with the `asNeeded` option.
+   */
+  requireForObjectLiteral?: boolean | null
+  /**
+   * The style to enforce for arrow function return statements.
+   */
+  style?: UseConsistentArrowReturnStyle | null
 }
 export interface RuleWithUseConsistentBuiltinInstantiationOptions {
   fix?: FixKind | null
@@ -5553,7 +5916,16 @@ export interface RuleWithUseUnifiedTypeSignaturesOptions {
   level: RulePlainConfiguration
   options?: UseUnifiedTypeSignaturesOptions
 }
-export interface UseUnifiedTypeSignaturesOptions {}
+export interface UseUnifiedTypeSignaturesOptions {
+  /**
+   * Whether to ignore overloads with different JSDoc comments.
+   */
+  ignoreDifferentJsDoc?: boolean | null
+  /**
+   * Whether to ignore overloads with differently named parameters.
+   */
+  ignoreDifferentlyNamedParameters?: boolean | null
+}
 /**
  * A list of rules that belong to this group
  */
@@ -5649,6 +6021,11 @@ export interface Suspicious {
    */
   noDebugger?: NoDebuggerConfiguration | null
   /**
+   * Restrict imports of deprecated exports.
+   * See https://biomejs.dev/linter/rules/no-deprecated-imports
+   */
+  noDeprecatedImports?: NoDeprecatedImportsConfiguration | null
+  /**
    * Disallow direct assignments to document.cookie.
    * See https://biomejs.dev/linter/rules/no-document-cookie
    */
@@ -5683,6 +6060,11 @@ export interface Suspicious {
    * See https://biomejs.dev/linter/rules/no-duplicate-custom-properties
    */
   noDuplicateCustomProperties?: NoDuplicateCustomPropertiesConfiguration | null
+  /**
+   * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
+   * See https://biomejs.dev/linter/rules/no-duplicate-dependencies
+   */
+  noDuplicateDependencies?: NoDuplicateDependenciesConfiguration | null
   /**
    * Disallow duplicate conditions in if-else-if chains.
    * See https://biomejs.dev/linter/rules/no-duplicate-else-if
@@ -5743,6 +6125,11 @@ export interface Suspicious {
    * See https://biomejs.dev/linter/rules/no-empty-interface
    */
   noEmptyInterface?: NoEmptyInterfaceConfiguration | null
+  /**
+   * Disallow empty sources.
+   * See https://biomejs.dev/linter/rules/no-empty-source
+   */
+  noEmptySource?: NoEmptySourceConfiguration | null
   /**
    * Disallow variables from evolving into any type through reassignments.
    * See https://biomejs.dev/linter/rules/no-evolving-types
@@ -5809,6 +6196,11 @@ export interface Suspicious {
    */
   noImportAssign?: NoImportAssignConfiguration | null
   /**
+   * Prevent import cycles.
+   * See https://biomejs.dev/linter/rules/no-import-cycles
+   */
+  noImportCycles?: NoImportCyclesConfiguration | null
+  /**
    * Disallow invalid !important within keyframe declarations.
    * See https://biomejs.dev/linter/rules/no-important-in-keyframe
    */
@@ -5863,6 +6255,11 @@ export interface Suspicious {
    * See https://biomejs.dev/linter/rules/no-quickfix-biome
    */
   noQuickfixBiome?: NoQuickfixBiomeConfiguration | null
+  /**
+   * Replaces usages of forwardRef with passing ref as a prop.
+   * See https://biomejs.dev/linter/rules/no-react-forward-ref
+   */
+  noReactForwardRef?: NoReactForwardRefConfiguration | null
   /**
    * Prevents React-specific JSX properties from being used.
    * See https://biomejs.dev/linter/rules/no-react-specific-props
@@ -5944,6 +6341,11 @@ export interface Suspicious {
    */
   noUnsafeNegation?: NoUnsafeNegationConfiguration | null
   /**
+   * Disallow expression statements that are neither a function call nor an assignment.
+   * See https://biomejs.dev/linter/rules/no-unused-expressions
+   */
+  noUnusedExpressions?: NoUnusedExpressionsConfiguration | null
+  /**
    * Disallow unnecessary escapes in string literals.
    * See https://biomejs.dev/linter/rules/no-useless-escape-in-string
    */
@@ -5987,6 +6389,11 @@ export interface Suspicious {
    * See https://biomejs.dev/linter/rules/use-default-switch-clause-last
    */
   useDefaultSwitchClauseLast?: UseDefaultSwitchClauseLastConfiguration | null
+  /**
+   * Require the @deprecated directive to specify a deletion date.
+   * See https://biomejs.dev/linter/rules/use-deprecated-date
+   */
+  useDeprecatedDate?: UseDeprecatedDateConfiguration | null
   /**
    * Enforce passing a message value when creating a built-in error.
    * See https://biomejs.dev/linter/rules/use-error-message
@@ -6151,6 +6558,11 @@ export interface RuleWithNoDebuggerOptions {
   options?: NoDebuggerOptions
 }
 export interface NoDebuggerOptions {}
+export interface RuleWithNoDeprecatedImportsOptions {
+  level: RulePlainConfiguration
+  options?: NoDeprecatedImportsOptions
+}
+export interface NoDeprecatedImportsOptions {}
 export interface RuleWithNoDocumentCookieOptions {
   level: RulePlainConfiguration
   options?: NoDocumentCookieOptions
@@ -6195,6 +6607,11 @@ export interface RuleWithNoDuplicateCustomPropertiesOptions {
   options?: NoDuplicateCustomPropertiesOptions
 }
 export interface NoDuplicateCustomPropertiesOptions {}
+export interface RuleWithNoDuplicateDependenciesOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateDependenciesOptions
+}
+export interface NoDuplicateDependenciesOptions {}
 export interface RuleWithNoDuplicateElseIfOptions {
   level: RulePlainConfiguration
   options?: NoDuplicateElseIfOptions
@@ -6256,6 +6673,16 @@ export interface RuleWithNoEmptyInterfaceOptions {
   options?: NoEmptyInterfaceOptions
 }
 export interface NoEmptyInterfaceOptions {}
+export interface RuleWithNoEmptySourceOptions {
+  level: RulePlainConfiguration
+  options?: NoEmptySourceOptions
+}
+export interface NoEmptySourceOptions {
+  /**
+   * Whether comments are considered meaningful
+   */
+  allowComments?: boolean | null
+}
 export interface RuleWithNoEvolvingTypesOptions {
   level: RulePlainConfiguration
   options?: NoEvolvingTypesOptions
@@ -6325,6 +6752,19 @@ export interface RuleWithNoImportAssignOptions {
   options?: NoImportAssignOptions
 }
 export interface NoImportAssignOptions {}
+export interface RuleWithNoImportCyclesOptions {
+  level: RulePlainConfiguration
+  options?: NoImportCyclesOptions
+}
+export interface NoImportCyclesOptions {
+  /**
+   * Ignores type-only imports when finding an import cycle. A type-only import (`import type`)
+   * will be removed by the compiler, so it cuts an import cycle at runtime. Note that named type
+   * imports (`import { type Foo }`) aren't considered as type-only because it's not removed by
+   * the compiler if the `verbatimModuleSyntax` option is enabled. Enabled by default.
+   */
+  ignoreTypes?: boolean | null
+}
 export interface RuleWithNoImportantInKeyframeOptions {
   level: RulePlainConfiguration
   options?: NoImportantInKeyframeOptions
@@ -6390,6 +6830,12 @@ export interface NoQuickfixBiomeOptions {
    */
   additionalPaths?: string[]
 }
+export interface RuleWithNoReactForwardRefOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoReactForwardRefOptions
+}
+export interface NoReactForwardRefOptions {}
 export interface RuleWithNoReactSpecificPropsOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -6481,6 +6927,11 @@ export interface RuleWithNoUnsafeNegationOptions {
   options?: NoUnsafeNegationOptions
 }
 export interface NoUnsafeNegationOptions {}
+export interface RuleWithNoUnusedExpressionsOptions {
+  level: RulePlainConfiguration
+  options?: NoUnusedExpressionsOptions
+}
+export interface NoUnusedExpressionsOptions {}
 export interface RuleWithNoUselessEscapeInStringOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -6524,6 +6975,13 @@ export interface RuleWithUseDefaultSwitchClauseLastOptions {
   options?: UseDefaultSwitchClauseLastOptions
 }
 export interface UseDefaultSwitchClauseLastOptions {}
+export interface RuleWithUseDeprecatedDateOptions {
+  level: RulePlainConfiguration
+  options?: UseDeprecatedDateOptions
+}
+export interface UseDeprecatedDateOptions {
+  argumentName?: string | null
+}
 export interface RuleWithUseErrorMessageOptions {
   level: RulePlainConfiguration
   options?: UseErrorMessageOptions
@@ -6554,7 +7012,13 @@ export interface RuleWithUseIterableCallbackReturnOptions {
   level: RulePlainConfiguration
   options?: UseIterableCallbackReturnOptions
 }
-export interface UseIterableCallbackReturnOptions {}
+export interface UseIterableCallbackReturnOptions {
+  /**
+   * When `true`, the rule reports `forEach` callbacks that return a value (default behaviour).
+   * When `false` or unset, such callbacks are ignored.
+   */
+  checkForEach?: boolean | null
+}
 export interface RuleWithUseNamespaceKeywordOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -6694,6 +7158,19 @@ export interface OverrideFormatterConfiguration {
    * What's the max width of a line. Defaults to 80.
    */
   lineWidth?: LineWidth | null
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+   * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+   * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   */
+  trailingNewline?: TrailingNewline | null
 }
 export interface OverrideLinterConfiguration {
   /**
