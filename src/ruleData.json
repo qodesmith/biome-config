@@ -1335,6 +1335,22 @@
       "url": "https://biomejs.dev/linter/rules/no-div-regex/"
     },
     {
+      "name": "noDrizzleDeleteWithoutWhere",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require .where() to be called when using .delete() with Drizzle ORM.\nSee https://biomejs.dev/linter/rules/no-drizzle-delete-without-where",
+      "url": "https://biomejs.dev/linter/rules/no-drizzle-delete-without-where/"
+    },
+    {
+      "name": "noDrizzleUpdateWithoutWhere",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require .where() to be called when using .update() with Drizzle ORM.\nSee https://biomejs.dev/linter/rules/no-drizzle-update-without-where",
+      "url": "https://biomejs.dev/linter/rules/no-drizzle-update-without-where/"
+    },
+    {
       "name": "noDuplicateArgumentNames",
       "recommended": false,
       "fix": "none",
@@ -1405,6 +1421,14 @@
       "severity": "info",
       "description": "Disallow JSX prop spreading the same identifier multiple times.\nSee https://biomejs.dev/linter/rules/no-duplicated-spread-props",
       "url": "https://biomejs.dev/linter/rules/no-duplicated-spread-props/"
+    },
+    {
+      "name": "noEmptyObjectKeys",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow empty keys in JSON objects.\nSee https://biomejs.dev/linter/rules/no-empty-object-keys",
+      "url": "https://biomejs.dev/linter/rules/no-empty-object-keys/"
     },
     {
       "name": "noEqualsToNull",
@@ -1671,6 +1695,14 @@
       "url": "https://biomejs.dev/linter/rules/no-ternary/"
     },
     {
+      "name": "noTopLevelLiterals",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require the JSON top-level value to be an array or object.\nSee https://biomejs.dev/linter/rules/no-top-level-literals",
+      "url": "https://biomejs.dev/linter/rules/no-top-level-literals/"
+    },
+    {
       "name": "noUndeclaredEnvVars",
       "recommended": false,
       "fix": "none",
@@ -1719,12 +1751,28 @@
       "url": "https://biomejs.dev/linter/rules/no-vue-options-api/"
     },
     {
+      "name": "noVueRefAsOperand",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow the use of value wrapped by ref()(Composition API) as operand.\nSee https://biomejs.dev/linter/rules/no-vue-ref-as-operand",
+      "url": "https://biomejs.dev/linter/rules/no-vue-ref-as-operand/"
+    },
+    {
       "name": "noVueVIfWithVFor",
       "recommended": false,
       "fix": "none",
       "severity": "info",
       "description": "Disallow using v-if and v-for directives on the same element.\nSee https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for",
       "url": "https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for/"
+    },
+    {
+      "name": "useArraySome",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Prefer Array.prototype.some() over verbose existence checks.\nSee https://biomejs.dev/linter/rules/use-array-some",
+      "url": "https://biomejs.dev/linter/rules/use-array-some/"
     },
     {
       "name": "useArraySortCompare",
@@ -1741,6 +1789,14 @@
       "severity": "info",
       "description": "Enforce that await is only used on Promise values.\nSee https://biomejs.dev/linter/rules/use-await-thenable",
       "url": "https://biomejs.dev/linter/rules/use-await-thenable/"
+    },
+    {
+      "name": "useBaseline",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow CSS properties, values, at-rules, functions, and selectors that are not part of the configured Baseline.\nSee https://biomejs.dev/linter/rules/use-baseline",
+      "url": "https://biomejs.dev/linter/rules/use-baseline/"
     },
     {
       "name": "useConsistentEnumValueType",
@@ -1795,7 +1851,7 @@
       "recommended": false,
       "fix": "none",
       "severity": "info",
-      "description": "Ensure that test functions contain at least one expect() assertion.\nSee https://biomejs.dev/linter/rules/use-expect",
+      "description": "Ensure that test functions contain at least one expect() or similar assertion.\nSee https://biomejs.dev/linter/rules/use-expect",
       "url": "https://biomejs.dev/linter/rules/use-expect/"
     },
     {
@@ -1821,6 +1877,14 @@
       "severity": "warn",
       "description": "Enforce the use of globalThis over window, self, and global.\nSee https://biomejs.dev/linter/rules/use-global-this",
       "url": "https://biomejs.dev/linter/rules/use-global-this/"
+    },
+    {
+      "name": "useImportsFirst",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforce that all imports appear at the top of the module.\nSee https://biomejs.dev/linter/rules/use-imports-first",
+      "url": "https://biomejs.dev/linter/rules/use-imports-first/"
     },
     {
       "name": "useInlineScriptId",
@@ -1855,6 +1919,22 @@
       "url": "https://biomejs.dev/linter/rules/use-lone-executable-definition/"
     },
     {
+      "name": "useNamedCaptureGroup",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforce using named capture groups in regular expression.\nSee https://biomejs.dev/linter/rules/use-named-capture-group",
+      "url": "https://biomejs.dev/linter/rules/use-named-capture-group/"
+    },
+    {
+      "name": "useNullishCoalescing",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Enforce using the nullish coalescing operator (??) instead of logical or (||).\nSee https://biomejs.dev/linter/rules/use-nullish-coalescing",
+      "url": "https://biomejs.dev/linter/rules/use-nullish-coalescing/"
+    },
+    {
       "name": "usePlaywrightValidDescribeCallback",
       "recommended": false,
       "fix": "none",
@@ -1879,6 +1959,14 @@
       "url": "https://biomejs.dev/linter/rules/use-required-scripts/"
     },
     {
+      "name": "useScopedStyles",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce that \\<style> blocks in Vue SFCs have the scoped attribute and that \\<style> blocks in Astro components do not have the is:global directive.\nSee https://biomejs.dev/linter/rules/use-scoped-styles",
+      "url": "https://biomejs.dev/linter/rules/use-scoped-styles/"
+    },
+    {
       "name": "useSortedClasses",
       "recommended": false,
       "fix": "unsafe",
@@ -1893,6 +1981,14 @@
       "severity": "info",
       "description": "Enforce the use of the spread operator over .apply().\nSee https://biomejs.dev/linter/rules/use-spread",
       "url": "https://biomejs.dev/linter/rules/use-spread/"
+    },
+    {
+      "name": "useUnicodeRegex",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Enforce the use of the u or v flag for regular expressions.\nSee https://biomejs.dev/linter/rules/use-unicode-regex",
+      "url": "https://biomejs.dev/linter/rules/use-unicode-regex/"
     },
     {
       "name": "useVueConsistentDefinePropsDeclaration",

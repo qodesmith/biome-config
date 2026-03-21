@@ -336,6 +336,12 @@ export type NoConditionalExpectConfiguration = RulePlainConfiguration | RuleWith
 export type NoContinueConfiguration = RulePlainConfiguration | RuleWithNoContinueOptions
 export type NoDeprecatedMediaTypeConfiguration = RulePlainConfiguration | RuleWithNoDeprecatedMediaTypeOptions
 export type NoDivRegexConfiguration = RulePlainConfiguration | RuleWithNoDivRegexOptions
+export type NoDrizzleDeleteWithoutWhereConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoDrizzleDeleteWithoutWhereOptions
+export type NoDrizzleUpdateWithoutWhereConfiguration =
+  | RulePlainConfiguration
+  | RuleWithNoDrizzleUpdateWithoutWhereOptions
 export type NoDuplicateArgumentNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateArgumentNamesOptions
 export type NoDuplicateAttributesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateAttributesOptions
 export type NoDuplicateEnumValueNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateEnumValueNamesOptions
@@ -349,6 +355,7 @@ export type NoDuplicateGraphqlOperationNameConfiguration =
 export type NoDuplicateInputFieldNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateInputFieldNamesOptions
 export type NoDuplicateVariableNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateVariableNamesOptions
 export type NoDuplicatedSpreadPropsConfiguration = RulePlainConfiguration | RuleWithNoDuplicatedSpreadPropsOptions
+export type NoEmptyObjectKeysConfiguration = RulePlainConfiguration | RuleWithNoEmptyObjectKeysOptions
 export type NoEqualsToNullConfiguration = RulePlainConfiguration | RuleWithNoEqualsToNullOptions
 export type NoExcessiveClassesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveClassesPerFileOptions
 export type NoExcessiveLinesPerFileConfiguration = RulePlainConfiguration | RuleWithNoExcessiveLinesPerFileOptions
@@ -388,6 +395,7 @@ export type NoScriptUrlConfiguration = RulePlainConfiguration | RuleWithNoScript
 export type NoShadowConfiguration = RulePlainConfiguration | RuleWithNoShadowOptions
 export type NoSyncScriptsConfiguration = RulePlainConfiguration | RuleWithNoSyncScriptsOptions
 export type NoTernaryConfiguration = RulePlainConfiguration | RuleWithNoTernaryOptions
+export type NoTopLevelLiteralsConfiguration = RulePlainConfiguration | RuleWithNoTopLevelLiteralsOptions
 export type NoUndeclaredEnvVarsConfiguration = RulePlainConfiguration | RuleWithNoUndeclaredEnvVarsOptions
 export type Regex = string
 export type NoUnknownAttributeConfiguration = RulePlainConfiguration | RuleWithNoUnknownAttributeOptions
@@ -395,9 +403,12 @@ export type NoUnnecessaryConditionsConfiguration = RulePlainConfiguration | Rule
 export type NoUselessReturnConfiguration = RulePlainConfiguration | RuleWithNoUselessReturnOptions
 export type NoVueArrowFuncInWatchConfiguration = RulePlainConfiguration | RuleWithNoVueArrowFuncInWatchOptions
 export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
+export type NoVueRefAsOperandConfiguration = RulePlainConfiguration | RuleWithNoVueRefAsOperandOptions
 export type NoVueVIfWithVForConfiguration = RulePlainConfiguration | RuleWithNoVueVIfWithVForOptions
+export type UseArraySomeConfiguration = RulePlainConfiguration | RuleWithUseArraySomeOptions
 export type UseArraySortCompareConfiguration = RulePlainConfiguration | RuleWithUseArraySortCompareOptions
 export type UseAwaitThenableConfiguration = RulePlainConfiguration | RuleWithUseAwaitThenableOptions
+export type UseBaselineConfiguration = RulePlainConfiguration | RuleWithUseBaselineOptions
 export type UseConsistentEnumValueTypeConfiguration = RulePlainConfiguration | RuleWithUseConsistentEnumValueTypeOptions
 export type UseConsistentGraphqlDescriptionsConfiguration =
   | RulePlainConfiguration
@@ -417,6 +428,7 @@ export type UseExpectConfiguration = RulePlainConfiguration | RuleWithUseExpectO
 export type UseExplicitTypeConfiguration = RulePlainConfiguration | RuleWithUseExplicitTypeOptions
 export type UseFindConfiguration = RulePlainConfiguration | RuleWithUseFindOptions
 export type UseGlobalThisConfiguration = RulePlainConfiguration | RuleWithUseGlobalThisOptions
+export type UseImportsFirstConfiguration = RulePlainConfiguration | RuleWithUseImportsFirstOptions
 export type UseInlineScriptIdConfiguration = RulePlainConfiguration | RuleWithUseInlineScriptIdOptions
 export type UseInputNameConfiguration = RulePlainConfiguration | RuleWithUseInputNameOptions
 export type CheckInputType = 'off' | 'loose' | 'strict'
@@ -424,13 +436,17 @@ export type UseLoneAnonymousOperationConfiguration = RulePlainConfiguration | Ru
 export type UseLoneExecutableDefinitionConfiguration =
   | RulePlainConfiguration
   | RuleWithUseLoneExecutableDefinitionOptions
+export type UseNamedCaptureGroupConfiguration = RulePlainConfiguration | RuleWithUseNamedCaptureGroupOptions
+export type UseNullishCoalescingConfiguration = RulePlainConfiguration | RuleWithUseNullishCoalescingOptions
 export type UsePlaywrightValidDescribeCallbackConfiguration =
   | RulePlainConfiguration
   | RuleWithUsePlaywrightValidDescribeCallbackOptions
 export type UseRegexpExecConfiguration = RulePlainConfiguration | RuleWithUseRegexpExecOptions
 export type UseRequiredScriptsConfiguration = RulePlainConfiguration | RuleWithUseRequiredScriptsOptions
+export type UseScopedStylesConfiguration = RulePlainConfiguration | RuleWithUseScopedStylesOptions
 export type UseSortedClassesConfiguration = RulePlainConfiguration | RuleWithUseSortedClassesOptions
 export type UseSpreadConfiguration = RulePlainConfiguration | RuleWithUseSpreadOptions
+export type UseUnicodeRegexConfiguration = RulePlainConfiguration | RuleWithUseUnicodeRegexOptions
 export type UseVueConsistentDefinePropsDeclarationConfiguration =
   | RulePlainConfiguration
   | RuleWithUseVueConsistentDefinePropsDeclarationOptions
@@ -3608,6 +3624,16 @@ export interface Nursery {
    */
   noDivRegex?: NoDivRegexConfiguration | null
   /**
+   * Require .where() to be called when using .delete() with Drizzle ORM.
+   * See https://biomejs.dev/linter/rules/no-drizzle-delete-without-where
+   */
+  noDrizzleDeleteWithoutWhere?: NoDrizzleDeleteWithoutWhereConfiguration | null
+  /**
+   * Require .where() to be called when using .update() with Drizzle ORM.
+   * See https://biomejs.dev/linter/rules/no-drizzle-update-without-where
+   */
+  noDrizzleUpdateWithoutWhere?: NoDrizzleUpdateWithoutWhereConfiguration | null
+  /**
    * Require all argument names for fields & directives to be unique.
    * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
    */
@@ -3652,6 +3678,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-duplicated-spread-props
    */
   noDuplicatedSpreadProps?: NoDuplicatedSpreadPropsConfiguration | null
+  /**
+   * Disallow empty keys in JSON objects.
+   * See https://biomejs.dev/linter/rules/no-empty-object-keys
+   */
+  noEmptyObjectKeys?: NoEmptyObjectKeysConfiguration | null
   /**
    * Require the use of === or !== for comparison with null.
    * See https://biomejs.dev/linter/rules/no-equals-to-null
@@ -3818,6 +3849,11 @@ export interface Nursery {
    */
   noTernary?: NoTernaryConfiguration | null
   /**
+   * Require the JSON top-level value to be an array or object.
+   * See https://biomejs.dev/linter/rules/no-top-level-literals
+   */
+  noTopLevelLiterals?: NoTopLevelLiteralsConfiguration | null
+  /**
    * Disallow the use of undeclared environment variables.
    * See https://biomejs.dev/linter/rules/no-undeclared-env-vars
    */
@@ -3848,6 +3884,11 @@ export interface Nursery {
    */
   noVueOptionsApi?: NoVueOptionsApiConfiguration | null
   /**
+   * Disallow the use of value wrapped by ref()(Composition API) as operand.
+   * See https://biomejs.dev/linter/rules/no-vue-ref-as-operand
+   */
+  noVueRefAsOperand?: NoVueRefAsOperandConfiguration | null
+  /**
    * Disallow using v-if and v-for directives on the same element.
    * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
    */
@@ -3856,6 +3897,11 @@ export interface Nursery {
    * Enables the recommended rules for this group
    */
   recommended?: boolean | null
+  /**
+   * Prefer Array.prototype.some() over verbose existence checks.
+   * See https://biomejs.dev/linter/rules/use-array-some
+   */
+  useArraySome?: UseArraySomeConfiguration | null
   /**
    * Require Array#sort and Array#toSorted calls to always provide a compareFunction.
    * See https://biomejs.dev/linter/rules/use-array-sort-compare
@@ -3866,6 +3912,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-await-thenable
    */
   useAwaitThenable?: UseAwaitThenableConfiguration | null
+  /**
+   * Disallow CSS properties, values, at-rules, functions, and selectors that are not part of the configured Baseline.
+   * See https://biomejs.dev/linter/rules/use-baseline
+   */
+  useBaseline?: UseBaselineConfiguration | null
   /**
    * Disallow enums from having both number and string members.
    * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
@@ -3897,7 +3948,7 @@ export interface Nursery {
    */
   useExhaustiveSwitchCases?: UseExhaustiveSwitchCasesConfiguration | null
   /**
-   * Ensure that test functions contain at least one expect() assertion.
+   * Ensure that test functions contain at least one expect() or similar assertion.
    * See https://biomejs.dev/linter/rules/use-expect
    */
   useExpect?: UseExpectConfiguration | null
@@ -3916,6 +3967,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-global-this
    */
   useGlobalThis?: UseGlobalThisConfiguration | null
+  /**
+   * Enforce that all imports appear at the top of the module.
+   * See https://biomejs.dev/linter/rules/use-imports-first
+   */
+  useImportsFirst?: UseImportsFirstConfiguration | null
   /**
    * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
    * See https://biomejs.dev/linter/rules/use-inline-script-id
@@ -3937,6 +3993,16 @@ export interface Nursery {
    */
   useLoneExecutableDefinition?: UseLoneExecutableDefinitionConfiguration | null
   /**
+   * Enforce using named capture groups in regular expression.
+   * See https://biomejs.dev/linter/rules/use-named-capture-group
+   */
+  useNamedCaptureGroup?: UseNamedCaptureGroupConfiguration | null
+  /**
+   * Enforce using the nullish coalescing operator (??) instead of logical or (||).
+   * See https://biomejs.dev/linter/rules/use-nullish-coalescing
+   */
+  useNullishCoalescing?: UseNullishCoalescingConfiguration | null
+  /**
    * Enforce valid describe() callback.
    * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
    */
@@ -3952,6 +4018,11 @@ export interface Nursery {
    */
   useRequiredScripts?: UseRequiredScriptsConfiguration | null
   /**
+   * Enforce that \<style> blocks in Vue SFCs have the scoped attribute and that \<style> blocks in Astro components do not have the is:global directive.
+   * See https://biomejs.dev/linter/rules/use-scoped-styles
+   */
+  useScopedStyles?: UseScopedStylesConfiguration | null
+  /**
    * Enforce the sorting of CSS utility classes.
    * See https://biomejs.dev/linter/rules/use-sorted-classes
    */
@@ -3961,6 +4032,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-spread
    */
   useSpread?: UseSpreadConfiguration | null
+  /**
+   * Enforce the use of the u or v flag for regular expressions.
+   * See https://biomejs.dev/linter/rules/use-unicode-regex
+   */
+  useUnicodeRegex?: UseUnicodeRegexConfiguration | null
   /**
    * Enforce consistent defineProps declaration style.
    * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
@@ -4098,6 +4174,26 @@ export interface RuleWithNoDivRegexOptions {
   options?: NoDivRegexOptions
 }
 export interface NoDivRegexOptions {}
+export interface RuleWithNoDrizzleDeleteWithoutWhereOptions {
+  level: RulePlainConfiguration
+  options?: NoDrizzleDeleteWithoutWhereOptions
+}
+export interface NoDrizzleDeleteWithoutWhereOptions {
+  /**
+   * List of variable names to consider as Drizzle ORM instances.
+   */
+  drizzleObjectName?: string[] | null
+}
+export interface RuleWithNoDrizzleUpdateWithoutWhereOptions {
+  level: RulePlainConfiguration
+  options?: NoDrizzleUpdateWithoutWhereOptions
+}
+export interface NoDrizzleUpdateWithoutWhereOptions {
+  /**
+   * List of variable names to consider as Drizzle ORM instances.
+   */
+  drizzleObjectName?: string[] | null
+}
 export interface RuleWithNoDuplicateArgumentNamesOptions {
   level: RulePlainConfiguration
   options?: NoDuplicateArgumentNamesOptions
@@ -4143,6 +4239,11 @@ export interface RuleWithNoDuplicatedSpreadPropsOptions {
   options?: NoDuplicatedSpreadPropsOptions
 }
 export interface NoDuplicatedSpreadPropsOptions {}
+export interface RuleWithNoEmptyObjectKeysOptions {
+  level: RulePlainConfiguration
+  options?: NoEmptyObjectKeysOptions
+}
+export interface NoEmptyObjectKeysOptions {}
 export interface RuleWithNoEqualsToNullOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -4343,6 +4444,11 @@ export interface RuleWithNoTernaryOptions {
   options?: NoTernaryOptions
 }
 export interface NoTernaryOptions {}
+export interface RuleWithNoTopLevelLiteralsOptions {
+  level: RulePlainConfiguration
+  options?: NoTopLevelLiteralsOptions
+}
+export interface NoTopLevelLiteralsOptions {}
 export interface RuleWithNoUndeclaredEnvVarsOptions {
   level: RulePlainConfiguration
   options?: NoUndeclaredEnvVarsOptions
@@ -4385,11 +4491,22 @@ export interface RuleWithNoVueOptionsApiOptions {
   options?: NoVueOptionsApiOptions
 }
 export interface NoVueOptionsApiOptions {}
+export interface RuleWithNoVueRefAsOperandOptions {
+  level: RulePlainConfiguration
+  options?: NoVueRefAsOperandOptions
+}
+export interface NoVueRefAsOperandOptions {}
 export interface RuleWithNoVueVIfWithVForOptions {
   level: RulePlainConfiguration
   options?: NoVueVIfWithVForOptions
 }
 export interface NoVueVIfWithVForOptions {}
+export interface RuleWithUseArraySomeOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseArraySomeOptions
+}
+export interface UseArraySomeOptions {}
 export interface RuleWithUseArraySortCompareOptions {
   level: RulePlainConfiguration
   options?: UseArraySortCompareOptions
@@ -4400,6 +4517,45 @@ export interface RuleWithUseAwaitThenableOptions {
   options?: UseAwaitThenableOptions
 }
 export interface UseAwaitThenableOptions {}
+export interface RuleWithUseBaselineOptions {
+  level: RulePlainConfiguration
+  options?: UseBaselineOptions
+}
+/**
+ * Options for the `useBaseline` rule.
+ */
+export interface UseBaselineOptions {
+  /**
+   * CSS at-rules to exclude from checking (without `@`, case-insensitive).
+   */
+  allowAtRules?: string[]
+  /**
+   * CSS value functions to exclude from checking (case-insensitive).
+   */
+  allowFunctions?: string[]
+  /**
+   * CSS media conditions to exclude from checking (case-insensitive).
+   */
+  allowMediaConditions?: string[]
+  /**
+   * CSS properties to exclude from checking (case-insensitive).
+   */
+  allowProperties?: string[]
+  /**
+   * CSS property values to exclude from checking (maps property name to allowed values, case-insensitive).
+   */
+  allowPropertyValues?: {
+    [k: string]: string[]
+  }
+  /**
+   * CSS pseudo-selectors to exclude from checking (without `:` or `::`, case-insensitive).
+   */
+  allowSelectors?: string[]
+  /**
+   * The availability level to target. Defaults to `"widely"`.
+   */
+  available?: ('widely' | 'newly') | number
+}
 export interface RuleWithUseConsistentEnumValueTypeOptions {
   level: RulePlainConfiguration
   options?: UseConsistentEnumValueTypeOptions
@@ -4474,6 +4630,11 @@ export interface RuleWithUseGlobalThisOptions {
   options?: UseGlobalThisOptions
 }
 export interface UseGlobalThisOptions {}
+export interface RuleWithUseImportsFirstOptions {
+  level: RulePlainConfiguration
+  options?: UseImportsFirstOptions
+}
+export interface UseImportsFirstOptions {}
 export interface RuleWithUseInlineScriptIdOptions {
   level: RulePlainConfiguration
   options?: UseInlineScriptIdOptions
@@ -4499,6 +4660,28 @@ export interface RuleWithUseLoneExecutableDefinitionOptions {
   options?: UseLoneExecutableDefinitionOptions
 }
 export interface UseLoneExecutableDefinitionOptions {}
+export interface RuleWithUseNamedCaptureGroupOptions {
+  level: RulePlainConfiguration
+  options?: UseNamedCaptureGroupOptions
+}
+export interface UseNamedCaptureGroupOptions {}
+export interface RuleWithUseNullishCoalescingOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseNullishCoalescingOptions
+}
+export interface UseNullishCoalescingOptions {
+  /**
+   * Whether to ignore `||` expressions in conditional test positions
+   * (if/while/for/do-while/ternary conditions).
+   *
+   * When `true` (the default), the rule will not report `||` expressions
+   * that appear in places where the falsy-checking behavior may be intentional.
+   *
+   * Default: `true`
+   */
+  ignoreConditionalTests?: boolean | null
+}
 export interface RuleWithUsePlaywrightValidDescribeCallbackOptions {
   level: RulePlainConfiguration
   options?: UsePlaywrightValidDescribeCallbackOptions
@@ -4519,6 +4702,12 @@ export interface UseRequiredScriptsOptions {
    */
   requiredScripts?: string[]
 }
+export interface RuleWithUseScopedStylesOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseScopedStylesOptions
+}
+export interface UseScopedStylesOptions {}
 export interface RuleWithUseSortedClassesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -4540,6 +4729,12 @@ export interface RuleWithUseSpreadOptions {
   options?: UseSpreadOptions
 }
 export interface UseSpreadOptions {}
+export interface RuleWithUseUnicodeRegexOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseUnicodeRegexOptions
+}
+export interface UseUnicodeRegexOptions {}
 export interface RuleWithUseVueConsistentDefinePropsDeclarationOptions {
   level: RulePlainConfiguration
   options?: UseVueConsistentDefinePropsDeclarationOptions

@@ -2,7 +2,7 @@
   "prettier.enable": false,
   "eslint.enable": false,
   "biome.enabled": true,
-  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
   "[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
