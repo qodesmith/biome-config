@@ -27,20 +27,20 @@
     "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi && echo \"Biome types build complete!\"",
     "build:rules": "bun run ./src/generateRuleData.ts",
     "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
-    "build:tsc": "tsc -p tsconfig.build.json",
+    "build:tsc": "bunx tsc -p tsconfig.build.json",
     "check": "biome check",
     "check:fix": "biome check --write .",
     "release": "bun run test && bun run build && npm login && release-it",
     "test": "bun test src/test"
   },
   "dependencies": {
-    "@biomejs/biome": "2.4.4",
+    "@biomejs/biome": "2.4.8",
     "gradient-string": "^3.0.0",
     "jsonc-parser": "^3.3.1",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.3.9",
+    "@types/bun": "^1.3.11",
     "auto-changelog": "^2.5.0",
     "bun-plugin-tailwind": "^0.1.2",
     "json-schema-to-typescript": "^15.0.4",
