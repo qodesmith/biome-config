@@ -183,7 +183,13 @@ export function createBiomeConfig({
         trailingCommas: 'es5',
       },
     },
-    // json: {},
+    json: {
+      formatter: {
+        indentStyle: 'space',
+        bracketSpacing: false,
+        expand: 'auto',
+      },
+    },
     linter: {
       /**
        * Domains are a convenient way to group rules together by technology
