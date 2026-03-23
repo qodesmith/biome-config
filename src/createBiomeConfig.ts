@@ -145,7 +145,6 @@ export function createBiomeConfig({
       formatWithErrors: true,
 
       // `formatter.includes` is applied AFTER `files.includes`
-      // includes: ['**'],
       indentStyle: 'space',
       indentWidth: 2,
       lineEnding: 'lf',
