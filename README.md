@@ -98,7 +98,7 @@ Add the following to `.vscode/settings.json`:
 
   // import type {thing} from 'pkg' <-- Uses this
   // import {type thing} from 'pkg'
-  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
 
   // Biome settings.
   "biome.enabled": true,

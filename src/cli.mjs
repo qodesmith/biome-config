@@ -223,7 +223,7 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
       'eslint.enable': false,
 
       // https://next.biomejs.dev/linter/rules/use-import-type/#description
-      'typescript.preferences.preferTypeOnlyAutoImports': true,
+      'js/ts.preferences.preferTypeOnlyAutoImports': true,
 
       'biome.enabled': true,
       '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]':

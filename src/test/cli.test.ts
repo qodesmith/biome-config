@@ -17,7 +17,7 @@ const defaultBiomeconfig = {
 const defaultVscodeSettings = {
   'prettier.enable': false,
   'eslint.enable': false,
-  'typescript.preferences.preferTypeOnlyAutoImports': true,
+  'js/ts.preferences.preferTypeOnlyAutoImports': true,
   'biome.enabled': true,
   '[typescript][typescriptreact][javascript][javascriptreact][json][jsonc]': {
     'editor.defaultFormatter': 'biomejs.biome',
