@@ -24,6 +24,6 @@
  */
 export const files = {
   ignoreUnknown: true,
-  includes: ['!**/node_modules', '!dist', '!*.lock'],
+  includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
   // maxSize: 1048576, // Default value - (1024*1024, 1MB)
 }

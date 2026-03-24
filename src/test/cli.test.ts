@@ -11,7 +11,7 @@ const defaultBiomeconfig = {
   extends: ['@qodestack/biome-config/react'], // React is the default config to extend.
   files: {
     ignoreUnknown: true,
-    includes: ['!**/node_modules', '!dist', '!*.lock'],
+    includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
   },
 }
 const defaultVscodeSettings = {
