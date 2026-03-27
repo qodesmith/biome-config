@@ -17,6 +17,11 @@ function run(cmd: string, args: string[]) {
   }
 }
 
+function exec(cmd: string, args: string[]) {
+  const result = spawnSync(cmd, args, {stdio: 'inherit'})
+  return {ok: result.status === 0}
+}
+
 function rollback(tag: string, committed: boolean) {
   p.log.info('Rolling back local changes...')
   if (committed) {
@@ -60,21 +65,16 @@ async function finishRelease(tag: string) {
   if (releaseExists) {
     p.log.step('GitHub release already exists — skipping.')
   } else {
-    const releaseSpinner = p.spinner()
-    releaseSpinner.start('Creating GitHub release')
-    const ghResult = run('gh', [
+    p.log.step('Creating GitHub release...')
+    const ghOk = exec('gh', [
       'release',
       'create',
       tag,
       '--generate-notes',
       '--title',
       tag,
-    ])
-    if (ghResult.ok) {
-      releaseSpinner.stop(`GitHub release created: ${ghResult.stdout}`)
-    } else {
-      releaseSpinner.stop(pc.yellow('GitHub release failed'))
-      p.log.warning(ghResult.stderr)
+    ]).ok
+    if (!ghOk) {
       p.log.warning(
         `Run ${pc.bold(`gh release create ${tag} --generate-notes --title ${tag}`)} to retry.`
       )
@@ -97,18 +97,15 @@ async function finishRelease(tag: string) {
   if (alreadyPublished) {
     p.log.step('Already published to npm — skipping.')
   } else {
-    const publishSpinner = p.spinner()
-    publishSpinner.start('Publishing to npm')
-    const publishResult = run('bun', ['publish'])
-    if (!publishResult.ok) {
-      publishSpinner.stop('Publish failed')
-      p.log.error(publishResult.stderr || publishResult.stdout)
+    p.log.step('Publishing to npm...')
+    const publishResult = spawnSync('bun', ['publish'], {stdio: 'inherit'})
+    if (publishResult.status !== 0) {
       p.cancel(
         `Release is tagged on GitHub but not published to npm. Run ${pc.bold('bun publish')} to retry.`
       )
       process.exit(1)
     }
-    publishSpinner.stop('Published to npm')
+    p.log.step('Published to npm')
   }
 
   p.outro(pc.green(`${tag} released!`))
@@ -178,15 +175,11 @@ async function main() {
   testSpinner.stop('Tests passed')
 
   // 6. Run build.
-  const buildSpinner = p.spinner()
-  buildSpinner.start('Building')
-  const buildResult = run('bun', ['run', 'build'])
-  if (!buildResult.ok) {
-    buildSpinner.stop('Build failed')
-    p.cancel(buildResult.stderr || buildResult.stdout)
+  p.log.step('Running build...')
+  if (!exec('bun', ['run', 'build']).ok) {
+    p.cancel('Build failed.')
     process.exit(1)
   }
-  buildSpinner.stop('Build complete')
 
   // 7. Check for a partially completed release.
   const pkg = getPkg()
@@ -282,58 +275,34 @@ async function main() {
   bumpSpinner.stop(`Version bumped to ${pc.bold(newVersion)}`)
 
   // 11. Generate changelog.
-  const changelogSpinner = p.spinner()
-  changelogSpinner.start('Generating changelog')
-  const changelogResult = run('bunx', [
-    'auto-changelog',
-    '--commit-limit',
-    'false',
-    '-p',
-  ])
-  if (!changelogResult.ok) {
-    changelogSpinner.stop('Changelog generation failed')
-    fail(changelogResult.stderr, tag, false)
+  p.log.step('Generating changelog...')
+  if (!exec('bunx', ['auto-changelog', '--commit-limit', 'false', '-p']).ok) {
+    fail('Changelog generation failed.', tag, false)
   }
-  changelogSpinner.stop('Changelog updated')
 
   // 12. Git commit, tag, push.
-  const gitSpinner = p.spinner()
-  gitSpinner.start('Committing and tagging')
+  p.log.step('Committing and tagging...')
 
-  const addResult = run('git', ['add', 'package.json', 'CHANGELOG.md'])
-  if (!addResult.ok) {
-    gitSpinner.stop('git add failed')
-    fail(addResult.stderr, tag, false)
+  if (!exec('git', ['add', 'package.json', 'CHANGELOG.md']).ok) {
+    fail('git add failed.', tag, false)
   }
 
-  const commitResult = run('git', ['commit', '-m', `Release ${newVersion}`])
-  if (!commitResult.ok) {
-    gitSpinner.stop('git commit failed')
-    fail(commitResult.stderr, tag, false)
+  if (!exec('git', ['commit', '-m', `Release ${newVersion}`]).ok) {
+    fail('git commit failed.', tag, false)
   }
 
-  const tagResult = run('git', ['tag', tag])
-  if (!tagResult.ok) {
-    gitSpinner.stop('git tag failed')
-    fail(tagResult.stderr, tag, true)
+  if (!exec('git', ['tag', tag]).ok) {
+    fail('git tag failed.', tag, true)
   }
 
-  gitSpinner.stop(`Committed and tagged ${pc.bold(tag)}`)
+  p.log.step('Pushing to remote...')
 
-  const pushSpinner = p.spinner()
-  pushSpinner.start('Pushing to remote')
-
-  const pushResult = run('git', ['push'])
-  if (!pushResult.ok) {
-    pushSpinner.stop('git push failed')
-    fail(pushResult.stderr, tag, true)
+  if (!exec('git', ['push']).ok) {
+    fail('git push failed.', tag, true)
   }
 
-  const pushTagResult = run('git', ['push', 'origin', tag])
-  if (!pushTagResult.ok) {
-    pushSpinner.stop('git push tag failed')
+  if (!exec('git', ['push', 'origin', tag]).ok) {
     run('git', ['tag', '-d', tag])
-    p.log.error(pushTagResult.stderr)
     p.cancel(
       [
         'Commit was pushed but tag push failed. To finish the release:',
@@ -344,8 +313,6 @@ async function main() {
     )
     process.exit(1)
   }
-
-  pushSpinner.stop('Pushed to remote')
 
   await finishRelease(tag)
 }
