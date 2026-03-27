@@ -117,12 +117,23 @@ async function finishRelease(tag: string) {
 async function main() {
   p.intro(pc.bgCyan(pc.black(' release ')))
 
-  // 1. Verify gh CLI is installed.
+  // 1. Verify gh CLI is installed and authenticated.
   if (!run('gh', ['--version']).ok) {
     p.cancel(
       'GitHub CLI (gh) is not installed. Install it from https://cli.github.com'
     )
     process.exit(1)
+  }
+
+  if (!run('gh', ['auth', 'status']).ok) {
+    p.log.warning('GitHub CLI is not authenticated. Starting login...')
+    const ghLoginResult = spawnSync('gh', ['auth', 'login'], {
+      stdio: 'inherit',
+    })
+    if (ghLoginResult.status !== 0) {
+      p.cancel('GitHub CLI login failed.')
+      process.exit(1)
+    }
   }
 
   // 2. Verify npm auth.
