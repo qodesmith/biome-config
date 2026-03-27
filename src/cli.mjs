@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import {execSync} from 'node:child_process'
+import {spawnSync} from 'node:child_process'
 import fs, {existsSync} from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -139,7 +139,16 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
      * Exposing these as opposed to keeping them opaque in the generated biome
      * settings files provided by this package.
      */
-    files,
+    files: {
+      ...files,
+
+      /**
+       * '**' is already declared in the extended Biome config and will actually
+       * be flagged by Biome itself during linting. Filtering it out here to
+       * avoid Biome noise.
+       */
+      includes: (files.includes ?? []).filter(v => v !== '**')
+    },
   }
 
   // biome.json takes precedence over biome.jsonc
@@ -277,12 +286,12 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
     includeBiomeConfig && biomeJsonPath,
     includeVscode && vscodeSettingsPath,
     includeScripts && pkgJsonPath,
-  ]
-    .filter(filePath => filePath && existsSync(filePath))
-    .join(' ')
+  ].filter(filePath => filePath && existsSync(filePath))
 
-  if (filesToFormat) {
-    execSync(`${biomeExecPath} format --write ${filesToFormat}`)
+  if (filesToFormat.length) {
+    spawnSync(biomeExecPath, ['format', '--write', ...filesToFormat], {
+      stdio: 'inherit',
+    })
   }
 
   if (includeScripts) {
