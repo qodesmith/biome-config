@@ -24,6 +24,15 @@
  */
 export const files = {
   ignoreUnknown: true,
+
+  /**
+   * '!dist'  - don't lint/format it, but the scanner may still index it
+   * '!!dist' - don't even look at it, period
+   * 
+   * The scanner follows import chains. So if a source file imports from
+   * 'dist/some-file.ts', Biome will still index that file to resolves types and
+   * a few other things.
+   */
   includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
   // maxSize: 1048576, // Default value - (1024*1024, 1MB)
 }
