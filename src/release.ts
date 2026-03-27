@@ -53,6 +53,67 @@ function bumpVersion(
   }
 }
 
+async function finishRelease(tag: string) {
+  // Create GitHub release (if it doesn't already exist).
+  const releaseExists = run('gh', ['release', 'view', tag]).ok
+
+  if (releaseExists) {
+    p.log.step('GitHub release already exists — skipping.')
+  } else {
+    const releaseSpinner = p.spinner()
+    releaseSpinner.start('Creating GitHub release')
+    const ghResult = run('gh', [
+      'release',
+      'create',
+      tag,
+      '--generate-notes',
+      '--title',
+      tag,
+    ])
+    if (ghResult.ok) {
+      releaseSpinner.stop(`GitHub release created: ${ghResult.stdout}`)
+    } else {
+      releaseSpinner.stop(pc.yellow('GitHub release failed'))
+      p.log.warning(ghResult.stderr)
+      p.log.warning(
+        `Run ${pc.bold(`gh release create ${tag} --generate-notes --title ${tag}`)} to retry.`
+      )
+    }
+  }
+
+  // Publish to npm (if not already published).
+  const pkg = getPkg()
+  const publishedVersions = run('bunx', [
+    'npm',
+    'view',
+    pkg.name,
+    'versions',
+    '--json',
+  ])
+  const alreadyPublished =
+    publishedVersions.ok &&
+    publishedVersions.stdout.includes(`"${pkg.version}"`)
+
+  if (alreadyPublished) {
+    p.log.step('Already published to npm — skipping.')
+  } else {
+    const publishSpinner = p.spinner()
+    publishSpinner.start('Publishing to npm')
+    const publishResult = run('bun', ['publish'])
+    if (!publishResult.ok) {
+      publishSpinner.stop('Publish failed')
+      p.log.error(publishResult.stderr || publishResult.stdout)
+      p.cancel(
+        `Release is tagged on GitHub but not published to npm. Run ${pc.bold('bun publish')} to retry.`
+      )
+      process.exit(1)
+    }
+    publishSpinner.stop('Published to npm')
+  }
+
+  p.outro(pc.green(`${tag} released!`))
+}
+
 async function main() {
   p.intro(pc.bgCyan(pc.black(' release ')))
 
@@ -64,7 +125,19 @@ async function main() {
     process.exit(1)
   }
 
-  // 2. Verify we're on main branch.
+  // 2. Verify npm auth.
+  if (!run('bunx', ['npm', 'whoami']).ok) {
+    p.log.warning('Not logged in to npm. Starting login...')
+    const loginResult = spawnSync('bunx', ['npm', 'login'], {
+      stdio: 'inherit',
+    })
+    if (loginResult.status !== 0) {
+      p.cancel('npm login failed.')
+      process.exit(1)
+    }
+  }
+
+  // 3. Verify we're on main branch.
   const branch = run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).stdout
   if (branch !== 'main') {
     p.cancel(
@@ -73,7 +146,7 @@ async function main() {
     process.exit(1)
   }
 
-  // 3. Check for uncommitted changes.
+  // 4. Check for uncommitted changes.
   const {stdout: gitStatus} = run('git', ['status', '--porcelain'])
   if (gitStatus) {
     p.cancel(
@@ -82,7 +155,7 @@ async function main() {
     process.exit(1)
   }
 
-  // 4. Run tests.
+  // 5. Run tests.
   const testSpinner = p.spinner()
   testSpinner.start('Running tests')
   const testResult = run('bun', ['test', 'src/test'])
@@ -93,7 +166,7 @@ async function main() {
   }
   testSpinner.stop('Tests passed')
 
-  // 5. Run build.
+  // 6. Run build.
   const buildSpinner = p.spinner()
   buildSpinner.start('Building')
   const buildResult = run('bun', ['run', 'build'])
@@ -104,10 +177,56 @@ async function main() {
   }
   buildSpinner.stop('Build complete')
 
-  // 6. Prompt for version bump.
+  // 7. Check for a partially completed release.
   const pkg = getPkg()
   const currentVersion = pkg.version
+  const currentTag = `v${currentVersion}`
+  const tagExistsOnRemote = run('git', [
+    'ls-remote',
+    '--tags',
+    'origin',
+    currentTag,
+  ]).stdout.includes(currentTag)
 
+  if (tagExistsOnRemote) {
+    const publishedVersions = run('bunx', [
+      'npm',
+      'view',
+      pkg.name,
+      'versions',
+      '--json',
+    ])
+    const alreadyOnNpm =
+      publishedVersions.ok &&
+      publishedVersions.stdout.includes(`"${currentVersion}"`)
+
+    if (alreadyOnNpm) {
+      p.cancel(
+        `${pc.bold(currentTag)} is already released and published. Nothing to do.`
+      )
+      process.exit(0)
+    }
+
+    p.log.warning(
+      `Tag ${pc.bold(currentTag)} exists on remote but is not on npm — a previous release may not have finished.`
+    )
+
+    const resume = await p.confirm({
+      message: `Resume the ${pc.bold(currentTag)} release?`,
+    })
+
+    if (p.isCancel(resume)) {
+      p.cancel('Release cancelled.')
+      process.exit(0)
+    }
+
+    if (resume) {
+      await finishRelease(currentTag)
+      return
+    }
+  }
+
+  // 8. Prompt for version bump.
   const releaseType = await p.select({
     message: `Current version: ${pc.bold(currentVersion)}. Select release type:`,
     options: [
@@ -134,7 +253,7 @@ async function main() {
   const newVersion = bumpVersion(currentVersion, releaseType)
   const tag = `v${newVersion}`
 
-  // 7. Confirm.
+  // 9. Confirm.
   const confirmed = await p.confirm({
     message: `Release ${pc.bold(tag)}?`,
   })
@@ -144,14 +263,14 @@ async function main() {
     process.exit(0)
   }
 
-  // 8. Bump version in package.json.
+  // 10. Bump version in package.json.
   const bumpSpinner = p.spinner()
   bumpSpinner.start('Bumping version')
   pkg.version = newVersion
   writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`)
   bumpSpinner.stop(`Version bumped to ${pc.bold(newVersion)}`)
 
-  // 9. Generate changelog.
+  // 11. Generate changelog.
   const changelogSpinner = p.spinner()
   changelogSpinner.start('Generating changelog')
   const changelogResult = run('bunx', [
@@ -166,7 +285,7 @@ async function main() {
   }
   changelogSpinner.stop('Changelog updated')
 
-  // 10. Git commit, tag, push.
+  // 12. Git commit, tag, push.
   const gitSpinner = p.spinner()
   gitSpinner.start('Committing and tagging')
 
@@ -217,42 +336,7 @@ async function main() {
 
   pushSpinner.stop('Pushed to remote')
 
-  // 11. Create GitHub release.
-  const releaseSpinner = p.spinner()
-  releaseSpinner.start('Creating GitHub release')
-  const ghResult = run('gh', [
-    'release',
-    'create',
-    tag,
-    '--generate-notes',
-    '--title',
-    tag,
-  ])
-  if (ghResult.ok) {
-    releaseSpinner.stop(`GitHub release created: ${ghResult.stdout}`)
-  } else {
-    releaseSpinner.stop(pc.yellow('GitHub release failed'))
-    p.log.warning(ghResult.stderr)
-    p.log.warning(
-      `Run ${pc.bold(`gh release create ${tag} --generate-notes --title ${tag}`)} to retry.`
-    )
-  }
-
-  // 12. Publish to npm.
-  const publishSpinner = p.spinner()
-  publishSpinner.start('Publishing to npm')
-  const publishResult = run('bun', ['publish'])
-  if (!publishResult.ok) {
-    publishSpinner.stop('Publish failed')
-    p.log.error(publishResult.stderr || publishResult.stdout)
-    p.cancel(
-      `Release is tagged on GitHub but not published to npm. Run ${pc.bold('bun publish')} to retry.`
-    )
-    process.exit(1)
-  }
-  publishSpinner.stop('Published to npm')
-
-  p.outro(pc.green(`🎉 ${tag} released!`))
+  await finishRelease(tag)
 }
 
 await main()
