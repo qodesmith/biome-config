@@ -1407,6 +1407,14 @@
       "url": "https://biomejs.dev/linter/rules/no-duplicate-input-field-names/"
     },
     {
+      "name": "noDuplicateSelectors",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow duplicate selectors.\nSee https://biomejs.dev/linter/rules/no-duplicate-selectors",
+      "url": "https://biomejs.dev/linter/rules/no-duplicate-selectors/"
+    },
+    {
       "name": "noDuplicateVariableNames",
       "recommended": false,
       "fix": "none",
@@ -1493,6 +1501,14 @@
       "severity": "info",
       "description": "Disallows the usage of the unary operators ++ and --.\nSee https://biomejs.dev/linter/rules/no-increment-decrement",
       "url": "https://biomejs.dev/linter/rules/no-increment-decrement/"
+    },
+    {
+      "name": "noInlineStyles",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Disallow the use of inline styles.\nSee https://biomejs.dev/linter/rules/no-inline-styles",
+      "url": "https://biomejs.dev/linter/rules/no-inline-styles/"
     },
     {
       "name": "noJsxPropsBind",
@@ -1727,6 +1743,14 @@
       "url": "https://biomejs.dev/linter/rules/no-unnecessary-conditions/"
     },
     {
+      "name": "noUntrustedLicenses",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow dependencies with untrusted licenses.\nSee https://biomejs.dev/linter/rules/no-untrusted-licenses",
+      "url": "https://biomejs.dev/linter/rules/no-untrusted-licenses/"
+    },
+    {
       "name": "noUselessReturn",
       "recommended": false,
       "fix": "safe",
@@ -1817,7 +1841,7 @@
     {
       "name": "useConsistentMethodSignatures",
       "recommended": false,
-      "fix": "none",
+      "fix": "unsafe",
       "severity": "info",
       "description": "Enforce consistent use of either method signatures or function properties within interfaces and type aliases.\nSee https://biomejs.dev/linter/rules/use-consistent-method-signatures",
       "url": "https://biomejs.dev/linter/rules/use-consistent-method-signatures/"

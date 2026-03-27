@@ -353,6 +353,7 @@ export type NoDuplicateGraphqlOperationNameConfiguration =
   | RulePlainConfiguration
   | RuleWithNoDuplicateGraphqlOperationNameOptions
 export type NoDuplicateInputFieldNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateInputFieldNamesOptions
+export type NoDuplicateSelectorsConfiguration = RulePlainConfiguration | RuleWithNoDuplicateSelectorsOptions
 export type NoDuplicateVariableNamesConfiguration = RulePlainConfiguration | RuleWithNoDuplicateVariableNamesOptions
 export type NoDuplicatedSpreadPropsConfiguration = RulePlainConfiguration | RuleWithNoDuplicatedSpreadPropsOptions
 export type NoEmptyObjectKeysConfiguration = RulePlainConfiguration | RuleWithNoEmptyObjectKeysOptions
@@ -364,6 +365,7 @@ export type NoFloatingPromisesConfiguration = RulePlainConfiguration | RuleWithN
 export type NoForInConfiguration = RulePlainConfiguration | RuleWithNoForInOptions
 export type NoHexColorsConfiguration = RulePlainConfiguration | RuleWithNoHexColorsOptions
 export type NoIncrementDecrementConfiguration = RulePlainConfiguration | RuleWithNoIncrementDecrementOptions
+export type NoInlineStylesConfiguration = RulePlainConfiguration | RuleWithNoInlineStylesOptions
 export type NoJsxPropsBindConfiguration = RulePlainConfiguration | RuleWithNoJsxPropsBindOptions
 export type NoLeakedRenderConfiguration = RulePlainConfiguration | RuleWithNoLeakedRenderOptions
 export type NoMisusedPromisesConfiguration = RulePlainConfiguration | RuleWithNoMisusedPromisesOptions
@@ -400,6 +402,7 @@ export type NoUndeclaredEnvVarsConfiguration = RulePlainConfiguration | RuleWith
 export type Regex = string
 export type NoUnknownAttributeConfiguration = RulePlainConfiguration | RuleWithNoUnknownAttributeOptions
 export type NoUnnecessaryConditionsConfiguration = RulePlainConfiguration | RuleWithNoUnnecessaryConditionsOptions
+export type NoUntrustedLicensesConfiguration = RulePlainConfiguration | RuleWithNoUntrustedLicensesOptions
 export type NoUselessReturnConfiguration = RulePlainConfiguration | RuleWithNoUselessReturnOptions
 export type NoVueArrowFuncInWatchConfiguration = RulePlainConfiguration | RuleWithNoVueArrowFuncInWatchOptions
 export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
@@ -3669,6 +3672,11 @@ export interface Nursery {
    */
   noDuplicateInputFieldNames?: NoDuplicateInputFieldNamesConfiguration | null
   /**
+   * Disallow duplicate selectors.
+   * See https://biomejs.dev/linter/rules/no-duplicate-selectors
+   */
+  noDuplicateSelectors?: NoDuplicateSelectorsConfiguration | null
+  /**
    * Require all variable definitions to be unique.
    * See https://biomejs.dev/linter/rules/no-duplicate-variable-names
    */
@@ -3723,6 +3731,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-increment-decrement
    */
   noIncrementDecrement?: NoIncrementDecrementConfiguration | null
+  /**
+   * Disallow the use of inline styles.
+   * See https://biomejs.dev/linter/rules/no-inline-styles
+   */
+  noInlineStyles?: NoInlineStylesConfiguration | null
   /**
    * Disallow .bind(), arrow functions, or function expressions in JSX props.
    * See https://biomejs.dev/linter/rules/no-jsx-props-bind
@@ -3868,6 +3881,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-unnecessary-conditions
    */
   noUnnecessaryConditions?: NoUnnecessaryConditionsConfiguration | null
+  /**
+   * Disallow dependencies with untrusted licenses.
+   * See https://biomejs.dev/linter/rules/no-untrusted-licenses
+   */
+  noUntrustedLicenses?: NoUntrustedLicensesConfiguration | null
   /**
    * Disallow redundant return statements.
    * See https://biomejs.dev/linter/rules/no-useless-return
@@ -4229,6 +4247,11 @@ export interface RuleWithNoDuplicateInputFieldNamesOptions {
   options?: NoDuplicateInputFieldNamesOptions
 }
 export interface NoDuplicateInputFieldNamesOptions {}
+export interface RuleWithNoDuplicateSelectorsOptions {
+  level: RulePlainConfiguration
+  options?: NoDuplicateSelectorsOptions
+}
+export interface NoDuplicateSelectorsOptions {}
 export interface RuleWithNoDuplicateVariableNamesOptions {
   level: RulePlainConfiguration
   options?: NoDuplicateVariableNamesOptions
@@ -4305,6 +4328,12 @@ export interface NoIncrementDecrementOptions {
    */
   allowForLoopAfterthoughts?: boolean | null
 }
+export interface RuleWithNoInlineStylesOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: NoInlineStylesOptions
+}
+export interface NoInlineStylesOptions {}
 export interface RuleWithNoJsxPropsBindOptions {
   level: RulePlainConfiguration
   options?: NoJsxPropsBindOptions
@@ -4474,6 +4503,44 @@ export interface RuleWithNoUnnecessaryConditionsOptions {
   options?: NoUnnecessaryConditionsOptions
 }
 export interface NoUnnecessaryConditionsOptions {}
+export interface RuleWithNoUntrustedLicensesOptions {
+  level: RulePlainConfiguration
+  options?: NoUntrustedLicensesOptions
+}
+export interface NoUntrustedLicensesOptions {
+  /**
+   * Additional license identifiers to trust, beyond valid SPDX identifiers.
+   *
+   * Useful for custom or proprietary licenses that are not part of the SPDX
+   * standard but are acceptable in your project.
+   */
+  allow?: string[] | null
+  /**
+   * License identifiers to explicitly deny, even if they are valid SPDX identifiers.
+   *
+   * Use this to block specific licenses that your project or organization can't use (e.g.,
+   * copyleft licenses in a proprietary project).
+   */
+  deny?: string[] | null
+  /**
+   * When `true`, deprecated SPDX license identifiers are accepted.
+   * When `false`, deprecated licenses are flagged as untrusted.
+   * Defaults to `false`.
+   */
+  ignoreDeprecated?: boolean | null
+  /**
+   * When `true`, only licenses recognized as free/libre by the Free Software
+   * Foundation (FSF) are trusted. Licenses in the `allow` list bypass this check.
+   * Defaults to `false`.
+   */
+  requireFsfLibre?: boolean | null
+  /**
+   * When `true`, only licenses approved by the Open Source Initiative (OSI)
+   * are trusted. Licenses in the `allow` list bypass this check.
+   * Defaults to `false`.
+   */
+  requireOsiApproved?: boolean | null
+}
 export interface RuleWithNoUselessReturnOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -4572,6 +4639,7 @@ export interface UseConsistentGraphqlDescriptionsOptions {
   style?: UseConsistentGraphqlDescriptionsStyle | null
 }
 export interface RuleWithUseConsistentMethodSignaturesOptions {
+  fix?: FixKind | null
   level: RulePlainConfiguration
   options?: UseConsistentMethodSignaturesOptions
 }
