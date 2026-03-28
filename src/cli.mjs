@@ -10,8 +10,6 @@ import {mind as mindGradient} from 'gradient-string'
 import {parse} from 'jsonc-parser'
 import color from 'picocolors'
 
-import {files} from './commonBiomeSettings.mjs'
-
 // biome-ignore-start lint/suspicious/noConsole: intentionally used
 
 ///////////
@@ -134,20 +132,22 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
     extends: [`@qodestack/biome-config${isVanilla ? '' : '/react'}`],
 
     /**
-     * Settings likekly to be customized by the user.
-     *
-     * Exposing these as opposed to keeping them opaque in the generated biome
-     * settings files provided by this package.
+     * `files` is NOT declared in the generated biome configs provided by this
+     * package because this is likely to be customized by the user.
      */
     files: {
-      ...files,
+      ignoreUnknown: true,
 
       /**
-       * '**' is already declared in the extended Biome config and will actually
-       * be flagged by Biome itself during linting. Filtering it out here to
-       * avoid Biome noise.
+       * '!dist'  - don't lint/format it, but the scanner may still index it
+       * '!!dist' - don't even look at it, period
+       *
+       * The scanner follows import chains. So if a source file imports from
+       * 'dist/some-file.ts', Biome will still index that file to resolves types and
+       * a few other things.
        */
-      includes: (files.includes ?? []).filter(v => v !== '**')
+      includes: ['**', '!**/node_modules', '!dist', '!*.lock'],
+      // maxSize: 1048576, // Default value - (1024*1024, 1MB)
     },
   }
 

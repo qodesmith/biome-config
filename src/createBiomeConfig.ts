@@ -13,11 +13,14 @@ import type {
 } from './biomeSchema'
 
 import pkgJson from '../package.json'
-import {files} from './commonBiomeSettings.mjs'
 
 // Allow arbitrary strings but keep autocompletion.
 type PredefinedImportGroup = NegatablePredefinedSourceMatcher | (string & {})
 
+/**
+ * Used to create biome configs shipped with this package that users will
+ * extend from. This does NOT create the biome config inside the user's project.
+ */
 export function createBiomeConfig({
   type,
 }: {
@@ -135,7 +138,7 @@ export function createBiomeConfig({
       },
     },
     // extends: [],
-    files,
+    // files: {},
     formatter: {
       attributePosition: 'auto',
       bracketSameLine: false,
@@ -304,7 +307,7 @@ export function createBiomeConfig({
             options: {
               // 'class' and 'className' are default.
               // attributes: [],
-              functions: ['clsx'],
+              functions: ['clsx', 'cn', 'twMerge'],
             },
           },
         },
