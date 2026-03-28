@@ -72,8 +72,10 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
   // TITLE //
   ///////////
 
-  const titleGradient = mindGradient(title)
-  console.log(titleGradient)
+  if (process.env.NODE_ENV !== 'test') {
+    const titleGradient = mindGradient(title)
+    console.log(titleGradient)
+  }
 
   //////////////////
   // BIOME CONFIG //

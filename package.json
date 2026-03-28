@@ -31,7 +31,7 @@
     "check": "biome check",
     "check:fix": "biome check --write .",
     "release": "bun run ./src/release.ts",
-    "test": "bun test src/test"
+    "test": "NODE_ENV=test bun test src/test"
   },
   "dependencies": {
     "@biomejs/biome": "2.4.9",
