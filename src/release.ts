@@ -204,29 +204,42 @@ async function main() {
       publishedVersions.ok &&
       publishedVersions.stdout.includes(`"${currentVersion}"`)
 
-    if (alreadyOnNpm) {
+    // Check if there are new commits since the tag.
+    const newCommits = run('git', [
+      'rev-list',
+      `${currentTag}..HEAD`,
+      '--count',
+    ])
+    const hasNewCommits = newCommits.ok && Number(newCommits.stdout) > 0
+
+    if (alreadyOnNpm && !hasNewCommits) {
       p.cancel(
         `${pc.bold(currentTag)} is already released and published. Nothing to do.`
       )
       process.exit(0)
     }
 
-    p.log.warning(
-      `Tag ${pc.bold(currentTag)} exists on remote but is not on npm — a previous release may not have finished.`
-    )
+    if (alreadyOnNpm && hasNewCommits) {
+      // Happy path — previous release completed, new commits exist.
+      // Fall through to version bump prompt.
+    } else if (!alreadyOnNpm) {
+      p.log.warning(
+        `Tag ${pc.bold(currentTag)} exists on remote but is not on npm — a previous release may not have finished.`
+      )
 
-    const resume = await p.confirm({
-      message: `Resume the ${pc.bold(currentTag)} release?`,
-    })
+      const resume = await p.confirm({
+        message: `Resume the ${pc.bold(currentTag)} release?`,
+      })
 
-    if (p.isCancel(resume)) {
-      p.cancel('Release cancelled.')
-      process.exit(0)
-    }
+      if (p.isCancel(resume)) {
+        p.cancel('Release cancelled.')
+        process.exit(0)
+      }
 
-    if (resume) {
-      await finishRelease(currentTag)
-      return
+      if (resume) {
+        await finishRelease(currentTag)
+        return
+      }
     }
   }
 
