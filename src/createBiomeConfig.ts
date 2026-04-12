@@ -299,7 +299,11 @@ export function createBiomeConfig({
          * find themselves into other groups.
          */
         nursery: {
-          noFloatingPromises: 'warn',
+          /**
+           * https://github.com/biomejs/biome/issues/9568
+           * noFloatingPromises doesn't respect TypeScript overloads.
+           */
+          // noFloatingPromises: 'warn',
           useExhaustiveSwitchCases: 'warn',
           useSortedClasses: {
             level: 'info',
