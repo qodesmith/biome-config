@@ -364,10 +364,12 @@ export type NoFloatingClassesConfiguration = RulePlainConfiguration | RuleWithNo
 export type NoFloatingPromisesConfiguration = RulePlainConfiguration | RuleWithNoFloatingPromisesOptions
 export type NoForInConfiguration = RulePlainConfiguration | RuleWithNoForInOptions
 export type NoHexColorsConfiguration = RulePlainConfiguration | RuleWithNoHexColorsOptions
+export type NoImpliedEvalConfiguration = RulePlainConfiguration | RuleWithNoImpliedEvalOptions
 export type NoIncrementDecrementConfiguration = RulePlainConfiguration | RuleWithNoIncrementDecrementOptions
 export type NoInlineStylesConfiguration = RulePlainConfiguration | RuleWithNoInlineStylesOptions
 export type NoJsxPropsBindConfiguration = RulePlainConfiguration | RuleWithNoJsxPropsBindOptions
 export type NoLeakedRenderConfiguration = RulePlainConfiguration | RuleWithNoLeakedRenderOptions
+export type NoMisleadingReturnTypeConfiguration = RulePlainConfiguration | RuleWithNoMisleadingReturnTypeOptions
 export type NoMisusedPromisesConfiguration = RulePlainConfiguration | RuleWithNoMisusedPromisesOptions
 export type NoMultiAssignConfiguration = RulePlainConfiguration | RuleWithNoMultiAssignOptions
 export type NoMultiStrConfiguration = RulePlainConfiguration | RuleWithNoMultiStrOptions
@@ -402,8 +404,10 @@ export type NoUndeclaredEnvVarsConfiguration = RulePlainConfiguration | RuleWith
 export type Regex = string
 export type NoUnknownAttributeConfiguration = RulePlainConfiguration | RuleWithNoUnknownAttributeOptions
 export type NoUnnecessaryConditionsConfiguration = RulePlainConfiguration | RuleWithNoUnnecessaryConditionsOptions
+export type NoUnsafePlusOperandsConfiguration = RulePlainConfiguration | RuleWithNoUnsafePlusOperandsOptions
 export type NoUntrustedLicensesConfiguration = RulePlainConfiguration | RuleWithNoUntrustedLicensesOptions
 export type NoUselessReturnConfiguration = RulePlainConfiguration | RuleWithNoUselessReturnOptions
+export type NoUselessTypeConversionConfiguration = RulePlainConfiguration | RuleWithNoUselessTypeConversionOptions
 export type NoVueArrowFuncInWatchConfiguration = RulePlainConfiguration | RuleWithNoVueArrowFuncInWatchOptions
 export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
 export type NoVueRefAsOperandConfiguration = RulePlainConfiguration | RuleWithNoVueRefAsOperandOptions
@@ -424,10 +428,17 @@ export type UseConsistentMethodSignaturesConfiguration =
   | RulePlainConfiguration
   | RuleWithUseConsistentMethodSignaturesOptions
 export type MethodSignatureStyle = 'property' | 'method'
+export type UseConsistentTestItConfiguration = RulePlainConfiguration | RuleWithUseConsistentTestItOptions
+/**
+ * The function to use for tests
+ */
+export type TestFunctionKind = 'it' | 'test'
 export type UseDestructuringConfiguration = RulePlainConfiguration | RuleWithUseDestructuringOptions
+export type UseDisposablesConfiguration = RulePlainConfiguration | RuleWithUseDisposablesOptions
 export type UseErrorCauseConfiguration = RulePlainConfiguration | RuleWithUseErrorCauseOptions
 export type UseExhaustiveSwitchCasesConfiguration = RulePlainConfiguration | RuleWithUseExhaustiveSwitchCasesOptions
 export type UseExpectConfiguration = RulePlainConfiguration | RuleWithUseExpectOptions
+export type UseExplicitReturnTypeConfiguration = RulePlainConfiguration | RuleWithUseExplicitReturnTypeOptions
 export type UseExplicitTypeConfiguration = RulePlainConfiguration | RuleWithUseExplicitTypeOptions
 export type UseFindConfiguration = RulePlainConfiguration | RuleWithUseFindOptions
 export type UseGlobalThisConfiguration = RulePlainConfiguration | RuleWithUseGlobalThisOptions
@@ -444,6 +455,7 @@ export type UseNullishCoalescingConfiguration = RulePlainConfiguration | RuleWit
 export type UsePlaywrightValidDescribeCallbackConfiguration =
   | RulePlainConfiguration
   | RuleWithUsePlaywrightValidDescribeCallbackOptions
+export type UseQwikLoaderLocationConfiguration = RulePlainConfiguration | RuleWithUseQwikLoaderLocationOptions
 export type UseRegexpExecConfiguration = RulePlainConfiguration | RuleWithUseRegexpExecOptions
 export type UseRequiredScriptsConfiguration = RulePlainConfiguration | RuleWithUseRequiredScriptsOptions
 export type UseScopedStylesConfiguration = RulePlainConfiguration | RuleWithUseScopedStylesOptions
@@ -3727,6 +3739,11 @@ export interface Nursery {
    */
   noHexColors?: NoHexColorsConfiguration | null
   /**
+   * Disallow the use of eval()-like methods.
+   * See https://biomejs.dev/linter/rules/no-implied-eval
+   */
+  noImpliedEval?: NoImpliedEvalConfiguration | null
+  /**
    * Disallows the usage of the unary operators ++ and --.
    * See https://biomejs.dev/linter/rules/no-increment-decrement
    */
@@ -3746,6 +3763,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-leaked-render
    */
   noLeakedRender?: NoLeakedRenderConfiguration | null
+  /**
+   * Detect return type annotations that are misleadingly wider than what the implementation actually returns.
+   * See https://biomejs.dev/linter/rules/no-misleading-return-type
+   */
+  noMisleadingReturnType?: NoMisleadingReturnTypeConfiguration | null
   /**
    * Disallow Promises to be used in places where they are almost certainly a mistake.
    * See https://biomejs.dev/linter/rules/no-misused-promises
@@ -3882,6 +3904,11 @@ export interface Nursery {
    */
   noUnnecessaryConditions?: NoUnnecessaryConditionsConfiguration | null
   /**
+   * Disallow + operations with operands that are known to be unsafe.
+   * See https://biomejs.dev/linter/rules/no-unsafe-plus-operands
+   */
+  noUnsafePlusOperands?: NoUnsafePlusOperandsConfiguration | null
+  /**
    * Disallow dependencies with untrusted licenses.
    * See https://biomejs.dev/linter/rules/no-untrusted-licenses
    */
@@ -3891,6 +3918,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-useless-return
    */
   noUselessReturn?: NoUselessReturnConfiguration | null
+  /**
+   * Disallow type conversions that do not change the type of an expression.
+   * See https://biomejs.dev/linter/rules/no-useless-type-conversion
+   */
+  noUselessTypeConversion?: NoUselessTypeConversionConfiguration | null
   /**
    * Disallows using arrow functions when defining a watcher.
    * See https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch
@@ -3951,10 +3983,20 @@ export interface Nursery {
    */
   useConsistentMethodSignatures?: UseConsistentMethodSignaturesConfiguration | null
   /**
+   * Enforce consistent use of it or test for test functions.
+   * See https://biomejs.dev/linter/rules/use-consistent-test-it
+   */
+  useConsistentTestIt?: UseConsistentTestItConfiguration | null
+  /**
    * Require destructuring from arrays and/or objects.
    * See https://biomejs.dev/linter/rules/use-destructuring
    */
   useDestructuring?: UseDestructuringConfiguration | null
+  /**
+   * Detects a disposable object assigned to a variable without using or await using syntax.
+   * See https://biomejs.dev/linter/rules/use-disposables
+   */
+  useDisposables?: UseDisposablesConfiguration | null
   /**
    * Enforce that new Error() is thrown with the original error as cause.
    * See https://biomejs.dev/linter/rules/use-error-cause
@@ -3970,6 +4012,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-expect
    */
   useExpect?: UseExpectConfiguration | null
+  /**
+   * Require explicit return types on functions and class methods.
+   * See https://biomejs.dev/linter/rules/use-explicit-return-type
+   */
+  useExplicitReturnType?: UseExplicitReturnTypeConfiguration | null
   /**
    * Enforce types in functions, methods, variables, and parameters.
    * See https://biomejs.dev/linter/rules/use-explicit-type
@@ -4025,6 +4072,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
    */
   usePlaywrightValidDescribeCallback?: UsePlaywrightValidDescribeCallbackConfiguration | null
+  /**
+   * Enforce that Qwik loader functions are declared in the correct location.
+   * See https://biomejs.dev/linter/rules/use-qwik-loader-location
+   */
+  useQwikLoaderLocation?: UseQwikLoaderLocationConfiguration | null
   /**
    * Enforce RegExp#exec over String#match if no global flag is provided.
    * See https://biomejs.dev/linter/rules/use-regexp-exec
@@ -4096,7 +4148,7 @@ export interface Nursery {
    */
   useVueValidTemplateRoot?: UseVueValidTemplateRootConfiguration | null
   /**
-   * Forbids v-bind directives with missing arguments or invalid modifiers.
+   * Forbids v-bind directives with missing values or invalid modifiers.
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-bind
    */
   useVueValidVBind?: UseVueValidVBindConfiguration | null
@@ -4318,6 +4370,11 @@ export interface RuleWithNoHexColorsOptions {
   options?: NoHexColorsOptions
 }
 export interface NoHexColorsOptions {}
+export interface RuleWithNoImpliedEvalOptions {
+  level: RulePlainConfiguration
+  options?: NoImpliedEvalOptions
+}
+export interface NoImpliedEvalOptions {}
 export interface RuleWithNoIncrementDecrementOptions {
   level: RulePlainConfiguration
   options?: NoIncrementDecrementOptions
@@ -4346,6 +4403,11 @@ export interface RuleWithNoLeakedRenderOptions {
 export interface NoLeakedRenderOptions {
   [k: string]: unknown
 }
+export interface RuleWithNoMisleadingReturnTypeOptions {
+  level: RulePlainConfiguration
+  options?: NoMisleadingReturnTypeOptions
+}
+export interface NoMisleadingReturnTypeOptions {}
 export interface RuleWithNoMisusedPromisesOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -4503,6 +4565,11 @@ export interface RuleWithNoUnnecessaryConditionsOptions {
   options?: NoUnnecessaryConditionsOptions
 }
 export interface NoUnnecessaryConditionsOptions {}
+export interface RuleWithNoUnsafePlusOperandsOptions {
+  level: RulePlainConfiguration
+  options?: NoUnsafePlusOperandsOptions
+}
+export interface NoUnsafePlusOperandsOptions {}
 export interface RuleWithNoUntrustedLicensesOptions {
   level: RulePlainConfiguration
   options?: NoUntrustedLicensesOptions
@@ -4547,6 +4614,11 @@ export interface RuleWithNoUselessReturnOptions {
   options?: NoUselessReturnOptions
 }
 export interface NoUselessReturnOptions {}
+export interface RuleWithNoUselessTypeConversionOptions {
+  level: RulePlainConfiguration
+  options?: NoUselessTypeConversionOptions
+}
+export interface NoUselessTypeConversionOptions {}
 export interface RuleWithNoVueArrowFuncInWatchOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -4654,11 +4726,37 @@ export interface UseConsistentMethodSignaturesOptions {
    */
   style?: MethodSignatureStyle | null
 }
+export interface RuleWithUseConsistentTestItOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseConsistentTestItOptions
+}
+/**
+ * Options for the `useConsistentTestIt` rule
+ */
+export interface UseConsistentTestItOptions {
+  /**
+   * The function to use for top-level tests (outside describe blocks).
+   * Default: `"it"`
+   */
+  function?: TestFunctionKind | null
+  /**
+   * The function to use for tests inside describe blocks.
+   * Default: `"it"`
+   */
+  withinDescribe?: TestFunctionKind | null
+}
 export interface RuleWithUseDestructuringOptions {
   level: RulePlainConfiguration
   options?: UseDestructuringOptions
 }
 export interface UseDestructuringOptions {}
+export interface RuleWithUseDisposablesOptions {
+  fix?: FixKind | null
+  level: RulePlainConfiguration
+  options?: UseDisposablesOptions
+}
+export interface UseDisposablesOptions {}
 export interface RuleWithUseErrorCauseOptions {
   level: RulePlainConfiguration
   options?: UseErrorCauseOptions
@@ -4683,6 +4781,28 @@ export interface RuleWithUseExpectOptions {
   options?: UseExpectOptions
 }
 export interface UseExpectOptions {}
+export interface RuleWithUseExplicitReturnTypeOptions {
+  level: RulePlainConfiguration
+  options?: UseExplicitReturnTypeOptions
+}
+/**
+ * Options for the `useExplicitReturnType` rule.
+ */
+export interface UseExplicitReturnTypeOptions {
+  /**
+   * Whether to ignore function expressions (functions that are not part of a declaration).
+   * When `true`, only declarations (function statements and class methods) are checked.
+   */
+  allowExpressions?: boolean | null
+  /**
+   * Whether to allow IIFEs (Immediately Invoked Function Expressions) without explicit return types.
+   */
+  allowIifes?: boolean | null
+  /**
+   * A list of function names that are allowed to not have explicit return types.
+   */
+  allowedNames?: string[] | null
+}
 export interface RuleWithUseExplicitTypeOptions {
   level: RulePlainConfiguration
   options?: UseExplicitTypeOptions
@@ -4749,12 +4869,24 @@ export interface UseNullishCoalescingOptions {
    * Default: `true`
    */
   ignoreConditionalTests?: boolean | null
+  /**
+   * Whether to ignore ternary expressions that could be simplified
+   * using the nullish coalescing operator.
+   *
+   * Default: `false`
+   */
+  ignoreTernaryTests?: boolean | null
 }
 export interface RuleWithUsePlaywrightValidDescribeCallbackOptions {
   level: RulePlainConfiguration
   options?: UsePlaywrightValidDescribeCallbackOptions
 }
 export interface UsePlaywrightValidDescribeCallbackOptions {}
+export interface RuleWithUseQwikLoaderLocationOptions {
+  level: RulePlainConfiguration
+  options?: UseQwikLoaderLocationOptions
+}
+export interface UseQwikLoaderLocationOptions {}
 export interface RuleWithUseRegexpExecOptions {
   level: RulePlainConfiguration
   options?: UseRegexpExecOptions

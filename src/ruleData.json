@@ -1495,6 +1495,14 @@
       "url": "https://biomejs.dev/linter/rules/no-hex-colors/"
     },
     {
+      "name": "noImpliedEval",
+      "recommended": true,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow the use of eval()-like methods.\nSee https://biomejs.dev/linter/rules/no-implied-eval",
+      "url": "https://biomejs.dev/linter/rules/no-implied-eval/"
+    },
+    {
       "name": "noIncrementDecrement",
       "recommended": false,
       "fix": "none",
@@ -1525,6 +1533,14 @@
       "severity": "info",
       "description": "Prevent problematic leaked values from being rendered.\nSee https://biomejs.dev/linter/rules/no-leaked-render",
       "url": "https://biomejs.dev/linter/rules/no-leaked-render/"
+    },
+    {
+      "name": "noMisleadingReturnType",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Detect return type annotations that are misleadingly wider than what the implementation actually returns.\nSee https://biomejs.dev/linter/rules/no-misleading-return-type",
+      "url": "https://biomejs.dev/linter/rules/no-misleading-return-type/"
     },
     {
       "name": "noMisusedPromises",
@@ -1743,6 +1759,14 @@
       "url": "https://biomejs.dev/linter/rules/no-unnecessary-conditions/"
     },
     {
+      "name": "noUnsafePlusOperands",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow + operations with operands that are known to be unsafe.\nSee https://biomejs.dev/linter/rules/no-unsafe-plus-operands",
+      "url": "https://biomejs.dev/linter/rules/no-unsafe-plus-operands/"
+    },
+    {
       "name": "noUntrustedLicenses",
       "recommended": false,
       "fix": "none",
@@ -1757,6 +1781,14 @@
       "severity": "info",
       "description": "Disallow redundant return statements.\nSee https://biomejs.dev/linter/rules/no-useless-return",
       "url": "https://biomejs.dev/linter/rules/no-useless-return/"
+    },
+    {
+      "name": "noUselessTypeConversion",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow type conversions that do not change the type of an expression.\nSee https://biomejs.dev/linter/rules/no-useless-type-conversion",
+      "url": "https://biomejs.dev/linter/rules/no-useless-type-conversion/"
     },
     {
       "name": "noVueArrowFuncInWatch",
@@ -1847,12 +1879,28 @@
       "url": "https://biomejs.dev/linter/rules/use-consistent-method-signatures/"
     },
     {
+      "name": "useConsistentTestIt",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "warn",
+      "description": "Enforce consistent use of it or test for test functions.\nSee https://biomejs.dev/linter/rules/use-consistent-test-it",
+      "url": "https://biomejs.dev/linter/rules/use-consistent-test-it/"
+    },
+    {
       "name": "useDestructuring",
       "recommended": false,
       "fix": "none",
       "severity": "info",
       "description": "Require destructuring from arrays and/or objects.\nSee https://biomejs.dev/linter/rules/use-destructuring",
       "url": "https://biomejs.dev/linter/rules/use-destructuring/"
+    },
+    {
+      "name": "useDisposables",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Detects a disposable object assigned to a variable without using or await using syntax.\nSee https://biomejs.dev/linter/rules/use-disposables",
+      "url": "https://biomejs.dev/linter/rules/use-disposables/"
     },
     {
       "name": "useErrorCause",
@@ -1877,6 +1925,14 @@
       "severity": "info",
       "description": "Ensure that test functions contain at least one expect() or similar assertion.\nSee https://biomejs.dev/linter/rules/use-expect",
       "url": "https://biomejs.dev/linter/rules/use-expect/"
+    },
+    {
+      "name": "useExplicitReturnType",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Require explicit return types on functions and class methods.\nSee https://biomejs.dev/linter/rules/use-explicit-return-type",
+      "url": "https://biomejs.dev/linter/rules/use-explicit-return-type/"
     },
     {
       "name": "useExplicitType",
@@ -1965,6 +2021,14 @@
       "severity": "info",
       "description": "Enforce valid describe() callback.\nSee https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback",
       "url": "https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback/"
+    },
+    {
+      "name": "useQwikLoaderLocation",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce that Qwik loader functions are declared in the correct location.\nSee https://biomejs.dev/linter/rules/use-qwik-loader-location",
+      "url": "https://biomejs.dev/linter/rules/use-qwik-loader-location/"
     },
     {
       "name": "useRegexpExec",
@@ -2083,7 +2147,7 @@
       "recommended": false,
       "fix": "none",
       "severity": "info",
-      "description": "Forbids v-bind directives with missing arguments or invalid modifiers.\nSee https://biomejs.dev/linter/rules/use-vue-valid-v-bind",
+      "description": "Forbids v-bind directives with missing values or invalid modifiers.\nSee https://biomejs.dev/linter/rules/use-vue-valid-v-bind",
       "url": "https://biomejs.dev/linter/rules/use-vue-valid-v-bind/"
     },
     {
