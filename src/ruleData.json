@@ -1303,6 +1303,14 @@
       "url": "https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document/"
     },
     {
+      "name": "noComponentHookFactories",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallows defining React components or custom hooks inside other functions.\nSee https://biomejs.dev/linter/rules/no-component-hook-factories",
+      "url": "https://biomejs.dev/linter/rules/no-component-hook-factories/"
+    },
+    {
       "name": "noConditionalExpect",
       "recommended": false,
       "fix": "none",
@@ -1463,6 +1471,22 @@
       "url": "https://biomejs.dev/linter/rules/no-excessive-lines-per-file/"
     },
     {
+      "name": "noExcessiveNestedCallbacks",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce a maximum depth that callbacks can be nested.\nSee https://biomejs.dev/linter/rules/no-excessive-nested-callbacks",
+      "url": "https://biomejs.dev/linter/rules/no-excessive-nested-callbacks/"
+    },
+    {
+      "name": "noExcessiveSelectorClasses",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Limit the number of classes in a selector.\nSee https://biomejs.dev/linter/rules/no-excessive-selector-classes",
+      "url": "https://biomejs.dev/linter/rules/no-excessive-selector-classes/"
+    },
+    {
       "name": "noFloatingClasses",
       "recommended": false,
       "fix": "none",
@@ -1495,6 +1519,14 @@
       "url": "https://biomejs.dev/linter/rules/no-hex-colors/"
     },
     {
+      "name": "noIdenticalTestTitle",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow identical titles in test suites and test cases.\nSee https://biomejs.dev/linter/rules/no-identical-test-title",
+      "url": "https://biomejs.dev/linter/rules/no-identical-test-title/"
+    },
+    {
       "name": "noImpliedEval",
       "recommended": true,
       "fix": "none",
@@ -1519,6 +1551,22 @@
       "url": "https://biomejs.dev/linter/rules/no-inline-styles/"
     },
     {
+      "name": "noJsxLeakedDollar",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "warn",
+      "description": "Flags text nodes with a trailing $ before a JSX expression.\nSee https://biomejs.dev/linter/rules/no-jsx-leaked-dollar",
+      "url": "https://biomejs.dev/linter/rules/no-jsx-leaked-dollar/"
+    },
+    {
+      "name": "noJsxNamespace",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow JSX namespace syntax.\nSee https://biomejs.dev/linter/rules/no-jsx-namespace",
+      "url": "https://biomejs.dev/linter/rules/no-jsx-namespace/"
+    },
+    {
       "name": "noJsxPropsBind",
       "recommended": false,
       "fix": "none",
@@ -1533,6 +1581,14 @@
       "severity": "info",
       "description": "Prevent problematic leaked values from being rendered.\nSee https://biomejs.dev/linter/rules/no-leaked-render",
       "url": "https://biomejs.dev/linter/rules/no-leaked-render/"
+    },
+    {
+      "name": "noLoopFunc",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow functions declared inside loops that capture unsafe outer variables.\nSee https://biomejs.dev/linter/rules/no-loop-func",
+      "url": "https://biomejs.dev/linter/rules/no-loop-func/"
     },
     {
       "name": "noMisleadingReturnType",
@@ -1671,6 +1727,38 @@
       "url": "https://biomejs.dev/linter/rules/no-proto/"
     },
     {
+      "name": "noReactNativeDeepImports",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow deep imports from the react-native package.\nSee https://biomejs.dev/linter/rules/no-react-native-deep-imports",
+      "url": "https://biomejs.dev/linter/rules/no-react-native-deep-imports/"
+    },
+    {
+      "name": "noReactNativeLiteralColors",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow color literals in React Native styles.\nSee https://biomejs.dev/linter/rules/no-react-native-literal-colors",
+      "url": "https://biomejs.dev/linter/rules/no-react-native-literal-colors/"
+    },
+    {
+      "name": "noReactNativeRawText",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Disallow raw text outside \\<Text> components in React Native.\nSee https://biomejs.dev/linter/rules/no-react-native-raw-text",
+      "url": "https://biomejs.dev/linter/rules/no-react-native-raw-text/"
+    },
+    {
+      "name": "noReactStringRefs",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Disallow string refs in React components.\nSee https://biomejs.dev/linter/rules/no-react-string-refs",
+      "url": "https://biomejs.dev/linter/rules/no-react-string-refs/"
+    },
+    {
       "name": "noRedundantDefaultExport",
       "recommended": false,
       "fix": "none",
@@ -1757,6 +1845,14 @@
       "severity": "warn",
       "description": "Disallow unnecessary type-based conditions that can be statically determined as redundant.\nSee https://biomejs.dev/linter/rules/no-unnecessary-conditions",
       "url": "https://biomejs.dev/linter/rules/no-unnecessary-conditions/"
+    },
+    {
+      "name": "noUnnecessaryTemplateExpression",
+      "recommended": false,
+      "fix": "safe",
+      "severity": "info",
+      "description": "Disallow unnecessary template expressions.\nSee https://biomejs.dev/linter/rules/no-unnecessary-template-expression",
+      "url": "https://biomejs.dev/linter/rules/no-unnecessary-template-expression/"
     },
     {
       "name": "noUnsafePlusOperands",
@@ -1903,6 +1999,22 @@
       "url": "https://biomejs.dev/linter/rules/use-disposables/"
     },
     {
+      "name": "useDomNodeTextContent",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Prefer .textContent over .innerText for DOM node text.\nSee https://biomejs.dev/linter/rules/use-dom-node-text-content",
+      "url": "https://biomejs.dev/linter/rules/use-dom-node-text-content/"
+    },
+    {
+      "name": "useDomQuerySelector",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Prefer querySelector() and querySelectorAll() over older DOM query APIs.\nSee https://biomejs.dev/linter/rules/use-dom-query-selector",
+      "url": "https://biomejs.dev/linter/rules/use-dom-query-selector/"
+    },
+    {
       "name": "useErrorCause",
       "recommended": false,
       "fix": "none",
@@ -1959,6 +2071,14 @@
       "url": "https://biomejs.dev/linter/rules/use-global-this/"
     },
     {
+      "name": "useIframeSandbox",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce the 'sandbox' attribute for 'iframe' elements.\nSee https://biomejs.dev/linter/rules/use-iframe-sandbox",
+      "url": "https://biomejs.dev/linter/rules/use-iframe-sandbox/"
+    },
+    {
       "name": "useImportsFirst",
       "recommended": false,
       "fix": "none",
@@ -1999,6 +2119,14 @@
       "url": "https://biomejs.dev/linter/rules/use-lone-executable-definition/"
     },
     {
+      "name": "useMathMinMax",
+      "recommended": true,
+      "fix": "unsafe",
+      "severity": "warn",
+      "description": "Prefer Math.min() and Math.max() over ternaries for simple comparisons.\nSee https://biomejs.dev/linter/rules/use-math-min-max",
+      "url": "https://biomejs.dev/linter/rules/use-math-min-max/"
+    },
+    {
       "name": "useNamedCaptureGroup",
       "recommended": false,
       "fix": "none",
@@ -2031,12 +2159,44 @@
       "url": "https://biomejs.dev/linter/rules/use-qwik-loader-location/"
     },
     {
+      "name": "useReactAsyncServerFunction",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Require functions with the \"use server\" directive to be async.\nSee https://biomejs.dev/linter/rules/use-react-async-server-function",
+      "url": "https://biomejs.dev/linter/rules/use-react-async-server-function/"
+    },
+    {
+      "name": "useReactNativePlatformComponents",
+      "recommended": false,
+      "fix": "none",
+      "severity": "error",
+      "description": "Ensure that platform-specific React Native components are only imported in files named for that platform.\nSee https://biomejs.dev/linter/rules/use-react-native-platform-components",
+      "url": "https://biomejs.dev/linter/rules/use-react-native-platform-components/"
+    },
+    {
+      "name": "useReduceTypeParameter",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce using a type parameter on Array#reduce instead of casting the initial value.\nSee https://biomejs.dev/linter/rules/use-reduce-type-parameter",
+      "url": "https://biomejs.dev/linter/rules/use-reduce-type-parameter/"
+    },
+    {
       "name": "useRegexpExec",
       "recommended": false,
       "fix": "none",
       "severity": "info",
       "description": "Enforce RegExp#exec over String#match if no global flag is provided.\nSee https://biomejs.dev/linter/rules/use-regexp-exec",
       "url": "https://biomejs.dev/linter/rules/use-regexp-exec/"
+    },
+    {
+      "name": "useRegexpTest",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Enforce the use of RegExp.prototype.test() over String.prototype.match() and RegExp.prototype.exec() in boolean contexts.\nSee https://biomejs.dev/linter/rules/use-regexp-test",
+      "url": "https://biomejs.dev/linter/rules/use-regexp-test/"
     },
     {
       "name": "useRequiredScripts",
@@ -2071,12 +2231,36 @@
       "url": "https://biomejs.dev/linter/rules/use-spread/"
     },
     {
+      "name": "useStringStartsEndsWith",
+      "recommended": false,
+      "fix": "unsafe",
+      "severity": "info",
+      "description": "Prefer String#startsWith() and String#endsWith() over verbose prefix and suffix checks.\nSee https://biomejs.dev/linter/rules/use-string-starts-ends-with",
+      "url": "https://biomejs.dev/linter/rules/use-string-starts-ends-with/"
+    },
+    {
+      "name": "useTestHooksOnTop",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce that lifecycle hooks appear before any test cases in the same block.\nSee https://biomejs.dev/linter/rules/use-test-hooks-on-top",
+      "url": "https://biomejs.dev/linter/rules/use-test-hooks-on-top/"
+    },
+    {
       "name": "useUnicodeRegex",
       "recommended": false,
       "fix": "safe",
       "severity": "info",
       "description": "Enforce the use of the u or v flag for regular expressions.\nSee https://biomejs.dev/linter/rules/use-unicode-regex",
       "url": "https://biomejs.dev/linter/rules/use-unicode-regex/"
+    },
+    {
+      "name": "useVarsOnTop",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Require var declarations to appear at the top of their containing scope.\nSee https://biomejs.dev/linter/rules/use-vars-on-top",
+      "url": "https://biomejs.dev/linter/rules/use-vars-on-top/"
     },
     {
       "name": "useVueConsistentDefinePropsDeclaration",

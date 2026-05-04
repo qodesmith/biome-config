@@ -9,6 +9,7 @@ Shows which packages have new versions available. If `@biomejs/biome` has a new 
 - Run `bun update` to update most packages
 - Change the version of `@biomejs/biome` in `package.json` to the latest version printed by `bun outdated`
 - Run `bun i` to install the newer version of `@biomejs/biome`
+- Update the schema version in the biome.jsonc comment to match the newer version of `@biomejs/biome`
 
 ### `bun run build`
 
