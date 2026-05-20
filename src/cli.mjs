@@ -274,7 +274,7 @@ export function run({cwd = process.cwd(), argv = process.argv} = {}) {
   }
 
   if (includeScripts) {
-    const pkgJsonStr = JSON.stringify(pkgJson)
+    const pkgJsonStr = JSON.stringify(pkgJson, null, 2)
     fs.writeFileSync(pkgJsonPath, pkgJsonStr)
   }
 
