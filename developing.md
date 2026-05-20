@@ -35,4 +35,4 @@ Kicks off a few tasks:
 
 ### `bun run release`
 
-Uses [release-it](https://github.com/release-it/release-it) to handle publishing to npm, tagging a release, and pushing those changes.
+Uses a custom release script (inspired by [release-it](https://github.com/release-it/release-it)) to handle publishing to npm, tagging a release, and pushing those changes.
