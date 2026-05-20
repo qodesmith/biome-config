@@ -3,15 +3,11 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
     "allowJs": true,
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./react-app/*"]
-    }
+    "noEmit": true
   },
-  "include": ["react-app/*", "src/*"]
+  "include": ["src/**/*"]
 }

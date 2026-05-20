@@ -27,7 +27,7 @@
     "build:types": "json2ts -i ./node_modules/@biomejs/biome/configuration_schema.json -o ./src/biomeSchema.d.ts --ignoreMinAndMaxItems true --style.singleQuote --no-style.semi && echo \"Biome types build complete!\"",
     "build:rules": "bun run ./src/generateRuleData.ts",
     "build:check": "biome check ./src/createStaticBiomeConfigs.ts",
-    "build:tsc": "bunx tsc -p tsconfig.build.json",
+    "build:tsc": "bunx tsc",
     "check": "biome check",
     "check:fix": "biome check --write .",
     "release": "bun run ./src/release.ts",
