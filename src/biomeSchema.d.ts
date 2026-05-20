@@ -329,6 +329,7 @@ export type UseValidTypeofConfiguration = RulePlainConfiguration | RuleWithUseVa
 export type UseYieldConfiguration = RulePlainConfiguration | RuleWithUseYieldOptions
 export type SeverityOrNursery = GroupPlainConfiguration | Nursery
 export type NoAmbiguousAnchorTextConfiguration = RulePlainConfiguration | RuleWithNoAmbiguousAnchorTextOptions
+export type NoBaseToStringConfiguration = RulePlainConfiguration | RuleWithNoBaseToStringOptions
 export type NoBeforeInteractiveScriptOutsideDocumentConfiguration =
   | RulePlainConfiguration
   | RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions
@@ -423,9 +424,11 @@ export type NoUntrustedLicensesConfiguration = RulePlainConfiguration | RuleWith
 export type NoUselessReturnConfiguration = RulePlainConfiguration | RuleWithNoUselessReturnOptions
 export type NoUselessTypeConversionConfiguration = RulePlainConfiguration | RuleWithNoUselessTypeConversionOptions
 export type NoVueArrowFuncInWatchConfiguration = RulePlainConfiguration | RuleWithNoVueArrowFuncInWatchOptions
+export type NoVueImportCompilerMacrosConfiguration = RulePlainConfiguration | RuleWithNoVueImportCompilerMacrosOptions
 export type NoVueOptionsApiConfiguration = RulePlainConfiguration | RuleWithNoVueOptionsApiOptions
 export type NoVueRefAsOperandConfiguration = RulePlainConfiguration | RuleWithNoVueRefAsOperandOptions
 export type NoVueVIfWithVForConfiguration = RulePlainConfiguration | RuleWithNoVueVIfWithVForOptions
+export type NoVueVOnNumberValuesConfiguration = RulePlainConfiguration | RuleWithNoVueVOnNumberValuesOptions
 export type UseArraySomeConfiguration = RulePlainConfiguration | RuleWithUseArraySomeOptions
 export type UseArraySortCompareConfiguration = RulePlainConfiguration | RuleWithUseArraySortCompareOptions
 export type UseAwaitThenableConfiguration = RulePlainConfiguration | RuleWithUseAwaitThenableOptions
@@ -488,7 +491,13 @@ export type UseScopedStylesConfiguration = RulePlainConfiguration | RuleWithUseS
 export type UseSortedClassesConfiguration = RulePlainConfiguration | RuleWithUseSortedClassesOptions
 export type UseSpreadConfiguration = RulePlainConfiguration | RuleWithUseSpreadOptions
 export type UseStringStartsEndsWithConfiguration = RulePlainConfiguration | RuleWithUseStringStartsEndsWithOptions
+export type UseTestHooksInOrderConfiguration = RulePlainConfiguration | RuleWithUseTestHooksInOrderOptions
 export type UseTestHooksOnTopConfiguration = RulePlainConfiguration | RuleWithUseTestHooksOnTopOptions
+export type UseThisInClassMethodsConfiguration = RulePlainConfiguration | RuleWithUseThisInClassMethodsOptions
+/**
+ * Controls how `useThisInClassMethods` treats classes that implement interfaces.
+ */
+export type IgnoreClassesWithImplements = 'none' | 'all' | 'public-fields'
 export type UseUnicodeRegexConfiguration = RulePlainConfiguration | RuleWithUseUnicodeRegexOptions
 export type UseVarsOnTopConfiguration = RulePlainConfiguration | RuleWithUseVarsOnTopOptions
 export type UseVueConsistentDefinePropsDeclarationConfiguration =
@@ -504,12 +513,14 @@ export type UseVueHyphenatedAttributesConfiguration = RulePlainConfiguration | R
 export type UseVueMultiWordComponentNamesConfiguration =
   | RulePlainConfiguration
   | RuleWithUseVueMultiWordComponentNamesOptions
+export type UseVueNextTickPromiseConfiguration = RulePlainConfiguration | RuleWithUseVueNextTickPromiseOptions
 export type UseVueVForKeyConfiguration = RulePlainConfiguration | RuleWithUseVueVForKeyOptions
 export type UseVueValidTemplateRootConfiguration = RulePlainConfiguration | RuleWithUseVueValidTemplateRootOptions
 export type UseVueValidVBindConfiguration = RulePlainConfiguration | RuleWithUseVueValidVBindOptions
 export type UseVueValidVCloakConfiguration = RulePlainConfiguration | RuleWithUseVueValidVCloakOptions
 export type UseVueValidVElseConfiguration = RulePlainConfiguration | RuleWithUseVueValidVElseOptions
 export type UseVueValidVElseIfConfiguration = RulePlainConfiguration | RuleWithUseVueValidVElseIfOptions
+export type UseVueValidVForConfiguration = RulePlainConfiguration | RuleWithUseVueValidVForOptions
 export type UseVueValidVHtmlConfiguration = RulePlainConfiguration | RuleWithUseVueValidVHtmlOptions
 export type UseVueValidVIfConfiguration = RulePlainConfiguration | RuleWithUseVueValidVIfOptions
 export type UseVueValidVOnConfiguration = RulePlainConfiguration | RuleWithUseVueValidVOnOptions
@@ -805,7 +816,7 @@ export interface Configuration {
    */
   css?: CssConfiguration | null
   /**
-   * A list of paths to other JSON files, used to extends the current configuration.
+   * A list of paths to other JSON files, used to extend the current configuration.
    */
   extends?: Extends | null
   /**
@@ -3643,6 +3654,11 @@ export interface Nursery {
    */
   noAmbiguousAnchorText?: NoAmbiguousAnchorTextConfiguration | null
   /**
+   * Require stringification to avoid values that only use the default object representation.
+   * See https://biomejs.dev/linter/rules/no-base-to-string
+   */
+  noBaseToString?: NoBaseToStringConfiguration | null
+  /**
    * Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.
    * See https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document
    */
@@ -4018,6 +4034,11 @@ export interface Nursery {
    */
   noVueArrowFuncInWatch?: NoVueArrowFuncInWatchConfiguration | null
   /**
+   * Disallow importing Vue compiler macros.
+   * See https://biomejs.dev/linter/rules/no-vue-import-compiler-macros
+   */
+  noVueImportCompilerMacros?: NoVueImportCompilerMacrosConfiguration | null
+  /**
    * Disallow the use of Vue Options API.
    * See https://biomejs.dev/linter/rules/no-vue-options-api
    */
@@ -4032,6 +4053,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
    */
   noVueVIfWithVFor?: NoVueVIfWithVForConfiguration | null
+  /**
+   * Disallow deprecated number modifiers on Vue v-on directives.
+   * See https://biomejs.dev/linter/rules/no-vue-v-on-number-values
+   */
+  noVueVOnNumberValues?: NoVueVOnNumberValuesConfiguration | null
   /**
    * Enables the recommended rules for this group
    */
@@ -4237,10 +4263,20 @@ export interface Nursery {
    */
   useStringStartsEndsWith?: UseStringStartsEndsWithConfiguration | null
   /**
+   * Enforce that test lifecycle hooks are declared in the order they execute.
+   * See https://biomejs.dev/linter/rules/use-test-hooks-in-order
+   */
+  useTestHooksInOrder?: UseTestHooksInOrderConfiguration | null
+  /**
    * Enforce that lifecycle hooks appear before any test cases in the same block.
    * See https://biomejs.dev/linter/rules/use-test-hooks-on-top
    */
   useTestHooksOnTop?: UseTestHooksOnTopConfiguration | null
+  /**
+   * Enforce that class methods utilize this.
+   * See https://biomejs.dev/linter/rules/use-this-in-class-methods
+   */
+  useThisInClassMethods?: UseThisInClassMethodsConfiguration | null
   /**
    * Enforce the use of the u or v flag for regular expressions.
    * See https://biomejs.dev/linter/rules/use-unicode-regex
@@ -4282,6 +4318,11 @@ export interface Nursery {
    */
   useVueMultiWordComponentNames?: UseVueMultiWordComponentNamesConfiguration | null
   /**
+   * Enforces Promise syntax when using Vue nextTick.
+   * See https://biomejs.dev/linter/rules/use-vue-next-tick-promise
+   */
+  useVueNextTickPromise?: UseVueNextTickPromiseConfiguration | null
+  /**
    * Enforce that elements using v-for also specify a unique key.
    * See https://biomejs.dev/linter/rules/use-vue-v-for-key
    */
@@ -4311,6 +4352,11 @@ export interface Nursery {
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-else-if
    */
   useVueValidVElseIf?: UseVueValidVElseIfConfiguration | null
+  /**
+   * Enforces valid v-for directives in Vue templates.
+   * See https://biomejs.dev/linter/rules/use-vue-valid-v-for
+   */
+  useVueValidVFor?: UseVueValidVForConfiguration | null
   /**
    * Enforce valid v-html directives.
    * See https://biomejs.dev/linter/rules/use-vue-valid-v-html
@@ -4356,6 +4402,13 @@ export interface NoAmbiguousAnchorTextOptions {
    * It allows users to modify the strings that can be checked for in the anchor text. Useful for specifying other words in other languages
    */
   words?: string[] | null
+}
+export interface RuleWithNoBaseToStringOptions {
+  level: RulePlainConfiguration
+  options?: NoBaseToStringOptions
+}
+export interface NoBaseToStringOptions {
+  ignoredTypeNames?: string[] | null
 }
 export interface RuleWithNoBeforeInteractiveScriptOutsideDocumentOptions {
   level: RulePlainConfiguration
@@ -4868,6 +4921,11 @@ export interface RuleWithNoVueArrowFuncInWatchOptions {
   options?: NoVueArrowFuncInWatchOptions
 }
 export interface NoVueArrowFuncInWatchOptions {}
+export interface RuleWithNoVueImportCompilerMacrosOptions {
+  level: RulePlainConfiguration
+  options?: NoVueImportCompilerMacrosOptions
+}
+export interface NoVueImportCompilerMacrosOptions {}
 export interface RuleWithNoVueOptionsApiOptions {
   level: RulePlainConfiguration
   options?: NoVueOptionsApiOptions
@@ -4883,6 +4941,11 @@ export interface RuleWithNoVueVIfWithVForOptions {
   options?: NoVueVIfWithVForOptions
 }
 export interface NoVueVIfWithVForOptions {}
+export interface RuleWithNoVueVOnNumberValuesOptions {
+  level: RulePlainConfiguration
+  options?: NoVueVOnNumberValuesOptions
+}
+export interface NoVueVOnNumberValuesOptions {}
 export interface RuleWithUseArraySomeOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -5235,11 +5298,45 @@ export interface RuleWithUseStringStartsEndsWithOptions {
   options?: UseStringStartsEndsWithOptions
 }
 export interface UseStringStartsEndsWithOptions {}
+export interface RuleWithUseTestHooksInOrderOptions {
+  level: RulePlainConfiguration
+  options?: UseTestHooksInOrderOptions
+}
+export interface UseTestHooksInOrderOptions {}
 export interface RuleWithUseTestHooksOnTopOptions {
   level: RulePlainConfiguration
   options?: UseTestHooksOnTopOptions
 }
 export interface UseTestHooksOnTopOptions {}
+export interface RuleWithUseThisInClassMethodsOptions {
+  level: RulePlainConfiguration
+  options?: UseThisInClassMethodsOptions
+}
+/**
+ * Options for the `useThisInClassMethods` rule.
+ */
+export interface UseThisInClassMethodsOptions {
+  /**
+   * Whether members of classes with an `implements` clause should be ignored.
+   *
+   * Defaults to `"none"`, which means implemented classes are checked like any other class.
+   * Use `"all"` to ignore every eligible member in such classes, or `"public-fields"`
+   * to ignore only public members in them.
+   */
+  ignoreClassesWithImplements?: IgnoreClassesWithImplements | null
+  /**
+   * Method names that should be ignored by the rule.
+   *
+   * Defaults to `[]`.
+   */
+  ignoreMethods?: string[] | null
+  /**
+   * Whether methods marked with `override` should be ignored.
+   *
+   * Defaults to `false`.
+   */
+  ignoreOverrideMethods?: boolean | null
+}
 export interface RuleWithUseUnicodeRegexOptions {
   fix?: FixKind | null
   level: RulePlainConfiguration
@@ -5318,6 +5415,11 @@ export interface UseVueMultiWordComponentNamesOptions {
    */
   ignores?: string[]
 }
+export interface RuleWithUseVueNextTickPromiseOptions {
+  level: RulePlainConfiguration
+  options?: UseVueNextTickPromiseOptions
+}
+export interface UseVueNextTickPromiseOptions {}
 export interface RuleWithUseVueVForKeyOptions {
   level: RulePlainConfiguration
   options?: UseVueVForKeyOptions
@@ -5350,6 +5452,11 @@ export interface RuleWithUseVueValidVElseIfOptions {
   options?: UseVueValidVElseIfOptions
 }
 export interface UseVueValidVElseIfOptions {}
+export interface RuleWithUseVueValidVForOptions {
+  level: RulePlainConfiguration
+  options?: UseVueValidVForOptions
+}
+export interface UseVueValidVForOptions {}
 export interface RuleWithUseVueValidVHtmlOptions {
   level: RulePlainConfiguration
   options?: UseVueValidVHtmlOptions

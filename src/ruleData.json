@@ -1295,6 +1295,14 @@
       "url": "https://biomejs.dev/linter/rules/no-ambiguous-anchor-text/"
     },
     {
+      "name": "noBaseToString",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Require stringification to avoid values that only use the default object representation.\nSee https://biomejs.dev/linter/rules/no-base-to-string",
+      "url": "https://biomejs.dev/linter/rules/no-base-to-string/"
+    },
+    {
       "name": "noBeforeInteractiveScriptOutsideDocument",
       "recommended": false,
       "fix": "none",
@@ -1895,6 +1903,14 @@
       "url": "https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch/"
     },
     {
+      "name": "noVueImportCompilerMacros",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow importing Vue compiler macros.\nSee https://biomejs.dev/linter/rules/no-vue-import-compiler-macros",
+      "url": "https://biomejs.dev/linter/rules/no-vue-import-compiler-macros/"
+    },
+    {
       "name": "noVueOptionsApi",
       "recommended": false,
       "fix": "none",
@@ -1917,6 +1933,14 @@
       "severity": "info",
       "description": "Disallow using v-if and v-for directives on the same element.\nSee https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for",
       "url": "https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for/"
+    },
+    {
+      "name": "noVueVOnNumberValues",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Disallow deprecated number modifiers on Vue v-on directives.\nSee https://biomejs.dev/linter/rules/no-vue-v-on-number-values",
+      "url": "https://biomejs.dev/linter/rules/no-vue-v-on-number-values/"
     },
     {
       "name": "useArraySome",
@@ -2239,12 +2263,28 @@
       "url": "https://biomejs.dev/linter/rules/use-string-starts-ends-with/"
     },
     {
+      "name": "useTestHooksInOrder",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce that test lifecycle hooks are declared in the order they execute.\nSee https://biomejs.dev/linter/rules/use-test-hooks-in-order",
+      "url": "https://biomejs.dev/linter/rules/use-test-hooks-in-order/"
+    },
+    {
       "name": "useTestHooksOnTop",
       "recommended": false,
       "fix": "none",
       "severity": "warn",
       "description": "Enforce that lifecycle hooks appear before any test cases in the same block.\nSee https://biomejs.dev/linter/rules/use-test-hooks-on-top",
       "url": "https://biomejs.dev/linter/rules/use-test-hooks-on-top/"
+    },
+    {
+      "name": "useThisInClassMethods",
+      "recommended": false,
+      "fix": "none",
+      "severity": "warn",
+      "description": "Enforce that class methods utilize this.\nSee https://biomejs.dev/linter/rules/use-this-in-class-methods",
+      "url": "https://biomejs.dev/linter/rules/use-this-in-class-methods/"
     },
     {
       "name": "useUnicodeRegex",
@@ -2311,6 +2351,14 @@
       "url": "https://biomejs.dev/linter/rules/use-vue-multi-word-component-names/"
     },
     {
+      "name": "useVueNextTickPromise",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforces Promise syntax when using Vue nextTick.\nSee https://biomejs.dev/linter/rules/use-vue-next-tick-promise",
+      "url": "https://biomejs.dev/linter/rules/use-vue-next-tick-promise/"
+    },
+    {
       "name": "useVueVForKey",
       "recommended": false,
       "fix": "none",
@@ -2357,6 +2405,14 @@
       "severity": "info",
       "description": "Enforce valid v-else-if directives.\nSee https://biomejs.dev/linter/rules/use-vue-valid-v-else-if",
       "url": "https://biomejs.dev/linter/rules/use-vue-valid-v-else-if/"
+    },
+    {
+      "name": "useVueValidVFor",
+      "recommended": false,
+      "fix": "none",
+      "severity": "info",
+      "description": "Enforces valid v-for directives in Vue templates.\nSee https://biomejs.dev/linter/rules/use-vue-valid-v-for",
+      "url": "https://biomejs.dev/linter/rules/use-vue-valid-v-for/"
     },
     {
       "name": "useVueValidVHtml",
