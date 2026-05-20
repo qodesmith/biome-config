@@ -9,9 +9,11 @@ Shows which packages have new versions available. If `@biomejs/biome` has a new 
 - Run `bun update` to update most packages
 - Change the version of `@biomejs/biome` in `package.json` to the latest version printed by `bun outdated`
 - Run `bun i` to install the newer version of `@biomejs/biome`
-- Update the schema version in the biome.jsonc comment to match the newer version of `@biomejs/biome`
+- Update the schema version in the `biome.jsonc` comment to match the newer version of `@biomejs/biome`
 
 ### `bun run build`
+
+Biome rule changes will show up in the (gitignored) `ruleChanges.json` file. This is where you can see what you'd like to add / adjust in `createBiomeConfig.ts`. Most changes will be from the nursery category - ignore those unless you want to take the risk of supporting a rule that will move to a new category in the future.
 
 ⚠️ Error with the build? Check the `nursery` section of `createBiomeConfig.ts` for lint errors and the `promoted` section of `ruleChanges.json` for a match. A rule may have been promoted, causing a mismatch error with the schema.
 
