@@ -21,6 +21,10 @@
     "type": "git",
     "url": "git+https://github.com/qodesmith/biome-config.git"
   },
+  "bugs": {
+    "url": "https://github.com/qodesmith/biome-config/issues"
+  },
+  "homepage": "https://github.com/qodesmith/biome-config#readme",
   "scripts": {
     "build": "bun run build:schema-check && bun run build:types && bun run build:rules && bun run ./src/createStaticBiomeConfigs.ts && bun run build:check && bun run build:tsc",
     "build:schema-check": "bun run ./src/checkSchemaInBiomeConfig.ts",
