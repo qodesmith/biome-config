@@ -44,5 +44,9 @@
     "@types/bun": "^1.3.14",
     "auto-changelog": "^2.5.1",
     "json-schema-to-typescript": "^15.0.4"
-  }
+  },
+  "bugs": {
+    "url": "git+https://github.com/qodesmith/biome-config/issues"
+  },
+  "homepage": "git+https://github.com/qodesmith/biome-config#readme"
 }
