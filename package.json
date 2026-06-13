@@ -1,6 +1,9 @@
 {
   "name": "@qodestack/biome-config",
   "version": "2.4.14",
+  "bugs": {
+    "url": "https://github.com/qodesmith/biome-config/issues"
+  },
   "author": "Qodesmith",
   "license": "MIT",
   "type": "module",
